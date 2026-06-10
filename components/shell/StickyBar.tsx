@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Phone, MapPin, CalendarDays } from "lucide-react";
 import { IgIcon } from "@/components/ui/icons";
 import { t, type Lang } from "@/lib/i18n";
@@ -24,8 +25,11 @@ export function StickyBar({ lang }: { lang: Lang }) {
   const iconCls = "w-(--mab-icon) h-(--mab-icon)";
 
   return (
-    <nav
+    <motion.nav
       aria-label="Quick contact"
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 2.2, ease: [0.22, 0.61, 0.36, 1] }}
       className="fixed bottom-0 inset-x-0 z-[90] md:hidden safe-bottom
         bg-ink/92 backdrop-blur-xl border-t border-(--line-2)
         shadow-[0_-8px_32px_rgba(0,0,0,0.5)] px-2 pt-1.5"
@@ -81,6 +85,6 @@ export function StickyBar({ lang }: { lang: Lang }) {
           <span className={labelCls}>{t(lang, "mab.book")}</span>
         </Link>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
