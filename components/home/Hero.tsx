@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
@@ -11,9 +11,11 @@ import { ResponsiveLabel } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
 import { VelvetGoldShader } from "@/components/effects/VelvetGoldShader";
 import { GoldDust } from "@/components/effects/GoldDust";
+import { Ring3D } from "@/components/effects/Ring3D";
+import { useMousePosition } from "@/hooks/useMousePosition";
 
 /** Concentric rotating gold rings — abstract nod to ring-making, desktop ornament. */
-function RingOrnament() {
+function RingOrnamentSVG() {
   return (
     <svg
       viewBox="0 0 400 400"
@@ -33,7 +35,6 @@ function RingOrnament() {
       </g>
       <circle cx="200" cy="200" r="64" stroke="rgba(201,168,106,0.18)" strokeWidth="18" />
       <circle cx="200" cy="200" r="64" stroke="rgba(242,195,59,0.55)" strokeWidth="1" />
-      {/* facet sparkle */}
       <g opacity="0.9">
         <path d="M200 118 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5z" fill="#F2C33B" opacity="0.85" />
       </g>
@@ -41,9 +42,25 @@ function RingOrnament() {
   );
 }
 
+function ResponsiveRing({ mouse }: { mouse: { x: number; y: number } }) {
+  const [show3D, setShow3D] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    setShow3D(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setShow3D(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  if (!show3D) return <RingOrnamentSVG />;
+  return <Ring3D mouse={mouse} className="w-full h-full" />;
+}
+
 export function Hero({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const mouse = useMousePosition();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -178,7 +195,7 @@ export function Hero({ lang }: { lang: Lang }) {
         className="hidden lg:block absolute right-[4%] xl:right-[8%] top-1/2 -translate-y-1/2 z-[5] w-[26rem] xl:w-[30rem] aspect-square pointer-events-none"
       >
         <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(201,168,106,0.12)_0%,transparent_70%)]" />
-        <RingOrnament />
+        <ResponsiveRing mouse={{ x: mouse.normalizedX, y: mouse.normalizedY }} />
       </motion.div>
 
       {/* Scroll cue */}
