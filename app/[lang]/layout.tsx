@@ -8,6 +8,7 @@ import { PageTransition } from "@/components/effects/PageTransition";
 import { SparkleTrail } from "@/components/effects/SparkleTrail";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { GrainOverlay } from "@/components/effects/GrainOverlay";
+import { SmoothAnchorProvider } from "@/components/effects/SmoothAnchorProvider";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -70,6 +71,7 @@ export default async function LangLayout({
       <ScrollProgress />
       <GrainOverlay />
       <SparkleTrail />
+      <SmoothAnchorProvider />
       <Header lang={l} />
       <PageTransition>
         <main id="main" className="flex-1">

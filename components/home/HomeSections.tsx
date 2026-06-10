@@ -12,11 +12,11 @@ import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { IGGrid } from "@/components/ig/IGGrid";
 import { IgIcon } from "@/components/ui/icons";
 import { TiltCard } from "@/components/effects/TiltCard";
-import { useScrollParallax } from "@/hooks/useScrollParallax";
+import { useScrollEffects } from "@/hooks/useScrollEffects";
 
 export function HomeSections({ lang }: { lang: Lang }) {
   const { open } = useLeadModal();
-  const scrollRef = useScrollParallax(".parallax-img", 10, 1.1);
+  const scrollRef = useScrollEffects();
 
   return (
     <div ref={scrollRef}>
@@ -102,7 +102,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               loading="lazy"
-              className="object-cover parallax-img scale-[1.12]"
+              className="object-cover parallax-img reveal-img scale-[1.12]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
             <figcaption className="absolute bottom-4 left-4 right-4 text-[0.8rem] text-text-2 italic font-serif text-[1rem]">
@@ -248,7 +248,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               loading="lazy"
-              className="object-cover parallax-img scale-[1.12]"
+              className="object-cover parallax-img reveal-img scale-[1.12]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
           </Reveal>

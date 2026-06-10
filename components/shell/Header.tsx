@@ -11,6 +11,31 @@ import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { luxeEase } from "@/lib/motion";
 
+const headerVariants = {
+  hidden: { y: -20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.8, ease: luxeEase },
+  },
+};
+
+const navStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.3 },
+  },
+};
+
+const navItem = {
+  hidden: { y: -10, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: luxeEase },
+  },
+};
+
 const NAV = [
   { href: "", key: "nav.home" },
   { href: "collections", key: "nav.collections" },
@@ -54,7 +79,10 @@ export function Header({ lang }: { lang: Lang }) {
 
   return (
     <>
-      <header
+      <motion.header
+        initial={reduce ? undefined : "hidden"}
+        animate="visible"
+        variants={headerVariants}
         className={cn(
           "fixed top-0 inset-x-0 z-[100] transition-all duration-500 ease-(--ease-luxe)",
           scrolled
@@ -78,7 +106,13 @@ export function Header({ lang }: { lang: Lang }) {
             />
           </Link>
 
-          <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
+          <motion.nav
+            aria-label="Main"
+            className="hidden lg:flex items-center gap-7"
+            initial={reduce ? undefined : "hidden"}
+            animate="visible"
+            variants={navStagger}
+          >
             {NAV.map((item) => {
               const href = `/${lang}${item.href ? `/${item.href}` : ""}`;
               const active =
@@ -86,26 +120,27 @@ export function Header({ lang }: { lang: Lang }) {
                   ? pathname === `/${lang}` || pathname === `/${lang}/`
                   : pathname.startsWith(href);
               return (
-                <Link
-                  key={item.key}
-                  href={href}
-                  className={cn(
-                    "relative text-[0.8rem] tracking-[0.14em] uppercase transition-colors duration-300 group",
-                    active ? "text-gold" : "text-text-2 hover:text-ivory"
-                  )}
-                >
-                  {t(lang, item.key)}
-                  <span
-                    aria-hidden
+                <motion.span key={item.key} variants={navItem}>
+                  <Link
+                    href={href}
                     className={cn(
-                      "absolute -bottom-1 left-1/2 -translate-x-1/2 h-px bg-gold transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)]",
-                      active ? "w-full" : "w-0 group-hover:w-full"
+                      "relative text-[0.8rem] tracking-[0.14em] uppercase transition-colors duration-300 group",
+                      active ? "text-gold" : "text-text-2 hover:text-ivory"
                     )}
-                  />
-                </Link>
+                  >
+                    {t(lang, item.key)}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "absolute -bottom-1 left-1/2 -translate-x-1/2 h-px bg-gold transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)]",
+                        active ? "w-full" : "w-0 group-hover:w-full"
+                      )}
+                    />
+                  </Link>
+                </motion.span>
               );
             })}
-          </nav>
+          </motion.nav>
 
           <div className="flex items-center gap-2 md:gap-3">
             <Link
@@ -138,7 +173,7 @@ export function Header({ lang }: { lang: Lang }) {
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile menu */}
       <AnimatePresence>
