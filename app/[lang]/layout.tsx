@@ -11,6 +11,7 @@ import { GrainOverlay } from "@/components/effects/GrainOverlay";
 import { SmoothAnchorProvider } from "@/components/effects/SmoothAnchorProvider";
 import { Preloader } from "@/components/effects/Preloader";
 import { CustomCursor } from "@/components/effects/CustomCursor";
+import { BackToTop } from "@/components/effects/BackToTop";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -84,6 +85,7 @@ export default async function LangLayout({
       </PageTransition>
       <Footer lang={l} />
       <StickyBar lang={l} />
+      <BackToTop />
     </LeadModalProvider>
   );
 }

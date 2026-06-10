@@ -48,12 +48,23 @@ const NAV = [
 
 export function Header({ lang }: { lang: Lang }) {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      if (y > 200) {
+        setHidden(y > lastY);
+      } else {
+        setHidden(false);
+      }
+      lastY = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -87,7 +98,8 @@ export function Header({ lang }: { lang: Lang }) {
           "fixed top-0 inset-x-0 z-[100] transition-all duration-500 ease-(--ease-luxe)",
           scrolled
             ? "bg-ink/90 backdrop-blur-xl border-b border-(--line) py-2"
-            : "bg-gradient-to-b from-ink/80 to-transparent py-3 md:py-4"
+            : "bg-gradient-to-b from-ink/80 to-transparent py-3 md:py-4",
+          hidden ? "-translate-y-full" : "translate-y-0"
         )}
       >
         <div className="mx-auto max-w-7xl px-4 md:px-8 flex items-center justify-between gap-3">
