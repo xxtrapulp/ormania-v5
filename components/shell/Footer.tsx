@@ -1,15 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { STORE } from "@/lib/data";
 
 export function Footer({ lang }: { lang: Lang }) {
   const year = new Date().getFullYear();
   const col = "flex flex-col gap-2.5 text-[0.875rem] text-text-2";
-  const link = "hover:text-gold transition-colors duration-300 min-h-6 inline-flex items-center";
+  const link = "hover:text-gold transition-colors duration-300 min-h-6 inline-flex items-center link-shimmer";
 
   return (
-    <footer className="border-t border-(--line) bg-ink-2 mt-auto">
+    <motion.footer
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
+      className="border-t border-(--line) bg-ink-2 mt-auto"
+    >
       <div className="mx-auto max-w-7xl px-4 md:px-8 py-14 md:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
           <div className="col-span-2 md:col-span-1">
@@ -63,6 +72,6 @@ export function Footer({ lang }: { lang: Lang }) {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
