@@ -9,6 +9,8 @@ import { track } from "@/lib/analytics";
 import { heroStagger, heroItem, luxeEase } from "@/lib/motion";
 import { ResponsiveLabel } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
+import { VelvetGoldShader } from "@/components/effects/VelvetGoldShader";
+import { GoldDust } from "@/components/effects/GoldDust";
 
 /** Concentric rotating gold rings — abstract nod to ring-making, desktop ornament. */
 function RingOrnament() {
@@ -62,14 +64,12 @@ export function Hero({ lang }: { lang: Lang }) {
       aria-label="Hero"
       className="relative min-h-[100svh] flex items-end md:items-center overflow-hidden"
     >
-      {/* Abstract velvet-and-gold stage with slow parallax — no photography */}
+      {/* WebGL shader background — living velvet & gold */}
       <motion.div className="absolute inset-0" style={{ y: bgY }} aria-hidden>
-        <div className="hero-velvet" />
-        <div className="hero-aura-a" />
-        <div className="hero-aura-b" />
+        <VelvetGoldShader />
       </motion.div>
-      <div className="hero-lightleak" aria-hidden />
-      <div className="hero-grain" aria-hidden />
+      {/* Gold dust particle field */}
+      <GoldDust />
       {/* Bottom fade into the page */}
       <div
         aria-hidden
@@ -188,10 +188,18 @@ export function Hero({ lang }: { lang: Lang }) {
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.8 }}
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-[0.65rem] tracking-[0.25em] uppercase text-text-3 hover:text-gold transition-colors"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-[0.65rem] tracking-[0.25em] uppercase text-text-3 hover:text-gold transition-colors scroll-cue-svg"
       >
         {t(lang, "hero.scroll")}
-        <span className="scroll-cue-line block w-px h-9 bg-gradient-to-b from-gold to-transparent" />
+        <svg width="2" height="36" viewBox="0 0 2 36" fill="none" aria-hidden>
+          <line x1="1" y1="0" x2="1" y2="36" stroke="url(#goldGradient)" strokeWidth="2" />
+          <defs>
+            <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#c9a86a" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+        </svg>
       </motion.a>
     </section>
   );

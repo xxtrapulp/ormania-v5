@@ -4,6 +4,8 @@ import { Header } from "@/components/shell/Header";
 import { Footer } from "@/components/shell/Footer";
 import { StickyBar } from "@/components/shell/StickyBar";
 import { LeadModalProvider } from "@/components/forms/LeadModalProvider";
+import { PageTransition } from "@/components/effects/PageTransition";
+import { SparkleTrail } from "@/components/effects/SparkleTrail";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -63,10 +65,13 @@ export default async function LangLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <SparkleTrail />
       <Header lang={l} />
-      <main id="main" className="flex-1">
-        {children}
-      </main>
+      <PageTransition>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+      </PageTransition>
       <Footer lang={l} />
       <StickyBar lang={l} />
     </LeadModalProvider>

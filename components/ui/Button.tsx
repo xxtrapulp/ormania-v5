@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 /**
  * Luxury tactile button — spec-compliant mobile sizing:
@@ -79,7 +80,8 @@ export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 export function Button(props: ButtonProps) {
   const { className, variant, size, full, arrow, children, ...rest } = props;
-  const classes = cn(buttonVariants({ variant, size, full }), className, "group");
+  const classes = cn(buttonVariants({ variant, size, full }), className, "group magnetic-btn");
+  const { ref, handleMouseMove, handleMouseLeave } = useMagnetic(0.2);
 
   const content = (
     <>
@@ -95,6 +97,12 @@ export function Button(props: ButtonProps) {
     </>
   );
 
+  const magneticProps = {
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
+    style: { willChange: "transform" },
+  };
+
   if ("href" in props && props.href !== undefined) {
     const { href, external, ...anchorRest } = rest as Omit<ButtonAsLink, keyof ButtonBaseProps> & {
       href?: string;
@@ -104,12 +112,14 @@ export function Button(props: ButtonProps) {
     if (external || props.href.startsWith("http") || props.href.startsWith("tel:") || props.href.startsWith("mailto:")) {
       return (
         <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
           href={props.href}
           className={classes}
           {...(props.href.startsWith("http")
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {})}
           {...(anchorRest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          {...magneticProps}
         >
           {content}
         </a>
@@ -117,9 +127,11 @@ export function Button(props: ButtonProps) {
     }
     return (
       <Link
+        ref={ref as React.Ref<HTMLAnchorElement>}
         href={props.href}
         className={classes}
         {...(anchorRest as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">)}
+        {...magneticProps}
       >
         {content}
       </Link>
@@ -128,8 +140,10 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
+      ref={ref as React.Ref<HTMLButtonElement>}
       className={classes}
       {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      {...magneticProps}
     >
       {content}
     </button>

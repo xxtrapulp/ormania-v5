@@ -312,6 +312,84 @@ body.has-action-bar {
   body.has-action-bar { padding-bottom: 0; }
 }
 
+/* ── Logo breathing glow ── */
+@keyframes logo-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 rgba(201, 168, 106, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(201, 168, 106, 0.2));
+  }
+}
+.logo-glow img {
+  animation: logo-glow 4s var(--ease-luxe) infinite;
+}
+
+/* ── 3D card tilt on hover (desktop) ── */
+.card-tilt {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.card-tilt-inner {
+  transition: transform 0.4s var(--ease-luxe), box-shadow 0.4s var(--ease-luxe);
+  transform-style: preserve-3d;
+}
+@media (hover: hover) {
+  .card-tilt:hover .card-tilt-inner {
+    transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg));
+  }
+}
+
+/* ── Magnetic button snap ── */
+.magnetic-btn {
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ── Scroll cue SVG line draw ── */
+@keyframes line-draw {
+  from { stroke-dashoffset: 40; }
+  to { stroke-dashoffset: 0; }
+}
+.scroll-cue-svg line {
+  stroke-dasharray: 40;
+  animation: line-draw 2s var(--ease-luxe) infinite;
+}
+
+/* ── Nav underline (handled in component, but base styles here) ── */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width 0.3s var(--ease-luxe);
+}
+.nav-underline:hover::after,
+.nav-underline[data-active="true"]::after {
+  width: 100%;
+}
+
+/* ── Surface card base ── */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  transition: border-color 0.45s var(--ease-luxe), box-shadow 0.45s var(--ease-luxe), transform 0.45s var(--ease-luxe);
+}
+@media (hover: hover) {
+  .surface-card:hover {
+    border-color: var(--line-2);
+    box-shadow: var(--glow-gold-soft);
+    transform: translateY(-3px);
+  }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,

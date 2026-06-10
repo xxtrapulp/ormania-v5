@@ -4,6 +4,31 @@ import { motion, useReducedMotion } from "framer-motion";
 import { fadeUp, stagger, drawLine, viewport } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
+/** Split text into words wrapped for mask-reveal animation. */
+function SplitWords({ text, className }: { text: string; className?: string }) {
+  return (
+    <span className={cn("inline-flex flex-wrap gap-x-[0.25em]", className)}>
+      {text.split(" ").map((word, i) => (
+        <span key={i} className="overflow-hidden inline-block">
+          <motion.span
+            className="inline-block"
+            variants={{
+              hidden: { y: "100%", opacity: 0 },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.75, ease: [0.22, 0.61, 0.36, 1] },
+              },
+            }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 /** Scroll-triggered fade-up reveal. */
 export function Reveal({
   children,
@@ -83,7 +108,7 @@ export function GoldDivider({ className }: { className?: string }) {
   );
 }
 
-/** Standard editorial section heading. */
+/** Standard editorial section heading with split-text word reveal. */
 export function SectionHeading({
   eyebrow,
   title,
@@ -98,31 +123,43 @@ export function SectionHeading({
   light?: boolean;
 }) {
   return (
-    <Reveal
+    <motion.div
       className={cn(
         "max-w-2xl mb-10 md:mb-16",
         align === "center" ? "mx-auto text-center" : ""
       )}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+      variants={stagger}
     >
-      {eyebrow && <span className="eyebrow block mb-3">{eyebrow}</span>}
+      {eyebrow && (
+        <motion.span
+          className="eyebrow block mb-3"
+          variants={fadeUp}
+        >
+          {eyebrow}
+        </motion.span>
+      )}
       <h2
         className={cn(
           "text-balance text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12]",
           light ? "text-espresso" : "text-ivory"
         )}
       >
-        {title}
+        <SplitWords text={title} />
       </h2>
       {sub && (
-        <p
+        <motion.p
           className={cn(
             "mt-4 text-[0.95rem] md:text-base leading-relaxed",
             light ? "text-espresso/70" : "text-text-2"
           )}
+          variants={fadeUp}
         >
           {sub}
-        </p>
+        </motion.p>
       )}
-    </Reveal>
+    </motion.div>
   );
 }

@@ -11,6 +11,7 @@ import { Reveal, RevealGroup, RevealItem, GoldDivider, SectionHeading } from "@/
 import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { IGGrid } from "@/components/ig/IGGrid";
 import { IgIcon } from "@/components/ui/icons";
+import { TiltCard } from "@/components/effects/TiltCard";
 
 export function HomeSections({ lang }: { lang: Lang }) {
   const { open } = useLeadModal();
@@ -27,12 +28,13 @@ export function HomeSections({ lang }: { lang: Lang }) {
           />
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             {COLLECTIONS.map((c) => (
-              <RevealItem key={c.id}>
-                <Link
-                  href={`/${lang}/collections#${c.id}`}
-                  onClick={() => track("collection_card_click", { id: c.id })}
-                  className="card-glow card-zoom group block relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]"
-                >
+              <RevealItem key={c.id} className="reveal-card">
+                <TiltCard>
+                  <Link
+                    href={`/${lang}/collections#${c.id}`}
+                    onClick={() => track("collection_card_click", { id: c.id })}
+                    className="card-glow card-zoom card-tilt-inner group block relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]"
+                  >
                   <Image
                     src={c.image}
                     alt={c[lang]}
@@ -55,6 +57,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                     </span>
                   </div>
                 </Link>
+                </TiltCard>
               </RevealItem>
             ))}
           </RevealGroup>
@@ -164,13 +167,13 @@ export function HomeSections({ lang }: { lang: Lang }) {
           />
           <RevealGroup className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-9">
             {REPAIR_SERVICES.map((s) => (
-              <RevealItem key={s.id}>
+              <RevealItem key={s.id} className="reveal-card">
                 <button
                   onClick={() => {
                     track("repair_service_click", { id: s.id });
                     open("repair", { itemType: "", problem: lang === "fr" ? s.fr : s.en });
                   }}
-                  className="card-glow w-full text-left rounded-2xl border border-(--line) bg-(--surface) p-4 md:p-5
+                  className="card-glow card-tilt-inner w-full text-left rounded-2xl border border-(--line) bg-(--surface) p-4 md:p-5
                     transition-all duration-300 [-webkit-tap-highlight-color:transparent]"
                 >
                   <Wrench size={18} className="text-gold mb-3" strokeWidth={1.5} aria-hidden />
@@ -290,7 +293,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                 dFr: "Boulevard des Laurentides — stationnement et visite faciles.",
               },
             ].map((w) => (
-              <RevealItem key={w.en}>
+              <RevealItem key={w.en} className="reveal-card">
                 <div className="surface-card card-glow h-full p-5 md:p-6">
                   <w.icon size={20} className="text-gold mb-3" strokeWidth={1.5} aria-hidden />
                   <h3 className="font-serif text-[1.15rem] text-ivory leading-tight">
