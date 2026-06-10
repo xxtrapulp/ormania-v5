@@ -411,6 +411,30 @@ body.has-action-bar {
   }
 }
 
+/* ── ScrollStory background mesh ── */
+@keyframes mesh-drift-a {
+  0%   { transform: translate(-30%, -20%) scale(1.2); opacity: 0.06; }
+  50%  { transform: translate(20%, 10%) scale(1.4); opacity: 0.03; }
+  100% { transform: translate(-30%, -20%) scale(1.2); opacity: 0.06; }
+}
+@keyframes mesh-drift-b {
+  0%   { transform: translate(30%, 20%) scale(1.3); opacity: 0.04; }
+  50%  { transform: translate(-20%, -10%) scale(1.1); opacity: 0.07; }
+  100% { transform: translate(30%, 20%) scale(1.3); opacity: 0.04; }
+}
+.scrollstory-mesh .mesh-a {
+  animation: mesh-drift-a 20s ease-in-out infinite;
+}
+.scrollstory-mesh .mesh-b {
+  animation: mesh-drift-b 24s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrollstory-mesh .mesh-a,
+  .scrollstory-mesh .mesh-b {
+    animation: none;
+  }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
