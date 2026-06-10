@@ -14,6 +14,7 @@ import { IgIcon } from "@/components/ui/icons";
 import { TiltCard } from "@/components/effects/TiltCard";
 import { ScrollStory } from "@/components/effects/ScrollStory";
 import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
+import { ParallaxText } from "@/components/effects/ParallaxText";
 import { useScrollEffects } from "@/hooks/useScrollEffects";
 
 export function HomeSections({ lang }: { lang: Lang }) {
@@ -136,7 +137,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
           </Reveal>
 
           <div>
-            <div className="max-w-xl mb-10 md:mb-16">
+            <ParallaxText speed={0.4} className="max-w-xl mb-10 md:mb-16">
               <TypeEyebrow text={t(lang, "custom.eyebrow")} className="block mb-3" />
               <BlurWords
                 text={t(lang, "custom.title")}
@@ -148,7 +149,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                   {t(lang, "custom.sub")}
                 </p>
               </FadeLines>
-            </div>
+            </ParallaxText>
             <RevealGroup className="flex flex-col gap-4 mb-8">
               {CUSTOM_STEPS.map((s, i) => (
                 <RevealItem key={i} className="flex gap-4 items-start">
@@ -192,7 +193,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ REPAIRS ═══ */}
       <section className="py-16 md:py-28 bg-ink-2/60">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+          <ParallaxText speed={0.35} className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
             <TypeEyebrow text={t(lang, "repairs.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "repairs.title")}
@@ -204,7 +205,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                 {t(lang, "repairs.sub")}
               </p>
             </FadeLines>
-          </div>
+          </ParallaxText>
           <RevealGroup className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-9">
             {REPAIR_SERVICES.map((s) => (
               <RevealItem key={s.id} className="reveal-card">
@@ -253,7 +254,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <section className="py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <div className="max-w-xl mb-10 md:mb-16">
+            <ParallaxText speed={0.4} className="max-w-xl mb-10 md:mb-16">
               <TypeEyebrow text={t(lang, "engagement.eyebrow")} className="block mb-3" />
               <BlurWords
                 text={t(lang, "engagement.title")}
@@ -265,7 +266,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                   {t(lang, "engagement.sub")}
                 </p>
               </FadeLines>
-            </div>
+            </ParallaxText>
             <Reveal className="flex flex-col xs:flex-row gap-3 xs:gap-2.5">
               <Button
                 onClick={() => {
@@ -365,10 +366,14 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ TOOLS TEASER ═══ */}
       <section className="py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <SectionHeading
-            eyebrow={t(lang, "tools.eyebrow")}
-            title={t(lang, "tools.title")}
-          />
+          <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "tools.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "tools.title")}
+              as="h2"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+          </div>
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
             {TOOLS.map((tool) => (
               <RevealItem key={tool.id}>
@@ -406,11 +411,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ VISIT BAND ═══ */}
       <section className="relative py-16 md:py-24 bg-ink-2 border-y border-(--line)">
         <div className="mx-auto max-w-5xl px-4 md:px-8 text-center">
-          <SectionHeading
-            eyebrow={t(lang, "visit.eyebrow")}
-            title={t(lang, "visit.title")}
-            sub={`${STORE.address}, ${STORE.city}, ${STORE.region} ${STORE.postal}`}
-          />
+          <ParallaxText speed={0.25} className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "visit.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "visit.title")}
+              as="h2"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+            <FadeLines className="mt-4" stagger={0.08}>
+              <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                {`${STORE.address}, ${STORE.city}, ${STORE.region} ${STORE.postal}`}
+              </p>
+            </FadeLines>
+          </ParallaxText>
           <Reveal className="flex flex-col xs:flex-row flex-wrap justify-center gap-3 xs:gap-2.5">
             <Button
               href={STORE.phoneHref}
