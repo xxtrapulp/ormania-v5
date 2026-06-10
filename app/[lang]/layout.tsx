@@ -9,6 +9,8 @@ import { SparkleTrail } from "@/components/effects/SparkleTrail";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { GrainOverlay } from "@/components/effects/GrainOverlay";
 import { SmoothAnchorProvider } from "@/components/effects/SmoothAnchorProvider";
+import { Preloader } from "@/components/effects/Preloader";
+import { CustomCursor } from "@/components/effects/CustomCursor";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -68,6 +70,8 @@ export default async function LangLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Preloader />
+      <CustomCursor />
       <ScrollProgress />
       <GrainOverlay />
       <SparkleTrail />
