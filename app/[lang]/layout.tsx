@@ -12,6 +12,7 @@ import { SmoothAnchorProvider } from "@/components/effects/SmoothAnchorProvider"
 import { Preloader } from "@/components/effects/Preloader";
 import { CustomCursor } from "@/components/effects/CustomCursor";
 import { BackToTop } from "@/components/effects/BackToTop";
+import { MouseSpotlight } from "@/components/effects/MouseSpotlight";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -73,6 +74,7 @@ export default async function LangLayout({
       />
       <Preloader />
       <CustomCursor />
+      <MouseSpotlight />
       <ScrollProgress />
       <GrainOverlay />
       <SparkleTrail />
