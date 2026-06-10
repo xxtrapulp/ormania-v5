@@ -6,6 +6,8 @@ import { StickyBar } from "@/components/shell/StickyBar";
 import { LeadModalProvider } from "@/components/forms/LeadModalProvider";
 import { PageTransition } from "@/components/effects/PageTransition";
 import { SparkleTrail } from "@/components/effects/SparkleTrail";
+import { ScrollProgress } from "@/components/effects/ScrollProgress";
+import { GrainOverlay } from "@/components/effects/GrainOverlay";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -65,6 +67,8 @@ export default async function LangLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <ScrollProgress />
+      <GrainOverlay />
       <SparkleTrail />
       <Header lang={l} />
       <PageTransition>
