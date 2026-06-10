@@ -66,6 +66,29 @@ const dict = {
   "ig.followCta": ["Follow on Instagram", "Suivre sur Instagram"],
   "ig.viewAll": ["See the Full Showroom", "Voir tout le showroom"],
 
+  /* Craft / storytelling */
+  "craft.eyebrow": ["The Craft", "L'Artisanat"],
+  "craft.step1.title": ["Design", "Conception"],
+  "craft.step1.desc": [
+    "Every piece starts with a conversation. We sketch, model, and refine until it feels like yours.",
+    "Chaque pièce commence par une conversation. Nous esquissons, modélisons et peaufinons jusqu'à ce que cela vous ressemble.",
+  ],
+  "craft.step2.title": ["Source", "Sélection"],
+  "craft.step2.desc": [
+    "Natural and lab-grown diamonds, ethically sourced and hand-selected for brilliance.",
+    "Diamants naturels et de laboratoire, d'origine éthique et sélectionnés à la main pour leur éclat.",
+  ],
+  "craft.step3.title": ["Craft", "Fabrication"],
+  "craft.step3.desc": [
+    "Our bench in Laval brings it to life — casting, setting, polishing, all in-house.",
+    "Notre atelier de Laval donne vie à vos projets — fonte, sertissage, polissage, tout est fait sur place.",
+  ],
+  "craft.step4.title": ["Restore", "Restauration"],
+  "craft.step4.desc": [
+    "Repairs, restorations, and watch services — trusted by generations.",
+    "Réparations, restaurations et entretien de montres — la confiance de générations.",
+  ],
+
   "custom.eyebrow": ["Custom Jewelry", "Bijoux sur mesure"],
   "custom.title": ["If you can imagine it, we can make it.", "Si vous pouvez l'imaginer, nous pouvons le créer."],
   "custom.sub": [

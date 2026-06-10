@@ -12,6 +12,8 @@ import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { IGGrid } from "@/components/ig/IGGrid";
 import { IgIcon } from "@/components/ui/icons";
 import { TiltCard } from "@/components/effects/TiltCard";
+import { ScrollStory } from "@/components/effects/ScrollStory";
+import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
 import { useScrollEffects } from "@/hooks/useScrollEffects";
 
 export function HomeSections({ lang }: { lang: Lang }) {
@@ -23,11 +25,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ FEATURED COLLECTIONS ═══ */}
       <section id="featured" className="py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <SectionHeading
-            eyebrow={t(lang, "collections.eyebrow")}
-            title={t(lang, "collections.title")}
-            sub={t(lang, "collections.sub")}
-          />
+          <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "collections.title")}
+              as="h2"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+            <FadeLines className="mt-4" stagger={0.08}>
+              <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                {t(lang, "collections.sub")}
+              </p>
+            </FadeLines>
+          </div>
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             {COLLECTIONS.map((c) => (
               <RevealItem key={c.id} className="reveal-card">
@@ -92,6 +102,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
 
       <GoldDivider className="mx-auto max-w-4xl" />
 
+      {/* ═══ THE CRAFT — pinned scroll storytelling ═══ */}
+      <ScrollStory
+        lang={lang}
+        steps={[
+          { title: t(lang, "craft.step1.title"), desc: t(lang, "craft.step1.desc") },
+          { title: t(lang, "craft.step2.title"), desc: t(lang, "craft.step2.desc") },
+          { title: t(lang, "craft.step3.title"), desc: t(lang, "craft.step3.desc") },
+          { title: t(lang, "craft.step4.title"), desc: t(lang, "craft.step4.desc") },
+        ]}
+      />
+
+      <GoldDivider className="mx-auto max-w-4xl" />
+
       {/* ═══ CUSTOM JEWELRY ═══ */}
       <section className="py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -113,12 +136,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
           </Reveal>
 
           <div>
-            <SectionHeading
-              align="left"
-              eyebrow={t(lang, "custom.eyebrow")}
-              title={t(lang, "custom.title")}
-              sub={t(lang, "custom.sub")}
-            />
+            <div className="max-w-xl mb-10 md:mb-16">
+              <TypeEyebrow text={t(lang, "custom.eyebrow")} className="block mb-3" />
+              <BlurWords
+                text={t(lang, "custom.title")}
+                as="h2"
+                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              />
+              <FadeLines className="mt-4" stagger={0.08}>
+                <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                  {t(lang, "custom.sub")}
+                </p>
+              </FadeLines>
+            </div>
             <RevealGroup className="flex flex-col gap-4 mb-8">
               {CUSTOM_STEPS.map((s, i) => (
                 <RevealItem key={i} className="flex gap-4 items-start">
@@ -162,11 +192,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ REPAIRS ═══ */}
       <section className="py-16 md:py-28 bg-ink-2/60">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <SectionHeading
-            eyebrow={t(lang, "repairs.eyebrow")}
-            title={t(lang, "repairs.title")}
-            sub={t(lang, "repairs.sub")}
-          />
+          <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "repairs.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "repairs.title")}
+              as="h2"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+            <FadeLines className="mt-4" stagger={0.08}>
+              <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                {t(lang, "repairs.sub")}
+              </p>
+            </FadeLines>
+          </div>
           <RevealGroup className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-9">
             {REPAIR_SERVICES.map((s) => (
               <RevealItem key={s.id} className="reveal-card">
@@ -215,12 +253,19 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <section className="py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <SectionHeading
-              align="left"
-              eyebrow={t(lang, "engagement.eyebrow")}
-              title={t(lang, "engagement.title")}
-              sub={t(lang, "engagement.sub")}
-            />
+            <div className="max-w-xl mb-10 md:mb-16">
+              <TypeEyebrow text={t(lang, "engagement.eyebrow")} className="block mb-3" />
+              <BlurWords
+                text={t(lang, "engagement.title")}
+                as="h2"
+                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              />
+              <FadeLines className="mt-4" stagger={0.08}>
+                <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                  {t(lang, "engagement.sub")}
+                </p>
+              </FadeLines>
+            </div>
             <Reveal className="flex flex-col xs:flex-row gap-3 xs:gap-2.5">
               <Button
                 onClick={() => {
@@ -260,10 +305,14 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ WHY ORMANIA ═══ */}
       <section className="py-16 md:py-28 bg-ink-2/60">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <SectionHeading
-            eyebrow={t(lang, "why.eyebrow")}
-            title={t(lang, "why.title")}
-          />
+          <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "why.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "why.title")}
+              as="h2"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+          </div>
           <RevealGroup className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
             {[
               {
