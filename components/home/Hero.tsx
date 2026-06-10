@@ -12,6 +12,7 @@ import { IgIcon } from "@/components/ui/icons";
 import { VelvetGoldShader } from "@/components/effects/VelvetGoldShader";
 import { GoldDust } from "@/components/effects/GoldDust";
 import { Ring3D } from "@/components/effects/Ring3D";
+import { ScrambleText } from "@/components/effects/ScrambleText";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
 /** Concentric rotating gold rings — abstract nod to ring-making, desktop ornament. */
@@ -132,8 +133,10 @@ export function Hero({ lang }: { lang: Lang }) {
             variants={heroItem}
             className="text-balance font-serif text-[clamp(2.5rem,9.5vw,5.25rem)] leading-[1.06] text-ivory"
           >
-            {t(lang, "hero.headline.1")}{" "}
-            <em className="text-gold-3 italic">{t(lang, "hero.headline.2")}</em>
+            <ScrambleText text={t(lang, "hero.headline.1")} delay={600} duration={900} />{" "}
+            <em className="text-gold-3 italic">
+              <ScrambleText text={t(lang, "hero.headline.2")} delay={1100} duration={700} />
+            </em>
           </motion.h1>
 
           <motion.p
