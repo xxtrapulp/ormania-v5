@@ -9,10 +9,8 @@ import { track } from "@/lib/analytics";
 import { heroStagger, heroItem, luxeEase } from "@/lib/motion";
 import { ResponsiveLabel } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
-import { VelvetGoldShader } from "@/components/effects/VelvetGoldShader";
 import { GoldDust } from "@/components/effects/GoldDust";
 import { Ring3D } from "@/components/effects/Ring3D";
-import { ScrambleText } from "@/components/effects/ScrambleText";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
 /** Concentric rotating gold rings — abstract nod to ring-making, desktop ornament. */
@@ -75,7 +73,6 @@ export function Hero({ lang }: { lang: Lang }) {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile || reduce ? "0%" : "18%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile || reduce ? "0%" : "40%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
@@ -91,10 +88,6 @@ export function Hero({ lang }: { lang: Lang }) {
       aria-label="Hero"
       className="relative min-h-[100svh] flex items-end md:items-center overflow-hidden"
     >
-      {/* WebGL shader background — living velvet & gold */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }} aria-hidden>
-        <VelvetGoldShader />
-      </motion.div>
       {/* Gold dust particle field */}
       <GoldDust />
       {/* Bottom fade into the page */}
@@ -117,7 +110,7 @@ export function Hero({ lang }: { lang: Lang }) {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <motion.div
-          className="max-w-2xl"
+          className="max-w-2xl mx-auto text-center"
           variants={heroStagger}
           initial={reduce ? false : "hidden"}
           animate="visible"
@@ -142,21 +135,19 @@ export function Hero({ lang }: { lang: Lang }) {
             variants={heroItem}
             className="text-balance font-serif text-[clamp(2.5rem,9.5vw,5.25rem)] leading-[1.12] text-ivory"
           >
-            <ScrambleText text={t(lang, "hero.headline.1")} delay={600} duration={900} />{" "}
-            <em className="text-gold-3 italic">
-              <ScrambleText text={t(lang, "hero.headline.2")} delay={1100} duration={700} />
-            </em>
+            {t(lang, "hero.headline.1")}{" "}
+            <em className="text-gold-3 italic">{t(lang, "hero.headline.2")}</em>
           </motion.h1>
 
           <motion.p
             variants={heroItem}
-            className="mt-5 text-[clamp(0.95rem,2.9vw,1.15rem)] text-text-2 leading-relaxed max-w-lg"
+            className="mt-5 text-[clamp(0.95rem,2.9vw,1.15rem)] text-text-2 leading-relaxed max-w-lg mx-auto"
           >
             {t(lang, "hero.sub")}
           </motion.p>
 
           {/* CTAs — stacked under 390px, side-by-side from xs */}
-          <motion.div variants={heroItem} className="mt-8 flex flex-col xs:flex-row gap-3 xs:gap-2.5 max-w-md xs:max-w-none">
+          <motion.div variants={heroItem} className="mt-8 flex flex-col xs:flex-row justify-center gap-3 xs:gap-2.5 max-w-md xs:max-w-none mx-auto">
             <Link
               href={`/${lang}/collections`}
               onClick={() => track("hero_explore_click")}
@@ -184,7 +175,7 @@ export function Hero({ lang }: { lang: Lang }) {
             </Link>
           </motion.div>
 
-          <motion.div variants={heroItem} className="mt-7">
+          <motion.div variants={heroItem} className="mt-7 flex justify-center">
             <Link
               href={`/${lang}/instagram`}
               onClick={() => track("hero_ig_click")}

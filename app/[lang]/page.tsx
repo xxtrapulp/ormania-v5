@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { isLang, type Lang } from "@/lib/i18n";
+import { GlobalBackground } from "@/components/effects/GlobalBackground";
 import { Hero } from "@/components/home/Hero";
 import { HomeSections } from "@/components/home/HomeSections";
 
@@ -53,6 +54,7 @@ export default async function HomePage({
 
   return (
     <>
+      <GlobalBackground />
       <Hero lang={l} />
       <HomeSections lang={l} />
     </>
