@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench } from "lucide-react";
+import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench, Gift, Circle, Link as LinkIcon, Search } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
 import { COLLECTIONS, CUSTOM_STEPS, REPAIR_SERVICES, STORE, TOOLS } from "@/lib/data";
 import { track } from "@/lib/analytics";
@@ -367,7 +367,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ TOOLS TEASER ═══ */}
       <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-6 md:mb-10 mx-auto text-center">
+          <div className="max-w-2xl mb-4 md:mb-8 mx-auto text-center">
             <TypeEyebrow text={t(lang, "tools.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "tools.title")}
@@ -376,35 +376,48 @@ export function HomeSections({ lang }: { lang: Lang }) {
             />
           </div>
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
-            {TOOLS.map((tool) => (
-              <RevealItem key={tool.id}>
-                <Link
-                  href={`/${lang}/explore#${tool.id}`}
-                  onClick={() => track("tool_click", { id: tool.id })}
-                  className="card-glow surface-card flex flex-col h-full p-4 md:p-5 group"
-                >
-                  <span
-                    className={
-                      "self-start text-[0.6rem] tracking-[0.14em] uppercase px-2 py-0.5 rounded-full mb-3 " +
-                      (tool.status === "live"
-                        ? "bg-gold/15 text-gold border border-gold/40"
-                        : "bg-white/5 text-text-3 border border-white/10")
-                    }
+            {TOOLS.map((tool) => {
+              const Icon =
+                tool.id === "gift" ? Gift :
+                tool.id === "size" ? Circle :
+                tool.id === "chain" ? LinkIcon :
+                tool.id === "status" ? Search :
+                Sparkles;
+              return (
+                <RevealItem key={tool.id}>
+                  <Link
+                    href={`/${lang}/explore#${tool.id}`}
+                    onClick={() => track("tool_click", { id: tool.id })}
+                    className="card-glow surface-card flex flex-col h-full p-4 md:p-5 group relative overflow-hidden"
                   >
-                    {tool.status === "live" ? t(lang, "tools.live") : t(lang, "tools.preview")}
-                  </span>
-                  <h3 className="font-serif text-[1.05rem] text-ivory leading-tight">
-                    {tool[lang]}
-                  </h3>
-                  <p className="mt-1 text-[0.78rem] text-text-2 leading-snug">
-                    {lang === "fr" ? tool.descFr : tool.descEn}
-                  </p>
-                  <span aria-hidden className="mt-auto pt-3 text-gold text-[0.85rem] transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-              </RevealItem>
-            ))}
+                    {/* Top accent line */}
+                    <div className={`absolute top-0 left-0 right-0 h-px ${tool.status === "live" ? "bg-gold/40" : "bg-white/8"}`} />
+                    <div className="flex items-start justify-between mb-3">
+                      <Icon size={20} className="text-gold/80 shrink-0" strokeWidth={1.5} aria-hidden />
+                      <span
+                        className={
+                          "text-[0.55rem] tracking-[0.14em] uppercase px-1.5 py-0.5 rounded-full " +
+                          (tool.status === "live"
+                            ? "bg-gold/15 text-gold border border-gold/40"
+                            : "bg-white/5 text-text-3 border border-white/10")
+                        }
+                      >
+                        {tool.status === "live" ? t(lang, "tools.live") : t(lang, "tools.preview")}
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-[1.05rem] text-ivory leading-tight">
+                      {tool[lang]}
+                    </h3>
+                    <p className="mt-1 text-[0.78rem] text-text-2 leading-snug">
+                      {lang === "fr" ? tool.descFr : tool.descEn}
+                    </p>
+                    <span aria-hidden className="mt-auto pt-3 text-gold text-[0.85rem] transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </RevealItem>
+              );
+            })}
           </RevealGroup>
         </div>
       </section>

@@ -19,8 +19,8 @@ export function Footer({ lang }: { lang: Lang }) {
       transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
       className="border-t border-(--line) bg-ink-2 mt-auto"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-8 py-10 md:py-14">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8">
+      <div className="mx-auto max-w-7xl px-4 md:px-8 py-6 md:py-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-6">
           <nav className={col} aria-label="Explore">
             <span className="eyebrow mb-1">{t(lang, "footer.explore")}</span>
             <Link className={link} href={`/${lang}/collections`}>{t(lang, "nav.collections")}</Link>
@@ -49,20 +49,20 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
 
         {/* Centered logo */}
-        <div className="mt-8 flex flex-col items-center">
+        <div className="mt-6 flex flex-col items-center">
           <Image
             src="/brand/ormania.svg"
             alt="Ormania"
             width={200}
             height={48}
-            className="h-10 md:h-12 w-auto opacity-60"
+            className="h-8 md:h-10 w-auto opacity-60"
           />
-          <p className="mt-3 text-[0.875rem] text-text-3 italic text-center">
+          <p className="mt-2 text-[0.875rem] text-text-3 italic text-center">
             {t(lang, "footer.tagline")}
           </p>
         </div>
 
-        <div className="mt-8 pt-4 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">
+        <div className="mt-6 pt-3 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">
           <span>
             © {year} {STORE.name}. {t(lang, "footer.rights")}
           </span>
