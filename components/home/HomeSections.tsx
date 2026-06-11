@@ -80,16 +80,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ SEEN ON INSTAGRAM — centerpiece ═══ */}
       <section className="pt-0 pb-6 md:pb-12">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <SectionHeading
-            eyebrow={t(lang, "ig.eyebrow")}
-            title={t(lang, "ig.title")}
-            sub={t(lang, "ig.sub")}
-          />
-          <p className="text-center font-serif italic text-[0.8rem] md:text-[0.9rem] text-ivory/60 -mt-3 md:-mt-4 mb-4 md:mb-6">
-            {lang === "fr"
-              ? "Chaque pièce raconte une histoire — la vôtre commence ici."
-              : "Every piece tells a story — yours begins here."}
-          </p>
+          <p className="eyebrow text-center mb-2 md:mb-3">{t(lang, "ig.eyebrow")}</p>
           <IGGrid lang={lang} limit={8} showFilters={false} showCtas />
           <Reveal className="mt-8 text-center">
             <Link
