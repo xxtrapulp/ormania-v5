@@ -77,10 +77,32 @@ export function HomeSections({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <GoldDivider className="mx-auto max-w-4xl" />
+      {/* ═══ QUOTE BAND — bridges collections to instagram ═══ */}
+      <section className="border-y border-(--line)">
+        <div className="mx-auto max-w-3xl px-4 md:px-8 py-5 md:py-8 text-center">
+          <Reveal>
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-1.5 h-1.5 rotate-45 bg-gold/60" />
+              <p className="font-serif italic text-[1rem] md:text-[1.2rem] text-ivory/80 leading-relaxed">
+                {lang === "fr"
+                  ? "Chaque pièce raconte une histoire — la vôtre commence ici."
+                  : "Every piece tells a story — yours begins here."}
+              </p>
+              <Link
+                href={`/${lang}/custom`}
+                onClick={() => track("quote_band_craft_click")}
+                className="inline-flex items-center gap-1.5 text-[0.8rem] tracking-[0.08em] uppercase text-gold hover:text-gold-3 transition-colors duration-300"
+              >
+                {lang === "fr" ? "Explorez notre savoir-faire" : "Explore Our Craft"}
+                <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ═══ SEEN ON INSTAGRAM — centerpiece ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="pt-4 md:pt-8 pb-8 md:pb-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <SectionHeading
             eyebrow={t(lang, "ig.eyebrow")}
