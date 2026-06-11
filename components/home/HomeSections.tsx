@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench, Gift, Circle, Link as LinkIcon, Search } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
 import { COLLECTIONS, CUSTOM_STEPS, REPAIR_SERVICES, STORE, TOOLS } from "@/lib/data";
@@ -146,7 +147,14 @@ export function HomeSections({ lang }: { lang: Lang }) {
             </ParallaxText>
             <div className="flex flex-col gap-4 mb-8">
               {CUSTOM_STEPS.map((s, i) => (
-                <div key={i} className="flex gap-4 items-start">
+                <motion.div
+                  key={i}
+                  className="flex gap-4 items-start"
+                  initial={{ opacity: 1, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1], delay: i * 0.08 }}
+                >
                   <span className="shrink-0 w-9 h-9 rounded-full border border-gold/50 text-gold font-serif text-[1rem] flex items-center justify-center">
                     {i + 1}
                   </span>
@@ -156,7 +164,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                       {lang === "fr" ? s.descFr : s.descEn}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
             <Reveal className="flex flex-col xs:flex-row gap-3 xs:gap-2.5">
