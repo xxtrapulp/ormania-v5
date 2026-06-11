@@ -125,7 +125,7 @@ export function SectionHeading({
   return (
     <motion.div
       className={cn(
-        "max-w-2xl mb-6 md:mb-10",
+        "max-w-2xl mb-4 md:mb-6",
         align === "center" ? "mx-auto text-center" : ""
       )}
       initial="hidden"
