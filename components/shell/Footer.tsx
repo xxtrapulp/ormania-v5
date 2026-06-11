@@ -20,20 +20,7 @@ export function Footer({ lang }: { lang: Lang }) {
       className="border-t border-(--line) bg-ink-2 mt-auto"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-8 py-14 md:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
-          <div className="col-span-2 md:col-span-1">
-            <Image
-              src="/brand/ormania.svg"
-              alt="Ormania"
-              width={156}
-              height={36}
-              className="h-8 w-auto mb-4"
-            />
-            <p className="text-[0.875rem] text-text-3 italic font-serif text-[1.05rem]">
-              {t(lang, "footer.tagline")}
-            </p>
-          </div>
-
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8">
           <nav className={col} aria-label="Explore">
             <span className="eyebrow mb-1">{t(lang, "footer.explore")}</span>
             <Link className={link} href={`/${lang}/collections`}>{t(lang, "nav.collections")}</Link>
@@ -59,6 +46,20 @@ export function Footer({ lang }: { lang: Lang }) {
               {STORE.instagramHandle}
             </a>
           </div>
+        </div>
+
+        {/* Centered logo */}
+        <div className="mt-14 flex flex-col items-center">
+          <Image
+            src="/brand/ormania.svg"
+            alt="Ormania"
+            width={200}
+            height={48}
+            className="h-10 md:h-12 w-auto opacity-60"
+          />
+          <p className="mt-3 text-[0.875rem] text-text-3 italic text-center">
+            {t(lang, "footer.tagline")}
+          </p>
         </div>
 
         <div className="mt-12 pt-6 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">

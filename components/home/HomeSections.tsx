@@ -24,7 +24,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
   return (
     <div ref={scrollRef}>
       {/* ═══ FEATURED COLLECTIONS ═══ */}
-      <section id="featured" className="py-16 md:py-28">
+      <section id="featured" className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
             <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
@@ -80,7 +80,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ SEEN ON INSTAGRAM — centerpiece ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <SectionHeading
             eyebrow={t(lang, "ig.eyebrow")}
@@ -117,7 +117,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ CUSTOM JEWELRY ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <Reveal className="card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5] max-h-[520px] w-full">
             <Image
@@ -191,7 +191,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ REPAIRS ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <ParallaxText speed={0.35} className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
             <TypeEyebrow text={t(lang, "repairs.eyebrow")} className="block mb-3" />
@@ -251,7 +251,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ ENGAGEMENT ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
             <ParallaxText speed={0.4} className="max-w-xl mb-10 md:mb-16 mx-auto text-center">
@@ -304,7 +304,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ WHY ORMANIA ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
             <TypeEyebrow text={t(lang, "why.eyebrow")} className="block mb-3" />
@@ -364,7 +364,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ TOOLS TEASER ═══ */}
-      <section className="py-16 md:py-28">
+      <section className="py-10 md:py-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
             <TypeEyebrow text={t(lang, "tools.eyebrow")} className="block mb-3" />

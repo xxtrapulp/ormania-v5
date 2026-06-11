@@ -6,7 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Split text into words and animate each with blur-in on scroll. */
+/** Split text into words and animate each with blur-in on scroll.
+ *  On mobile: skips expensive filter:blur, uses lighter opacity+y. */
 export function BlurWords({
   text,
   className = "",
@@ -28,18 +29,20 @@ export function BlurWords({
     const words = el.querySelectorAll(".blur-word");
     if (!words.length) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       gsap.from(words, {
         opacity: 0,
-        y: 20,
-        filter: "blur(8px)",
-        duration: 0.7,
-        stagger,
+        y: isMobile ? 12 : 20,
+        ...(isMobile ? {} : { filter: "blur(8px)" }),
+        duration: isMobile ? 0.5 : 0.7,
+        stagger: isMobile ? stagger * 0.6 : stagger,
         delay,
-        ease: "power3.out",
+        ease: isMobile ? "power2.out" : "power3.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 75%",
+          start: isMobile ? "top 90%" : "top 75%",
           toggleActions: "play none none none",
         },
       });
@@ -50,12 +53,13 @@ export function BlurWords({
 
   const words = text.split(" ");
   const Comp = Tag as any;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
     <Comp ref={ref} className={className}>
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
-          <span className="blur-word inline-block will-change-[filter,transform,opacity]">
+        <span key={i} className={`inline-block mr-[0.25em] ${isMobile ? "" : "overflow-hidden"}`}>
+          <span className={`blur-word inline-block ${isMobile ? "" : "will-change-[filter,transform,opacity]"}`}>
             {word}
           </span>
         </span>

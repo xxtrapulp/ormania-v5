@@ -16,6 +16,11 @@ export function getLenis() {
 export function initLenis() {
   if (lenisInstance) return lenisInstance;
 
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(pointer: coarse)").matches;
+  if (isMobile) return null;
+
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;

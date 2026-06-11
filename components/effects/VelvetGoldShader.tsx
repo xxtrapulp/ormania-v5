@@ -179,6 +179,10 @@ export function VelvetGoldShader() {
     return () => observer.disconnect();
   }, []);
 
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(pointer: coarse)").matches;
+
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -198,7 +202,7 @@ export function VelvetGoldShader() {
           camera={{ position: [0, 0, 1] }}
           gl={{ antialias: false, alpha: false }}
           style={{ position: "absolute", inset: 0 }}
-          dpr={[1, 1.5]}
+          dpr={isMobile ? [1, 1] : [1, 1.5]}
         >
           <ShaderPlane />
         </Canvas>
