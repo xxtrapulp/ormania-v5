@@ -107,30 +107,43 @@ export function Hero({ lang }: { lang: Lang }) {
 
       {/* Content */}
       <motion.div
-        className="relative z-10 w-full mx-auto max-w-7xl px-5 md:px-8 pb-24 pt-32 md:py-40"
+        className="relative z-10 w-full mx-auto max-w-7xl px-5 md:px-8 pb-24 pt-32 md:py-28"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <motion.div
-          className="max-w-2xl mx-auto text-center"
+          className="max-w-2xl md:max-w-3xl mx-auto text-center"
           variants={heroStagger}
           initial={reduce ? false : "hidden"}
           animate="visible"
         >
           {/* Logo fades in first — the hero centerpiece */}
           <motion.div variants={heroItem} className="mb-8">
-            <Image
-              src="/brand/ormania.svg"
-              alt="Bijouterie Ormania"
-              width={652}
-              height={150}
-              priority
-              className="h-16 xs:h-20 md:h-28 lg:h-32 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
-            />
+            <motion.div
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              <Image
+                src="/brand/ormania.svg"
+                alt="Bijouterie Ormania"
+                width={652}
+                height={150}
+                priority
+                className="h-16 xs:h-20 md:h-28 lg:h-32 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
+              />
+            </motion.div>
           </motion.div>
 
           <motion.span variants={heroItem} className="eyebrow block mb-4">
             {t(lang, "hero.eyebrow")}
           </motion.span>
+
+          <motion.div
+            aria-hidden
+            className="w-16 h-px mx-auto mb-4 bg-gradient-to-r from-transparent via-gold to-transparent"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ delay: 0.9, duration: 0.8, ease: luxeEase }}
+          />
 
           <motion.h1
             variants={heroItem}
@@ -139,7 +152,7 @@ export function Hero({ lang }: { lang: Lang }) {
             <HeroTextReveal
               parts={[
                 { text: t(lang, "hero.headline.1") },
-                { text: t(lang, "hero.headline.2"), className: "text-gold-3 italic" },
+                { text: t(lang, "hero.headline.2"), className: "text-gold-3 italic gold-glow" },
               ]}
               baseDelay={0.6}
             />

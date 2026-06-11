@@ -19,7 +19,7 @@ export function Footer({ lang }: { lang: Lang }) {
       transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
       className="border-t border-(--line) bg-ink-2 mt-auto"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-8 py-14 md:py-20">
+      <div className="mx-auto max-w-7xl px-4 md:px-8 py-10 md:py-14">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8">
           <nav className={col} aria-label="Explore">
             <span className="eyebrow mb-1">{t(lang, "footer.explore")}</span>
@@ -49,7 +49,7 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
 
         {/* Centered logo */}
-        <div className="mt-14 flex flex-col items-center">
+        <div className="mt-8 flex flex-col items-center">
           <Image
             src="/brand/ormania.svg"
             alt="Ormania"
@@ -62,7 +62,7 @@ export function Footer({ lang }: { lang: Lang }) {
           </p>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">
+        <div className="mt-8 pt-4 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">
           <span>
             © {year} {STORE.name}. {t(lang, "footer.rights")}
           </span>

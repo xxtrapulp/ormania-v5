@@ -109,6 +109,9 @@ h1, h2, h3, h4 {
   color: var(--color-gold);
   font-weight: 500;
 }
+.gold-glow {
+  text-shadow: 0 0 40px rgba(201, 168, 106, 0.25), 0 0 80px rgba(201, 168, 106, 0.12);
+}
 .gold-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-gold), transparent);

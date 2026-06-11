@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useLayoutEffect, useState, useCallback } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
@@ -14,13 +13,6 @@ interface Step {
   title: string;
   desc: string;
 }
-
-const BG_IMAGES = [
-  "/instagram/ig-DRP2awpjmhB.jpg",
-  "/instagram/ig-DSAifEiDouU.jpg",
-  "/instagram/ig-DCsRV7yuwrx.jpg",
-  "/instagram/ig-DEN0REXJO1E.jpg",
-];
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -36,16 +28,11 @@ function useIsMobile() {
 export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement[]>([]);
-  const imagesRef = useRef<HTMLDivElement[]>([]);
   const dotsRef = useRef<HTMLDivElement[]>([]);
   const isMobile = useIsMobile();
 
   const setPanelRef = useCallback((el: HTMLDivElement | null, i: number) => {
     if (el) panelsRef.current[i] = el;
-  }, []);
-
-  const setImageRef = useCallback((el: HTMLDivElement | null, i: number) => {
-    if (el) imagesRef.current[i] = el;
   }, []);
 
   const setDotRef = useCallback((el: HTMLDivElement | null, i: number) => {
@@ -57,16 +44,19 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
 
     const ctx = gsap.context(() => {
       const panels = panelsRef.current.filter(Boolean);
-      const images = imagesRef.current.filter(Boolean);
       const dots = dotsRef.current.filter(Boolean);
       if (!panels.length) return;
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      // Set initial states
-      gsap.set(panels.slice(1), { opacity: 0, y: 40 });
-      gsap.set(images.slice(1), { opacity: 0, scale: 1.12 });
-      gsap.set(images[0], { opacity: 1, scale: 1.05 });
+      // Set initial states for panels and their children
+      gsap.set(panels.slice(1), { opacity: 0 });
+      panels.forEach((panel) => {
+        const counter = panel.querySelector(".step-counter");
+        const title = panel.querySelector("h2");
+        const desc = panel.querySelector("p");
+        if (counter) gsap.set(counter, { opacity: 0, scale: 0.9 });
+        if (title) gsap.set(title, { opacity: 0, y: 15 });
+        if (desc) gsap.set(desc, { opacity: 0, y: 10 });
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -74,7 +64,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
           start: "top top",
           end: `+=${window.innerHeight * panels.length}`,
           pin: true,
-          scrub: 0.8,
+          scrub: 0.5,
           anticipatePin: 1,
           snap: {
             snapTo: "labels",
@@ -87,32 +77,39 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
 
       tl.addLabel("step0", 0);
 
+      // First panel entrance
+      const firstCounter = panels[0].querySelector(".step-counter");
+      const firstTitle = panels[0].querySelector("h2");
+      const firstDesc = panels[0].querySelector("p");
+      if (firstCounter) tl.to(firstCounter, { opacity: 1, scale: 1, duration: 0.3 }, 0);
+      if (firstTitle) tl.to(firstTitle, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.1);
+      if (firstDesc) tl.to(firstDesc, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.2);
+
       panels.forEach((panel, i) => {
         if (i === 0) return;
         const at = i - 0.5;
 
-        tl.to(panels[i - 1], { opacity: 0, y: -40, duration: 0.3 }, at);
-        tl.fromTo(panel, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.3 }, at + 0.18);
-        tl.to(images[i - 1], { opacity: 0, duration: 0.35 }, at);
-        tl.fromTo(images[i], { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1.05, duration: 0.35 }, at + 0.12);
+        // Fade out previous panel
+        tl.to(panels[i - 1], { opacity: 0, duration: 0.3 }, at);
+        // Fade in new panel
+        tl.fromTo(panel, { opacity: 0 }, { opacity: 1, duration: 0.3 }, at + 0.18);
 
-        if (dots[i - 1]) {
-          tl.to(dots[i - 1], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, at);
-        }
-        if (dots[i]) {
-          tl.to(dots[i], { backgroundColor: "rgba(201,168,106,0.85)", scale: 1.4, duration: 0.2 }, at + 0.18);
-        }
+        // Animate in new panel's children
+        const counter = panel.querySelector(".step-counter");
+        const title = panel.querySelector("h2");
+        const desc = panel.querySelector("p");
+        if (counter) tl.fromTo(counter, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3 }, at + 0.2);
+        if (title) tl.fromTo(title, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, at + 0.28);
+        if (desc) tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, at + 0.35);
+
+        // Dots
+        if (dots[i - 1]) tl.to(dots[i - 1], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, at);
+        if (dots[i]) tl.to(dots[i], { backgroundColor: "rgba(201,168,106,0.85)", scale: 1.4, duration: 0.2 }, at + 0.18);
 
         tl.addLabel(`step${i}`, i);
       });
 
       tl.to({}, { duration: 0.6 });
-
-      if (!prefersReduced) {
-        images.forEach((img) => {
-          gsap.to(img, { scale: 1.0, duration: 8, ease: "none", repeat: -1, yoyo: true, paused: true });
-        });
-      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -134,28 +131,17 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
           <RevealGroup className="flex flex-col gap-8">
             {steps.map((step, i) => (
               <RevealItem key={i}>
-                <div className="relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/3]">
-                  <Image
-                    src={BG_IMAGES[i % BG_IMAGES.length]}
-                    alt=""
-                    fill
-                    sizes="100vw"
-                    loading="lazy"
-                    className="object-cover"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent" />
-                  <div className="absolute bottom-0 inset-x-0 p-5 text-center">
-                    <span className="eyebrow block mb-2 text-gold/70 text-[0.65rem]">
-                      0{i + 1} / 0{steps.length}
-                    </span>
-                    <h2 className="font-serif text-[1.5rem] leading-[1.15] text-ivory mb-2">
-                      {step.title}
-                    </h2>
-                    <p className="text-[0.9rem] text-text-2 leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
+                <div className="rounded-2xl border border-(--line) surface-card p-6 text-center">
+                  <span className="eyebrow block mb-3 text-gold/70 text-[0.65rem]">
+                    0{i + 1} / 0{steps.length}
+                  </span>
+                  <h2 className="font-serif text-[1.35rem] leading-[1.15] text-ivory mb-3">
+                    {step.title}
+                  </h2>
+                  <p className="text-[0.9rem] text-text-2 leading-relaxed">
+                    {step.desc}
+                  </p>
+                  <div className="mt-4 w-12 h-px bg-gold/30 mx-auto" />
                 </div>
               </RevealItem>
             ))}
@@ -173,40 +159,6 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
       {/* ── WebGL flowing filament background ── */}
       <div aria-hidden className="absolute inset-0 z-[1]">
         <ScrollStoryShader />
-      </div>
-
-      {/* ── Crossfading background images ── */}
-      <div aria-hidden className="absolute inset-0 z-[2]">
-        {BG_IMAGES.map((src, i) => (
-          <div
-            key={src}
-            ref={(el) => setImageRef(el, i)}
-            className="absolute inset-0 will-change-[opacity,transform]"
-            style={{ opacity: i === 0 ? 1 : 0 }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              sizes="100vw"
-              priority={i === 0}
-              loading={i === 0 ? "eager" : "lazy"}
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        ))}
-        {/* Dark overlay for text contrast — slightly lighter to let shader show through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/65 to-ink/90" />
-      </div>
-
-      {/* ── Decorative rotating ring SVG ── */}
-      <div aria-hidden className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none z-[3]">
-        <svg viewBox="0 0 600 600" className="w-[70vmin] h-[70vmin] md:w-[80vmin] md:h-[80vmin] animate-[spin_60s_linear_infinite]">
-          <circle cx="300" cy="300" r="200" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-gold" />
-          <circle cx="300" cy="300" r="160" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-gold" />
-          <circle cx="300" cy="300" r="240" fill="none" stroke="currentColor" strokeWidth="0.3" className="text-gold" />
-        </svg>
       </div>
 
       {/* ── Progress dots (left on desktop, bottom center on mobile) ── */}
@@ -242,7 +194,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
             className="col-start-1 row-start-1 w-full flex flex-col items-center justify-center"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
-            <span className="eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
+            <span className="step-counter eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
               0{i + 1} / 0{steps.length}
             </span>
             <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] md:text-[clamp(2.5rem,5vw,4.25rem)] leading-[1.15] text-ivory mb-3 md:mb-6">

@@ -34,13 +34,13 @@ export function HeroTextReveal({
   const charStagger = 0.015;
 
   return (
-    <span className={`inline ${className}`}>
+    <span className={`inline-block ${className}`}>
       {allWords.map(({ text, partIdx, wordIdx }) => {
         const wordDelay = baseDelay + wordIdx * wordStagger;
         return (
           <motion.span
             key={wordIdx}
-            className={`inline-block mr-[0.25em] ${parts[partIdx].className ?? ""}`}
+            className={`inline-block will-change-[transform,opacity] mr-[0.25em] ${parts[partIdx].className ?? ""}`}
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
@@ -52,7 +52,7 @@ export function HeroTextReveal({
             {text.split("").map((char, charIdx) => (
               <motion.span
                 key={charIdx}
-                className="inline-block"
+                className="inline-block will-change-[transform,opacity]"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
