@@ -61,7 +61,12 @@ function Login({ onAuth, lang }: { onAuth: () => void; lang: Lang }) {
   const [pass, setPass] = useState("");
   const [err, setErr] = useState(false);
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4 pt-24">
+    <motion.div
+      className="min-h-[70vh] flex items-center justify-center px-4 pt-24"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: luxeEase }}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -117,7 +122,7 @@ function Login({ onAuth, lang }: { onAuth: () => void; lang: Lang }) {
           {lang === "fr" ? "Entrer" : "Sign in"}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 }
 
