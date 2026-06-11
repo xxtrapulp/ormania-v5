@@ -144,9 +144,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
                 </p>
               </FadeLines>
             </ParallaxText>
-            <RevealGroup className="flex flex-col gap-4 mb-8">
+            <div className="flex flex-col gap-4 mb-8">
               {CUSTOM_STEPS.map((s, i) => (
-                <RevealItem key={i} className="flex gap-4 items-start">
+                <div key={i} className="flex gap-4 items-start">
                   <span className="shrink-0 w-9 h-9 rounded-full border border-gold/50 text-gold font-serif text-[1rem] flex items-center justify-center">
                     {i + 1}
                   </span>
@@ -156,9 +156,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
                       {lang === "fr" ? s.descFr : s.descEn}
                     </p>
                   </div>
-                </RevealItem>
+                </div>
               ))}
-            </RevealGroup>
+            </div>
             <Reveal className="flex flex-col xs:flex-row gap-3 xs:gap-2.5">
               <Button
                 onClick={() => {
