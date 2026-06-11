@@ -5,8 +5,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
 import { ScrollStoryShader } from "./ScrollStoryShader";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface Step {
@@ -40,8 +38,6 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   }, []);
 
   useLayoutEffect(() => {
-    if (isMobile) return; // Mobile uses static Reveal layout below
-
     const ctx = gsap.context(() => {
       const panels = panelsRef.current.filter(Boolean);
       const dots = dotsRef.current.filter(Boolean);
@@ -58,13 +54,16 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         if (desc) gsap.set(desc, { opacity: 0, y: 10 });
       });
 
+      const stepHeight = isMobile ? window.innerHeight * 0.65 : window.innerHeight;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${window.innerHeight * panels.length}`,
+          end: `+=${stepHeight * panels.length}`,
           pin: true,
-          scrub: 0.5,
+          pinType: isMobile ? "transform" : "fixed",
+          scrub: isMobile ? 0.3 : 0.5,
           anticipatePin: 1,
           snap: {
             snapTo: "labels",
@@ -114,42 +113,6 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
 
     return () => ctx.revert();
   }, [steps, isMobile]);
-
-  // Mobile: simple vertical reveal cards — no pin, no GSAP scrub fighting touch scroll
-  if (isMobile) {
-    return (
-      <section className="relative py-16 overflow-hidden">
-        <div aria-hidden className="absolute inset-0 z-[1] opacity-40">
-          <ScrollStoryShader />
-        </div>
-        <div className="relative z-10 mx-auto max-w-3xl px-5">
-          <Reveal className="text-center mb-10">
-            <span className="eyebrow text-gold/60 block mb-3">
-              {lang === "fr" ? "L'Artisanat" : "The Craft"}
-            </span>
-          </Reveal>
-          <RevealGroup className="flex flex-col gap-8">
-            {steps.map((step, i) => (
-              <RevealItem key={i}>
-                <div className="rounded-2xl border border-(--line) surface-card p-6 text-center">
-                  <span className="eyebrow block mb-3 text-gold/70 text-[0.65rem]">
-                    0{i + 1} / 0{steps.length}
-                  </span>
-                  <h2 className="font-serif text-[1.35rem] leading-[1.15] text-ivory mb-3">
-                    {step.title}
-                  </h2>
-                  <p className="text-[0.9rem] text-text-2 leading-relaxed">
-                    {step.desc}
-                  </p>
-                  <div className="mt-4 w-12 h-px bg-gold/30 mx-auto" />
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section
