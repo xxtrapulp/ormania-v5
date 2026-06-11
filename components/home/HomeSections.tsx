@@ -304,9 +304,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ WHY ORMANIA ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
+          <div className="max-w-2xl mb-6 md:mb-10 mx-auto text-center">
             <TypeEyebrow text={t(lang, "why.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "why.title")}
@@ -344,14 +344,17 @@ export function HomeSections({ lang }: { lang: Lang }) {
                 dEn: "Boulevard des Laurentides — easy parking, easy visit.",
                 dFr: "Boulevard des Laurentides — stationnement et visite faciles.",
               },
-            ].map((w) => (
+            ].map((w, i) => (
               <RevealItem key={w.en} className="reveal-card">
-                <div className="surface-card card-glow h-full p-5 md:p-6">
-                  <w.icon size={20} className="text-gold mb-3" strokeWidth={1.5} aria-hidden />
-                  <h3 className="font-serif text-[1.15rem] text-ivory leading-tight">
+                <div className="surface-card card-glow h-full p-4 md:p-5 relative">
+                  <span className="absolute top-3 right-3 text-[0.6rem] tracking-[0.2em] text-gold/30 font-mono">
+                    0{i + 1}
+                  </span>
+                  <w.icon size={22} className="text-gold mb-2.5" strokeWidth={1.5} aria-hidden />
+                  <h3 className="font-serif text-[1.1rem] text-ivory leading-tight">
                     {lang === "fr" ? w.fr : w.en}
                   </h3>
-                  <p className="mt-1.5 text-[0.82rem] text-text-2 leading-relaxed">
+                  <p className="mt-1.5 text-[0.8rem] text-text-2 leading-relaxed">
                     {lang === "fr" ? w.dFr : w.dEn}
                   </p>
                 </div>
@@ -361,12 +364,10 @@ export function HomeSections({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <GoldDivider className="mx-auto max-w-4xl" />
-
       {/* ═══ TOOLS TEASER ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
+          <div className="max-w-2xl mb-6 md:mb-10 mx-auto text-center">
             <TypeEyebrow text={t(lang, "tools.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "tools.title")}
