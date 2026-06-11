@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRef, useState, useEffect, type ReactNode } from "react";
 import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench, Gift, Circle, Link as LinkIcon, Search } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
 import { COLLECTIONS, CUSTOM_STEPS, REPAIR_SERVICES, STORE, TOOLS } from "@/lib/data";
@@ -17,6 +17,41 @@ import { ScrollStory } from "@/components/effects/ScrollStory";
 import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
 import { ParallaxText } from "@/components/effects/ParallaxText";
 import { useScrollEffects } from "@/hooks/useScrollEffects";
+
+function StepItem({ children, index }: { children: ReactNode; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-80px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="flex gap-4 items-start"
+      style={{
+        opacity: 1,
+        transform: visible ? "translateY(0)" : "translateY(8px)",
+        transition: `transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) ${index * 0.08}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function HomeSections({ lang }: { lang: Lang }) {
   const { open } = useLeadModal();
@@ -147,14 +182,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             </ParallaxText>
             <div className="flex flex-col gap-4 mb-8">
               {CUSTOM_STEPS.map((s, i) => (
-                <motion.div
-                  key={i}
-                  className="flex gap-4 items-start"
-                  initial={{ opacity: 1, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1], delay: i * 0.08 }}
-                >
+                <StepItem key={i} index={i}>
                   <span className="shrink-0 w-9 h-9 rounded-full border border-gold/50 text-gold font-serif text-[1rem] flex items-center justify-center">
                     {i + 1}
                   </span>
@@ -164,7 +192,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
                       {lang === "fr" ? s.descFr : s.descEn}
                     </p>
                   </div>
-                </motion.div>
+                </StepItem>
               ))}
             </div>
             <Reveal className="flex flex-col xs:flex-row gap-3 xs:gap-2.5">
