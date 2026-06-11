@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useLayoutEffect, useState, useCallback } from "react";
+import { useRef, useLayoutEffect, useState, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
@@ -27,6 +28,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement[]>([]);
   const dotsRef = useRef<HTMLDivElement[]>([]);
+  const [activeStep, setActiveStep] = useState(0);
   const isMobile = useIsMobile();
 
   const setPanelRef = useCallback((el: HTMLDivElement | null, i: number) => {
@@ -38,6 +40,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   }, []);
 
   useLayoutEffect(() => {
+    if (isMobile) return;
     const ctx = gsap.context(() => {
       const panels = panelsRef.current.filter(Boolean);
       const dots = dotsRef.current.filter(Boolean);
@@ -54,16 +57,13 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         if (desc) gsap.set(desc, { opacity: 0, y: 10 });
       });
 
-      const stepHeight = isMobile ? window.innerHeight * 0.65 : window.innerHeight;
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${stepHeight * panels.length}`,
+          end: `+=${window.innerHeight * panels.length}`,
           pin: true,
-          pinType: isMobile ? "transform" : "fixed",
-          scrub: isMobile ? 0.3 : 0.5,
+          scrub: 0.5,
           anticipatePin: 1,
           snap: {
             snapTo: "labels",
@@ -113,6 +113,86 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
 
     return () => ctx.revert();
   }, [steps, isMobile]);
+
+  // Track active step on mobile with IntersectionObserver
+  useEffect(() => {
+    if (!isMobile) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute("data-step"));
+            setActiveStep(idx);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    const stepEls = document.querySelectorAll("[data-craft-step]");
+    stepEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isMobile, steps]);
+
+  // Mobile: CSS scroll-snap for smooth step-by-step scrolling
+  if (isMobile) {
+    return (
+      <section className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory">
+        {/* WebGL flowing filament background */}
+        <div aria-hidden className="fixed inset-0 z-[1]">
+          <ScrollStoryShader />
+        </div>
+
+        {/* Progress dots */}
+        <div className="fixed z-20 left-1/2 -translate-x-1/2 bottom-8 flex flex-row gap-2.5">
+          {steps.map((_, i) => (
+            <div
+              key={i}
+              className="w-2 h-2 rounded-full transition-colors duration-300"
+              style={{
+                backgroundColor: i === activeStep ? "rgba(201,168,106,0.85)" : "rgba(201,168,106,0.15)",
+                transform: i === activeStep ? "scale(1.4)" : "scale(1)",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Step counter eyebrow */}
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-20">
+          <span className="eyebrow text-gold/60">
+            {lang === "fr" ? "L'Artisanat" : "The Craft"}
+          </span>
+        </div>
+
+        {/* Step panels */}
+        {steps.map((step, i) => (
+          <div
+            key={i}
+            data-craft-step={i}
+            className="snap-start h-[100dvh] flex items-center justify-center px-5"
+          >
+            <motion.div
+              className="text-center max-w-4xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+            >
+              <span className="step-counter eyebrow block mb-3 text-gold/70 text-[0.65rem]">
+                0{i + 1} / 0{steps.length}
+              </span>
+              <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] leading-[1.15] text-ivory mb-3">
+                {step.title}
+              </h2>
+              <p className="w-full max-w-[34ch] text-[0.95rem] text-text-2 leading-relaxed">
+                {step.desc}
+              </p>
+              <div className="mt-5 w-12 h-px bg-gold/30 mx-auto" />
+            </motion.div>
+          </div>
+        ))}
+      </section>
+    );
+  }
 
   return (
     <section
