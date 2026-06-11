@@ -66,59 +66,66 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
       gsap.set(images.slice(1), { opacity: 0, scale: 1.12 });
       gsap.set(images[0], { opacity: 1, scale: 1.05 });
 
-      const stepCount = panels.length;
-      const stepSize = 1 / stepCount;
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: mobile ? "top 5%" : "top top",
-          end: `+=${window.innerHeight * (panels.length - (mobile ? 1 : 0.5))}`,
+          // Full viewport-height per slide + a resting hold on the last slide,
+          // so the section stays pinned until the final step has been seen.
+          end: `+=${window.innerHeight * panels.length}`,
           pin: true,
-          scrub: mobile ? true : 0.8,
+          scrub: mobile ? 0.4 : 0.8,
           anticipatePin: 1,
           snap: {
-            snapTo: (value: number) => {
-              const target = Math.round(value / stepSize) * stepSize;
-              const clamped = Math.max(0, Math.min(1, target));
-              return Math.abs(value - clamped) < 0.12 ? clamped : value;
-            },
-            duration: { min: 0.15, max: 0.3 },
-            delay: 0,
-            ease: "power1.out",
+            snapTo: "labels",
+            duration: { min: 0.2, max: 0.5 },
+            delay: 0.05,
+            ease: "power2.inOut",
           },
         },
       });
 
+      // Each slide rests at an integer timeline position (label),
+      // with the crossfade transition centered between rests.
+      tl.addLabel("step0", 0);
+
       panels.forEach((panel, i) => {
         if (i === 0) return;
-        const prevI = i - 1;
+        const at = i - 0.5;
 
         // Fade out previous panel
-        tl.to(panels[prevI], { opacity: 0, y: mobile ? -16 : -40, duration: 0.25 }, prevI + 0.25);
+        tl.to(panels[i - 1], { opacity: 0, y: mobile ? -16 : -40, duration: 0.3 }, at);
         // Fade in current panel
-        tl.fromTo(panel, { opacity: 0, y: mobile ? 16 : 40 }, { opacity: 1, y: 0, duration: 0.25 }, prevI + 0.5);
+        tl.fromTo(
+          panel,
+          { opacity: 0, y: mobile ? 16 : 40 },
+          { opacity: 1, y: 0, duration: 0.3 },
+          at + 0.18
+        );
 
         // Crossfade background images
-        tl.to(images[prevI], { opacity: 0, duration: 0.3 }, prevI + 0.25);
-        tl.fromTo(images[i], { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1.05, duration: 0.3 }, prevI + 0.35);
+        tl.to(images[i - 1], { opacity: 0, duration: 0.35 }, at);
+        tl.fromTo(
+          images[i],
+          { opacity: 0, scale: 1.12 },
+          { opacity: 1, scale: 1.05, duration: 0.35 },
+          at + 0.12
+        );
 
         // Highlight active dot
-        if (dots[prevI]) {
-          tl.to(dots[prevI], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, prevI + 0.25);
+        if (dots[i - 1]) {
+          tl.to(dots[i - 1], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, at);
         }
         if (dots[i]) {
-          tl.to(dots[i], { backgroundColor: "rgba(201,168,106,0.85)", scale: 1.4, duration: 0.2 }, prevI + 0.35);
+          tl.to(dots[i], { backgroundColor: "rgba(201,168,106,0.85)", scale: 1.4, duration: 0.2 }, at + 0.18);
         }
+
+        tl.addLabel(`step${i}`, i);
       });
 
-      // Final fade out
-      const last = panels.length - 1;
-      tl.to(panels[last], { opacity: 0, y: mobile ? -16 : -40, duration: 0.2 });
-      tl.to(images[last], { opacity: 0, duration: 0.2 }, "<");
-      if (dots[last]) {
-        tl.to(dots[last], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, "<");
-      }
+      // Hold the last slide fully visible before the pin releases —
+      // no final fade-out, the section simply scrolls away naturally.
+      tl.to({}, { duration: 0.6 });
 
       if (!prefersReduced) {
         // Slow continuous scale on the active image
@@ -205,22 +212,23 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         </span>
       </div>
 
-      {/* ── Text panels ── */}
-      <div className="relative z-[5] max-w-[95vw] md:max-w-3xl mx-auto px-3 md:px-12 text-center">
+      {/* ── Text panels — grid-stacked so the container keeps real height
+           and text wraps naturally across the available width ── */}
+      <div className="relative z-[5] w-full max-w-4xl mx-auto px-5 md:px-12 grid place-items-center text-center">
         {steps.map((step, i) => (
           <div
             key={i}
             ref={(el) => setPanelRef(el, i)}
-            className="absolute inset-0 flex flex-col items-center justify-center"
+            className="col-start-1 row-start-1 w-full flex flex-col items-center justify-center"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <span className="eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
               0{i + 1} / 0{steps.length}
             </span>
-            <h2 className="font-serif text-[clamp(1.85rem,10vw,3.5rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.1] text-ivory mb-3 md:mb-6">
+            <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] md:text-[clamp(2.5rem,5vw,4.25rem)] leading-[1.1] text-ivory mb-3 md:mb-6">
               {step.title}
             </h2>
-            <p className="text-[0.95rem] md:text-[clamp(0.95rem,1.4vw,1.2rem)] text-text-2 leading-relaxed max-w-none md:max-w-xl">
+            <p className="w-full max-w-[34ch] xs:max-w-[44ch] md:max-w-2xl text-[0.95rem] md:text-[clamp(0.95rem,1.4vw,1.15rem)] text-text-2 leading-relaxed">
               {step.desc}
             </p>
             {/* Decorative line */}
