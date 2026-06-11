@@ -120,7 +120,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               loading="lazy"
-              className="object-cover parallax-img reveal-img scale-[1.12]"
+              className="object-cover parallax-img scale-[1.12]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
             <figcaption className="absolute bottom-4 left-4 right-4 text-[0.8rem] text-text-2 italic font-serif text-[1rem]">
