@@ -87,7 +87,7 @@ export function Hero({ lang }: { lang: Lang }) {
     <section
       ref={ref}
       aria-label="Hero"
-      className="relative min-h-[100svh] flex items-end md:items-center overflow-hidden"
+      className="relative min-h-[100svh] flex items-center overflow-hidden"
     >
       {/* Gold dust particle field */}
       <GoldDust />
@@ -107,117 +107,124 @@ export function Hero({ lang }: { lang: Lang }) {
 
       {/* Content */}
       <motion.div
-        className="relative z-10 w-full mx-auto max-w-7xl px-5 md:px-8 pb-24 pt-32 md:py-28"
+        className="relative z-10 w-full mx-auto max-w-7xl px-5 md:px-8 flex flex-col items-center justify-center min-h-[100svh] py-20 md:py-0"
         style={{ y: contentY, opacity: contentOpacity }}
       >
+        {/* Logo — always centered, floats gently */}
         <motion.div
-          className="max-w-2xl md:max-w-3xl mx-auto text-center"
-          variants={heroStagger}
-          initial={reduce ? false : "hidden"}
-          animate="visible"
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.9, ease: luxeEase }}
+          className="mb-6 md:mb-8"
         >
-          {/* Logo fades in first — the hero centerpiece */}
-          <motion.div variants={heroItem} className="mb-8">
+          <motion.div
+            animate={reduce ? undefined : { y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            <Image
+              src="/brand/ormania.svg"
+              alt="Bijouterie Ormania"
+              width={652}
+              height={150}
+              priority
+              className="h-16 xs:h-20 md:h-24 lg:h-28 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Desktop: split layout. Mobile: stacked centered. */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 lg:gap-8">
+          {/* Left: text column */}
+          <motion.div
+            className="w-full md:w-[55%] lg:w-[52%] text-center md:text-left"
+            variants={heroStagger}
+            initial={reduce ? false : "hidden"}
+            animate="visible"
+          >
+            <motion.span variants={heroItem} className="eyebrow block mb-3">
+              {t(lang, "hero.eyebrow")}
+            </motion.span>
+
             <motion.div
-              animate={reduce ? undefined : { y: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              aria-hidden
+              className="w-16 h-px mx-auto md:mx-0 mb-3 bg-gradient-to-r from-transparent via-gold to-transparent md:from-gold md:to-gold/30"
+              variants={heroItem}
+            />
+
+            <motion.h1
+              variants={heroItem}
+              className="text-balance font-serif text-[clamp(2.2rem,8vw,4.5rem)] lg:text-[clamp(2.5rem,5.5vw,5rem)] leading-[1.12] text-ivory"
             >
-              <Image
-                src="/brand/ormania.svg"
-                alt="Bijouterie Ormania"
-                width={652}
-                height={150}
-                priority
-                className="h-16 xs:h-20 md:h-28 lg:h-32 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
+              <HeroTextReveal
+                parts={[
+                  { text: t(lang, "hero.headline.1") },
+                  { text: t(lang, "hero.headline.2"), className: "text-gold-3 italic gold-glow" },
+                ]}
+                baseDelay={0.6}
               />
+            </motion.h1>
+
+            <motion.p
+              variants={heroItem}
+              className="mt-5 text-[clamp(0.9rem,2.5vw,1.1rem)] text-text-2 leading-relaxed max-w-lg mx-auto md:mx-0"
+            >
+              {t(lang, "hero.sub")}
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div variants={heroItem} className="mt-7 flex flex-col xs:flex-row justify-center md:justify-start gap-3 xs:gap-2.5 max-w-md xs:max-w-none mx-auto md:mx-0">
+              <Link
+                href={`/${lang}/collections`}
+                onClick={() => track("hero_explore_click")}
+                className={`${btnBase} bg-gold text-ink border border-gold hover:bg-gold-3 hover:-translate-y-px hover:shadow-[0_8px_28px_rgba(201,168,106,0.35)]`}
+              >
+                <ResponsiveLabel
+                  short={t(lang, "hero.exploreShort")}
+                  full={t(lang, "hero.explore")}
+                  breakpoint="sm"
+                />
+                <span aria-hidden className="inline-block transition-transform duration-300 ease-(--ease-luxe) group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+              <Link
+                href={`/${lang}/engagement#book`}
+                onClick={() => track("hero_book_click")}
+                className={`${btnBase} bg-transparent text-ivory border border-gold/60 hover:bg-gold/10 hover:border-gold`}
+              >
+                <ResponsiveLabel
+                  short={t(lang, "hero.bookShort")}
+                  full={t(lang, "hero.book")}
+                  breakpoint="sm"
+                />
+              </Link>
+            </motion.div>
+
+            <motion.div variants={heroItem} className="mt-6 flex justify-center md:justify-start">
+              <Link
+                href={`/${lang}/instagram`}
+                onClick={() => track("hero_ig_click")}
+                className="inline-flex items-center gap-2 min-h-11 text-[0.875rem] text-text-2 hover:text-gold transition-colors duration-300"
+              >
+                <IgIcon className="w-[18px] h-[18px]" />
+                {t(lang, "hero.igLink")}
+                <span aria-hidden>→</span>
+              </Link>
             </motion.div>
           </motion.div>
 
-          <motion.span variants={heroItem} className="eyebrow block mb-4">
-            {t(lang, "hero.eyebrow")}
-          </motion.span>
-
+          {/* Right: rotating gold ring ornament — desktop only */}
           <motion.div
             aria-hidden
-            className="w-16 h-px mx-auto mb-4 bg-gradient-to-r from-transparent via-gold to-transparent"
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8, ease: luxeEase }}
-          />
-
-          <motion.h1
-            variants={heroItem}
-            className="text-balance font-serif text-[clamp(2.5rem,9.5vw,5.25rem)] leading-[1.12] text-ivory"
+            className="hidden md:block md:w-[45%] lg:w-[48%] max-w-[22rem] lg:max-w-[26rem] xl:max-w-[28rem] aspect-square relative pointer-events-none"
+            initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.1, duration: 1.4, ease: luxeEase }}
           >
-            <HeroTextReveal
-              parts={[
-                { text: t(lang, "hero.headline.1") },
-                { text: t(lang, "hero.headline.2"), className: "text-gold-3 italic gold-glow" },
-              ]}
-              baseDelay={0.6}
-            />
-          </motion.h1>
-
-          <motion.p
-            variants={heroItem}
-            className="mt-5 text-[clamp(0.95rem,2.9vw,1.15rem)] text-text-2 leading-relaxed max-w-lg mx-auto"
-          >
-            {t(lang, "hero.sub")}
-          </motion.p>
-
-          {/* CTAs — stacked under 390px, side-by-side from xs */}
-          <motion.div variants={heroItem} className="mt-8 flex flex-col xs:flex-row justify-center gap-3 xs:gap-2.5 max-w-md xs:max-w-none mx-auto">
-            <Link
-              href={`/${lang}/collections`}
-              onClick={() => track("hero_explore_click")}
-              className={`${btnBase} bg-gold text-ink border border-gold hover:bg-gold-3 hover:-translate-y-px hover:shadow-[0_8px_28px_rgba(201,168,106,0.35)]`}
-            >
-              <ResponsiveLabel
-                short={t(lang, "hero.exploreShort")}
-                full={t(lang, "hero.explore")}
-                breakpoint="sm"
-              />
-              <span aria-hidden className="inline-block transition-transform duration-300 ease-(--ease-luxe) group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-            <Link
-              href={`/${lang}/engagement#book`}
-              onClick={() => track("hero_book_click")}
-              className={`${btnBase} bg-transparent text-ivory border border-gold/60 hover:bg-gold/10 hover:border-gold`}
-            >
-              <ResponsiveLabel
-                short={t(lang, "hero.bookShort")}
-                full={t(lang, "hero.book")}
-                breakpoint="sm"
-              />
-            </Link>
+            <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(201,168,106,0.12)_0%,transparent_70%)]" />
+            <ResponsiveRing mouse={{ x: mouse.normalizedX, y: mouse.normalizedY }} />
           </motion.div>
-
-          <motion.div variants={heroItem} className="mt-7 flex justify-center">
-            <Link
-              href={`/${lang}/instagram`}
-              onClick={() => track("hero_ig_click")}
-              className="inline-flex items-center gap-2 min-h-11 text-[0.875rem] text-text-2 hover:text-gold transition-colors duration-300"
-            >
-              <IgIcon className="w-[18px] h-[18px]" />
-              {t(lang, "hero.igLink")}
-              <span aria-hidden>→</span>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* Rotating gold-ring ornament — desktop only */}
-      <motion.div
-        aria-hidden
-        initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.1, duration: 1.4, ease: luxeEase }}
-        className="hidden lg:block absolute right-[4%] xl:right-[8%] top-1/2 -translate-y-1/2 z-[5] w-[26rem] xl:w-[30rem] aspect-square pointer-events-none"
-      >
-        <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(201,168,106,0.12)_0%,transparent_70%)]" />
-        <ResponsiveRing mouse={{ x: mouse.normalizedX, y: mouse.normalizedY }} />
+        </div>
       </motion.div>
 
       {/* Scroll cue */}

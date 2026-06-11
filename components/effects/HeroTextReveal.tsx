@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface Part {
@@ -7,66 +8,66 @@ interface Part {
   className?: string;
 }
 
-/** Hero headline: word-by-word fade-up + scale reveal,
- *  with character-level micro-stagger inside each word.
+/** Hero headline: typewriter character reveal with blinking gold cursor.
  *  Uses Framer Motion only — no GSAP in the hero.
  */
 export function HeroTextReveal({
   parts,
   className = "",
   baseDelay = 0.6,
+  onComplete,
 }: {
   parts: Part[];
   className?: string;
   baseDelay?: number;
+  onComplete?: () => void;
 }) {
-  // Flatten all parts into one word stream with part indices
-  const allWords: { text: string; partIdx: number; wordIdx: number }[] = [];
-  let wordCounter = 0;
-  parts.forEach((part, partIdx) => {
-    part.text.split(" ").forEach((word) => {
-      allWords.push({ text: word, partIdx, wordIdx: wordCounter });
-      wordCounter++;
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+
+  const chars: { char: string; className?: string }[] = [];
+  parts.forEach((part) => {
+    part.text.split("").forEach((char) => {
+      chars.push({ char, className: part.className });
     });
   });
 
-  const wordStagger = 0.08;
-  const charStagger = 0.015;
+  useEffect(() => {
+    const total = chars.length;
+    if (visibleCount >= total) {
+      const t = setTimeout(() => {
+        setShowCursor(false);
+        onComplete?.();
+      }, 700);
+      return () => clearTimeout(t);
+    }
+    const delayMs = visibleCount === 0 ? baseDelay * 1000 : 28;
+    const t = setTimeout(() => setVisibleCount((c) => c + 1), delayMs);
+    return () => clearTimeout(t);
+  }, [visibleCount, chars.length, baseDelay, onComplete]);
 
   return (
     <span className={`inline-block ${className}`}>
-      {allWords.map(({ text, partIdx, wordIdx }) => {
-        const wordDelay = baseDelay + wordIdx * wordStagger;
-        return (
-          <motion.span
-            key={wordIdx}
-            className={`inline-block will-change-[transform,opacity] mr-[0.25em] ${parts[partIdx].className ?? ""}`}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: wordDelay,
-              ease: [0.22, 0.61, 0.36, 1],
-            }}
-          >
-            {text.split("").map((char, charIdx) => (
-              <motion.span
-                key={charIdx}
-                className="inline-block will-change-[transform,opacity]"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.35,
-                  delay: wordDelay + charIdx * charStagger,
-                  ease: [0.22, 0.61, 0.36, 1],
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </motion.span>
-        );
-      })}
+      {chars.map((item, i) => (
+        <motion.span
+          key={i}
+          className={`inline-block will-change-[opacity] ${item.className ?? ""}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: i < visibleCount ? 1 : 0 }}
+          transition={{ duration: 0.03 }}
+        >
+          {item.char === " " ? "\u00A0" : item.char}
+        </motion.span>
+      ))}
+      <motion.span
+        className="inline-block w-[2px] h-[0.8em] bg-gold ml-1 align-middle"
+        animate={{ opacity: showCursor ? [1, 0, 1] : 0 }}
+        transition={
+          showCursor
+            ? { repeat: Infinity, duration: 0.55, ease: "easeInOut" }
+            : { duration: 0.2 }
+        }
+      />
     </span>
   );
 }

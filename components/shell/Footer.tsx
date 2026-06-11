@@ -8,7 +8,7 @@ import { STORE } from "@/lib/data";
 
 export function Footer({ lang }: { lang: Lang }) {
   const year = new Date().getFullYear();
-  const col = "flex flex-col gap-2.5 text-[0.875rem] text-text-2";
+  const col = "flex flex-col gap-2 text-[0.82rem] text-text-2";
   const link = "hover:text-gold transition-colors duration-300 min-h-6 inline-flex items-center link-shimmer";
 
   return (
@@ -19,8 +19,8 @@ export function Footer({ lang }: { lang: Lang }) {
       transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
       className="border-t border-(--line) bg-ink-2 mt-auto"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-8 py-6 md:py-10">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-6">
+      <div className="mx-auto max-w-7xl px-4 md:px-8 py-5 md:py-7">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
           <nav className={col} aria-label="Explore">
             <span className="eyebrow mb-1">{t(lang, "footer.explore")}</span>
             <Link className={link} href={`/${lang}/collections`}>{t(lang, "nav.collections")}</Link>
@@ -49,20 +49,20 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
 
         {/* Centered logo */}
-        <div className="mt-6 flex flex-col items-center">
+        <div className="mt-5 flex flex-col items-center">
           <Image
             src="/brand/ormania.svg"
             alt="Ormania"
             width={200}
             height={48}
-            className="h-8 md:h-10 w-auto opacity-60"
+            className="h-7 md:h-9 w-auto opacity-60"
           />
-          <p className="mt-2 text-[0.875rem] text-text-3 italic text-center">
+          <p className="mt-1.5 text-[0.8rem] text-text-3 italic text-center">
             {t(lang, "footer.tagline")}
           </p>
         </div>
 
-        <div className="mt-6 pt-3 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[0.78rem] text-text-3">
+        <div className="mt-5 pt-2 border-t border-(--line) flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-[0.75rem] text-text-3">
           <span>
             © {year} {STORE.name}. {t(lang, "footer.rights")}
           </span>
