@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
 import { ScrollStoryShader } from "./ScrollStoryShader";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,29 +53,28 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   }, []);
 
   useLayoutEffect(() => {
+    if (isMobile) return; // Mobile uses static Reveal layout below
+
     const ctx = gsap.context(() => {
       const panels = panelsRef.current.filter(Boolean);
       const images = imagesRef.current.filter(Boolean);
       const dots = dotsRef.current.filter(Boolean);
       if (!panels.length) return;
 
-      const mobile = window.innerWidth < 768;
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       // Set initial states
-      gsap.set(panels.slice(1), { opacity: 0, y: mobile ? 24 : 40 });
+      gsap.set(panels.slice(1), { opacity: 0, y: 40 });
       gsap.set(images.slice(1), { opacity: 0, scale: 1.12 });
       gsap.set(images[0], { opacity: 1, scale: 1.05 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: mobile ? "top 5%" : "top top",
-          // Full viewport-height per slide + a resting hold on the last slide,
-          // so the section stays pinned until the final step has been seen.
+          start: "top top",
           end: `+=${window.innerHeight * panels.length}`,
           pin: true,
-          scrub: mobile ? 0.4 : 0.8,
+          scrub: 0.8,
           anticipatePin: 1,
           snap: {
             snapTo: "labels",
@@ -85,34 +85,17 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         },
       });
 
-      // Each slide rests at an integer timeline position (label),
-      // with the crossfade transition centered between rests.
       tl.addLabel("step0", 0);
 
       panels.forEach((panel, i) => {
         if (i === 0) return;
         const at = i - 0.5;
 
-        // Fade out previous panel
-        tl.to(panels[i - 1], { opacity: 0, y: mobile ? -16 : -40, duration: 0.3 }, at);
-        // Fade in current panel
-        tl.fromTo(
-          panel,
-          { opacity: 0, y: mobile ? 16 : 40 },
-          { opacity: 1, y: 0, duration: 0.3 },
-          at + 0.18
-        );
-
-        // Crossfade background images
+        tl.to(panels[i - 1], { opacity: 0, y: -40, duration: 0.3 }, at);
+        tl.fromTo(panel, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.3 }, at + 0.18);
         tl.to(images[i - 1], { opacity: 0, duration: 0.35 }, at);
-        tl.fromTo(
-          images[i],
-          { opacity: 0, scale: 1.12 },
-          { opacity: 1, scale: 1.05, duration: 0.35 },
-          at + 0.12
-        );
+        tl.fromTo(images[i], { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1.05, duration: 0.35 }, at + 0.12);
 
-        // Highlight active dot
         if (dots[i - 1]) {
           tl.to(dots[i - 1], { backgroundColor: "rgba(201,168,106,0.15)", scale: 1, duration: 0.2 }, at);
         }
@@ -123,27 +106,64 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         tl.addLabel(`step${i}`, i);
       });
 
-      // Hold the last slide fully visible before the pin releases —
-      // no final fade-out, the section simply scrolls away naturally.
       tl.to({}, { duration: 0.6 });
 
       if (!prefersReduced) {
-        // Slow continuous scale on the active image
         images.forEach((img) => {
-          gsap.to(img, {
-            scale: 1.0,
-            duration: 8,
-            ease: "none",
-            repeat: -1,
-            yoyo: true,
-            paused: true,
-          });
+          gsap.to(img, { scale: 1.0, duration: 8, ease: "none", repeat: -1, yoyo: true, paused: true });
         });
       }
     }, containerRef);
 
     return () => ctx.revert();
   }, [steps, isMobile]);
+
+  // Mobile: simple vertical reveal cards — no pin, no GSAP scrub fighting touch scroll
+  if (isMobile) {
+    return (
+      <section className="relative bg-ink py-16 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 z-[1] opacity-40">
+          <ScrollStoryShader />
+        </div>
+        <div className="relative z-10 mx-auto max-w-3xl px-5">
+          <Reveal className="text-center mb-10">
+            <span className="eyebrow text-gold/60 block mb-3">
+              {lang === "fr" ? "L'Artisanat" : "The Craft"}
+            </span>
+          </Reveal>
+          <RevealGroup className="flex flex-col gap-8">
+            {steps.map((step, i) => (
+              <RevealItem key={i}>
+                <div className="relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/3]">
+                  <Image
+                    src={BG_IMAGES[i % BG_IMAGES.length]}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    loading="lazy"
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent" />
+                  <div className="absolute bottom-0 inset-x-0 p-5 text-center">
+                    <span className="eyebrow block mb-2 text-gold/70 text-[0.65rem]">
+                      0{i + 1} / 0{steps.length}
+                    </span>
+                    <h2 className="font-serif text-[1.5rem] leading-[1.15] text-ivory mb-2">
+                      {step.title}
+                    </h2>
+                    <p className="text-[0.9rem] text-text-2 leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -225,7 +245,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
             <span className="eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
               0{i + 1} / 0{steps.length}
             </span>
-            <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] md:text-[clamp(2.5rem,5vw,4.25rem)] leading-[1.1] text-ivory mb-3 md:mb-6">
+            <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] md:text-[clamp(2.5rem,5vw,4.25rem)] leading-[1.15] text-ivory mb-3 md:mb-6">
               {step.title}
             </h2>
             <p className="w-full max-w-[34ch] xs:max-w-[44ch] md:max-w-2xl text-[0.95rem] md:text-[clamp(0.95rem,1.4vw,1.15rem)] text-text-2 leading-relaxed">

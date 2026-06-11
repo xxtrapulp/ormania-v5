@@ -25,7 +25,7 @@
   --color-text-3: #8a8174;
 
   /* Type */
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-serif: var(--font-outfit), "Outfit", -apple-system, system-ui, sans-serif;
   --font-sans: var(--font-inter), "Inter", -apple-system, system-ui, sans-serif;
 
   /* Motion */

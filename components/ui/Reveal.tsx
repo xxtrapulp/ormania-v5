@@ -143,7 +143,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "text-balance text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12]",
+          "text-balance text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18]",
           light ? "text-espresso" : "text-ivory"
         )}
       >

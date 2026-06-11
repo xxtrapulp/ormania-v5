@@ -62,12 +62,21 @@ export function Hero({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const mouse = useMousePosition();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "40%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile || reduce ? "0%" : "18%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile || reduce ? "0%" : "40%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const btnBase =
@@ -131,7 +140,7 @@ export function Hero({ lang }: { lang: Lang }) {
 
           <motion.h1
             variants={heroItem}
-            className="text-balance font-serif text-[clamp(2.5rem,9.5vw,5.25rem)] leading-[1.06] text-ivory"
+            className="text-balance font-serif text-[clamp(2.5rem,9.5vw,5.25rem)] leading-[1.12] text-ivory"
           >
             <ScrambleText text={t(lang, "hero.headline.1")} delay={600} duration={900} />{" "}
             <em className="text-gold-3 italic">

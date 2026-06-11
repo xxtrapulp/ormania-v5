@@ -42,7 +42,7 @@ export function CollectionsView({ lang }: { lang: Lang }) {
             <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "collections.title")}
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
             <FadeLines className="mt-4" stagger={0.08}>
               <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">

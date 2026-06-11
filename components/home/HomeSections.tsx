@@ -31,7 +31,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             <BlurWords
               text={t(lang, "collections.title")}
               as="h2"
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
             <FadeLines className="mt-4" stagger={0.08}>
               <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
@@ -142,7 +142,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
               <BlurWords
                 text={t(lang, "custom.title")}
                 as="h2"
-                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
               />
               <FadeLines className="mt-4" stagger={0.08}>
                 <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
@@ -198,7 +198,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             <BlurWords
               text={t(lang, "repairs.title")}
               as="h2"
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
             <FadeLines className="mt-4" stagger={0.08}>
               <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
@@ -259,7 +259,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
               <BlurWords
                 text={t(lang, "engagement.title")}
                 as="h2"
-                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+                className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
               />
               <FadeLines className="mt-4" stagger={0.08}>
                 <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
@@ -311,7 +311,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             <BlurWords
               text={t(lang, "why.title")}
               as="h2"
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
           </div>
           <RevealGroup className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
@@ -371,7 +371,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             <BlurWords
               text={t(lang, "tools.title")}
               as="h2"
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
           </div>
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
@@ -416,7 +416,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             <BlurWords
               text={t(lang, "visit.title")}
               as="h2"
-              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.18] text-ivory"
             />
             <FadeLines className="mt-4" stagger={0.08}>
               <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">

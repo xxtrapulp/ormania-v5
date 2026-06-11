@@ -36,7 +36,7 @@ export function PageHero({
         </motion.span>
         <motion.h1
           variants={heroItem}
-          className="text-balance font-serif text-[clamp(2.1rem,7vw,3.6rem)] leading-[1.08] text-ivory max-w-3xl mx-auto"
+          className="text-balance font-serif text-[clamp(2.1rem,7vw,3.6rem)] leading-[1.14] text-ivory max-w-3xl mx-auto"
         >
           {title}
         </motion.h1>
