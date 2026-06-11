@@ -24,7 +24,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
   return (
     <div ref={scrollRef}>
       {/* ═══ FEATURED COLLECTIONS ═══ */}
-      <section id="featured" className="py-8 md:py-20">
+      <section id="featured" className="pt-6 md:pt-12 pb-3 md:pb-6">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
             <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
@@ -79,7 +79,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
 
       {/* ═══ QUOTE BAND — bridges collections to instagram ═══ */}
       <section className="border-y border-(--line)">
-        <div className="mx-auto max-w-3xl px-4 md:px-8 py-5 md:py-8 text-center">
+        <div className="mx-auto max-w-3xl px-4 md:px-8 py-2 md:py-4 text-center">
           <Reveal>
             <div className="flex flex-col items-center gap-3">
               <div className="w-1.5 h-1.5 rotate-45 bg-gold/60" />
@@ -102,7 +102,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       </section>
 
       {/* ═══ SEEN ON INSTAGRAM — centerpiece ═══ */}
-      <section className="pt-4 md:pt-8 pb-8 md:pb-20">
+      <section className="pt-2 md:pt-4 pb-6 md:pb-12">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <SectionHeading
             eyebrow={t(lang, "ig.eyebrow")}
