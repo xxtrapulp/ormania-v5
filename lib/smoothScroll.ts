@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 let lenisInstance: Lenis | null = null;
+let tickerCallback: ((time: number) => void) | null = null;
 
 export function getLenis() {
   return lenisInstance;
@@ -26,9 +27,10 @@ export function initLenis() {
 
   lenisInstance.on("scroll", ScrollTrigger.update);
 
-  gsap.ticker.add((time) => {
+  tickerCallback = (time: number) => {
     lenisInstance?.raf(time * 1000);
-  });
+  };
+  gsap.ticker.add(tickerCallback);
 
   gsap.ticker.lagSmoothing(0);
 
@@ -36,6 +38,10 @@ export function initLenis() {
 }
 
 export function destroyLenis() {
+  if (tickerCallback) {
+    gsap.ticker.remove(tickerCallback);
+    tickerCallback = null;
+  }
   lenisInstance?.destroy();
   lenisInstance = null;
 }

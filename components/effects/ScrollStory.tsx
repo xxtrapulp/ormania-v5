@@ -5,6 +5,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
+import { ScrollStoryShader } from "./ScrollStoryShader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,14 +66,27 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
       gsap.set(images.slice(1), { opacity: 0, scale: 1.12 });
       gsap.set(images[0], { opacity: 1, scale: 1.05 });
 
+      const stepCount = panels.length;
+      const stepSize = 1 / stepCount;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top top",
+          start: mobile ? "top 5%" : "top top",
           end: `+=${window.innerHeight * (panels.length - (mobile ? 1 : 0.5))}`,
           pin: true,
           scrub: mobile ? true : 0.8,
           anticipatePin: 1,
+          snap: {
+            snapTo: (value: number) => {
+              const target = Math.round(value / stepSize) * stepSize;
+              const clamped = Math.max(0, Math.min(1, target));
+              return Math.abs(value - clamped) < 0.12 ? clamped : value;
+            },
+            duration: { min: 0.15, max: 0.3 },
+            delay: 0,
+            ease: "power1.out",
+          },
         },
       });
 
@@ -129,10 +143,9 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
       ref={containerRef}
       className="relative min-h-[100dvh] bg-ink flex items-center justify-center overflow-hidden"
     >
-      {/* ── Animated radial mesh background ── */}
-      <div aria-hidden className="scrollstory-mesh absolute inset-0 overflow-hidden pointer-events-none z-[1]">
-        <div className="mesh-a absolute -inset-[50%] rounded-[50%] bg-[radial-gradient(circle_at_center,rgba(201,168,106,0.08),transparent_60%)] blur-3xl" />
-        <div className="mesh-b absolute -inset-[50%] rounded-[50%] bg-[radial-gradient(circle_at_center,rgba(201,168,106,0.06),transparent_55%)] blur-2xl" />
+      {/* ── WebGL flowing filament background ── */}
+      <div aria-hidden className="absolute inset-0 z-[1]">
+        <ScrollStoryShader />
       </div>
 
       {/* ── Crossfading background images ── */}
@@ -156,8 +169,8 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
             />
           </div>
         ))}
-        {/* Dark overlay for text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/75 to-ink/95" />
+        {/* Dark overlay for text contrast — slightly lighter to let shader show through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/65 to-ink/90" />
       </div>
 
       {/* ── Decorative rotating ring SVG ── */}
@@ -193,7 +206,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
       </div>
 
       {/* ── Text panels ── */}
-      <div className="relative z-[5] max-w-[85vw] md:max-w-3xl mx-auto px-4 md:px-12 text-center">
+      <div className="relative z-[5] max-w-[95vw] md:max-w-3xl mx-auto px-3 md:px-12 text-center">
         {steps.map((step, i) => (
           <div
             key={i}
@@ -201,17 +214,17 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
             className="absolute inset-0 flex flex-col items-center justify-center"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
-            <span className="eyebrow block mb-4 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
+            <span className="eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
               0{i + 1} / 0{steps.length}
             </span>
-            <h2 className="font-serif text-[clamp(1.75rem,10vw,3.5rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.08] text-ivory mb-4 md:mb-6">
+            <h2 className="font-serif text-[clamp(1.85rem,10vw,3.5rem)] md:text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.1] text-ivory mb-3 md:mb-6">
               {step.title}
             </h2>
-            <p className="text-sm md:text-[clamp(0.95rem,1.4vw,1.2rem)] text-text-2 leading-relaxed max-w-[85vw] md:max-w-xl">
+            <p className="text-[0.95rem] md:text-[clamp(0.95rem,1.4vw,1.2rem)] text-text-2 leading-relaxed max-w-none md:max-w-xl">
               {step.desc}
             </p>
             {/* Decorative line */}
-            <div className="mt-6 md:mt-10 w-12 md:w-16 h-px bg-gold/30" />
+            <div className="mt-5 md:mt-10 w-12 md:w-16 h-px bg-gold/30" />
           </div>
         ))}
       </div>

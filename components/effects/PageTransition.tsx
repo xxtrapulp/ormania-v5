@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useRef, useEffect } from "react";
-import { initLenis } from "@/lib/smoothScroll";
+import { initLenis, destroyLenis } from "@/lib/smoothScroll";
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     lenisRef.current = initLenis();
     return () => {
-      lenisRef.current?.destroy();
+      destroyLenis();
     };
   }, []);
 

@@ -11,6 +11,7 @@ import { useLeadModal } from "@/components/forms/LeadModalProvider";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
+import { BlurWords, FadeLines } from "@/components/effects/TextReveal";
 
 export function ProductView({ post, lang }: { post: IGPost; lang: Lang }) {
   const { open } = useLeadModal();
@@ -47,10 +48,13 @@ export function ProductView({ post, lang }: { post: IGPost; lang: Lang }) {
 
           <Reveal delay={0.1}>
             <span className="eyebrow block mb-3">{post.availability}</span>
-            <h1 className="font-serif text-[clamp(1.9rem,6vw,3rem)] leading-[1.1] text-ivory">
-              {post.title}
-            </h1>
-            <p className="mt-4 text-[0.95rem] text-text-2 leading-relaxed">{post.caption}</p>
+            <BlurWords
+              text={post.title}
+              className="font-serif text-[clamp(1.9rem,6vw,3rem)] leading-[1.1] text-ivory"
+            />
+            <FadeLines className="mt-4" stagger={0.06}>
+              <p className="fade-line text-[0.95rem] text-text-2 leading-relaxed">{post.caption}</p>
+            </FadeLines>
 
             <div className="mt-7 flex flex-col gap-3 max-w-sm">
               <Button

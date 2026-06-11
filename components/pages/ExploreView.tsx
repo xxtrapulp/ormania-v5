@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Gift, Ruler, Search, Sparkles } from "lucide-react";
 import { IG_POSTS, TOOLS, type IGCategory } from "@/lib/data";
 import { t, type Lang } from "@/lib/i18n";
@@ -11,6 +12,7 @@ import { getLeads, LEAD_STATUSES } from "@/lib/store";
 import { track } from "@/lib/analytics";
 import { PageHero } from "@/components/ui/PageHero";
 import { GoldDivider } from "@/components/ui/Reveal";
+import { BlurWords, TypeEyebrow } from "@/components/effects/TextReveal";
 import { luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -105,12 +107,17 @@ function GiftFinder({ lang }: { lang: Lang }) {
           >
             <p className="eyebrow mb-3">{lang === "fr" ? "Nos suggestions" : "Our picks"}</p>
             <div className="grid grid-cols-3 gap-2.5">
-              {picks.map((p) => (
-                <Link
+              {picks.map((p, idx) => (
+                <motion.div
                   key={p.code}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, ease: luxeEase, delay: idx * 0.08 }}
+                >
+                <Link
                   href={`/${lang}/product/${p.code}`}
                   onClick={() => track("gift_quiz_pick_click", { code: p.code })}
-                  className="card-glow card-zoom relative rounded-xl overflow-hidden border border-(--line) aspect-[4/5]"
+                  className="card-glow card-zoom relative rounded-xl overflow-hidden border border-(--line) aspect-[4/5] block"
                 >
                   <Image src={p.image} alt={p.title} fill sizes="33vw" loading="lazy" className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent" />
@@ -118,6 +125,7 @@ function GiftFinder({ lang }: { lang: Lang }) {
                     {p.title}
                   </span>
                 </Link>
+                </motion.div>
               ))}
             </div>
             {picks.length === 0 && (
@@ -185,7 +193,10 @@ function ChainVisualizer({ lang }: { lang: Lang }) {
               fill="none"
               stroke={active === c.len ? "#C9A86A" : "rgba(201,168,106,0.25)"}
               strokeWidth={active === c.len ? 2 : 1}
-              className="transition-all duration-300"
+              strokeLinecap="round"
+              strokeDasharray={active === c.len ? "200" : "200"}
+              strokeDashoffset={active === c.len ? "0" : "200"}
+              className="transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
             />
           </g>
         ))}
@@ -246,7 +257,13 @@ function StatusLookup({ lang }: { lang: Lang }) {
         </button>
       </form>
       {result && (
-        <div className="mt-4 surface-card p-4" role="status">
+        <motion.div
+          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.4, ease: luxeEase }}
+          className="mt-4 surface-card p-4"
+          role="status"
+        >
           {result === "none" ? (
             <p className="text-[0.875rem] text-text-2">
               {lang === "fr"
@@ -261,7 +278,7 @@ function StatusLookup({ lang }: { lang: Lang }) {
               </span>
             </p>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -286,14 +303,16 @@ function CareGuide({ lang }: { lang: Lang }) {
           "Once a year: free setting inspection in store.",
         ];
   return (
-    <ul className="flex flex-col gap-2.5">
+    <RevealGroup className="flex flex-col gap-2.5">
       {tips.map((tip) => (
-        <li key={tip} className="flex gap-3 text-[0.875rem] text-text-2 leading-relaxed">
-          <Sparkles size={14} className="text-gold shrink-0 mt-1" aria-hidden />
-          {tip}
-        </li>
+        <RevealItem key={tip}>
+          <li className="flex gap-3 text-[0.875rem] text-text-2 leading-relaxed">
+            <Sparkles size={14} className="text-gold shrink-0 mt-1" aria-hidden />
+            {tip}
+          </li>
+        </RevealItem>
       ))}
-    </ul>
+    </RevealGroup>
   );
 }
 
@@ -338,8 +357,11 @@ export function ExploreView({ lang }: { lang: Lang }) {
                     {toolMeta[tool.id].icon}
                   </span>
                   <div>
-                    <h2 className="font-serif text-[1.35rem] text-ivory leading-tight">{tool[lang]}</h2>
-                    <p className="text-[0.8rem] text-text-3">{lang === "fr" ? tool.descFr : tool.descEn}</p>
+                    <TypeEyebrow text={lang === "fr" ? tool.descFr : tool.descEn} className="mb-1.5" />
+                    <BlurWords
+                      text={tool[lang]}
+                      className="font-serif text-[1.35rem] text-ivory leading-tight"
+                    />
                   </div>
                 </div>
                 <span

@@ -209,5 +209,3 @@ export function VelvetGoldShader() {
     </div>
   );
 }
-
-// Need useState import at top — will fix imports

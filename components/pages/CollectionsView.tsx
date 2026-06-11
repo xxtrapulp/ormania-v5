@@ -10,6 +10,9 @@ import { t, type Lang } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { useLeadModal } from "@/components/forms/LeadModalProvider";
 import { PageHero } from "@/components/ui/PageHero";
+import { Reveal } from "@/components/ui/Reveal";
+import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
+import { ParallaxText } from "@/components/effects/ParallaxText";
 import { luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -35,8 +38,22 @@ export function CollectionsView({ lang }: { lang: Lang }) {
 
       <section className="pb-16 md:pb-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <ParallaxText speed={0.25} className="max-w-2xl mb-10 md:mb-16 mx-auto text-center">
+            <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
+            <BlurWords
+              text={t(lang, "collections.title")}
+              className="text-balance font-serif text-[clamp(1.75rem,5.5vw,2.75rem)] leading-[1.12] text-ivory"
+            />
+            <FadeLines className="mt-4" stagger={0.08}>
+              <p className="fade-line text-[0.95rem] md:text-base leading-relaxed text-text-2">
+                {t(lang, "collections.sub")}
+              </p>
+            </FadeLines>
+          </ParallaxText>
+
           {/* Search + filter row */}
-          <div className="flex flex-col md:flex-row gap-3 md:items-center mb-7 md:mb-10">
+          <Reveal>
+            <div className="flex flex-col md:flex-row gap-3 md:items-center mb-7 md:mb-10">
             <label className="relative md:max-w-xs w-full">
               <span className="sr-only">{lang === "fr" ? "Rechercher" : "Search"}</span>
               <Search
@@ -81,7 +98,8 @@ export function CollectionsView({ lang }: { lang: Lang }) {
                 </button>
               ))}
             </div>
-          </div>
+            </div>
+          </Reveal>
 
           {/* Product grid */}
           <motion.div layout className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-5">
