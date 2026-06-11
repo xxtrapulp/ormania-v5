@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useLayoutEffect, useState, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useRef, useLayoutEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type Lang } from "@/lib/i18n";
 import { ScrollStoryShader } from "./ScrollStoryShader";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface Step {
@@ -28,7 +29,6 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement[]>([]);
   const dotsRef = useRef<HTMLDivElement[]>([]);
-  const [activeStep, setActiveStep] = useState(0);
   const isMobile = useIsMobile();
 
   const setPanelRef = useCallback((el: HTMLDivElement | null, i: number) => {
@@ -40,7 +40,8 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   }, []);
 
   useLayoutEffect(() => {
-    if (isMobile) return;
+    if (isMobile) return; // Mobile uses static Reveal layout below
+
     const ctx = gsap.context(() => {
       const panels = panelsRef.current.filter(Boolean);
       const dots = dotsRef.current.filter(Boolean);
@@ -114,82 +115,38 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
     return () => ctx.revert();
   }, [steps, isMobile]);
 
-  // Track active step on mobile with IntersectionObserver
-  useEffect(() => {
-    if (!isMobile) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = Number(entry.target.getAttribute("data-step"));
-            setActiveStep(idx);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    const stepEls = document.querySelectorAll("[data-craft-step]");
-    stepEls.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [isMobile, steps]);
-
-  // Mobile: CSS scroll-snap for smooth step-by-step scrolling
+  // Mobile: simple vertical reveal cards — no pin, no GSAP scrub fighting touch scroll
   if (isMobile) {
     return (
-      <section className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory">
-        {/* WebGL flowing filament background */}
-        <div aria-hidden className="fixed inset-0 z-[1]">
+      <section className="relative py-16 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 z-[1] opacity-40">
           <ScrollStoryShader />
         </div>
-
-        {/* Progress dots */}
-        <div className="fixed z-20 left-1/2 -translate-x-1/2 bottom-8 flex flex-row gap-2.5">
-          {steps.map((_, i) => (
-            <div
-              key={i}
-              className="w-2 h-2 rounded-full transition-colors duration-300"
-              style={{
-                backgroundColor: i === activeStep ? "rgba(201,168,106,0.85)" : "rgba(201,168,106,0.15)",
-                transform: i === activeStep ? "scale(1.4)" : "scale(1)",
-              }}
-            />
-          ))}
+        <div className="relative z-10 mx-auto max-w-3xl px-5">
+          <Reveal className="text-center mb-10">
+            <span className="eyebrow text-gold/60 block mb-3">
+              {lang === "fr" ? "L'Artisanat" : "The Craft"}
+            </span>
+          </Reveal>
+          <RevealGroup className="flex flex-col gap-8">
+            {steps.map((step, i) => (
+              <RevealItem key={i}>
+                <div className="rounded-2xl border border-(--line) surface-card p-6 text-center">
+                  <span className="eyebrow block mb-3 text-gold/70 text-[0.65rem]">
+                    0{i + 1} / 0{steps.length}
+                  </span>
+                  <h2 className="font-serif text-[1.35rem] leading-[1.15] text-ivory mb-3">
+                    {step.title}
+                  </h2>
+                  <p className="text-[0.9rem] text-text-2 leading-relaxed">
+                    {step.desc}
+                  </p>
+                  <div className="mt-4 w-12 h-px bg-gold/30 mx-auto" />
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
         </div>
-
-        {/* Step counter eyebrow */}
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-20">
-          <span className="eyebrow text-gold/60">
-            {lang === "fr" ? "L'Artisanat" : "The Craft"}
-          </span>
-        </div>
-
-        {/* Step panels */}
-        {steps.map((step, i) => (
-          <div
-            key={i}
-            data-craft-step={i}
-            className="snap-start h-[100dvh] flex items-center justify-center px-5"
-          >
-            <motion.div
-              className="text-center max-w-4xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.5 }}
-              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
-            >
-              <span className="step-counter eyebrow block mb-3 text-gold/70 text-[0.65rem]">
-                0{i + 1} / 0{steps.length}
-              </span>
-              <h2 className="text-balance font-serif text-[clamp(1.85rem,8vw,3.5rem)] leading-[1.15] text-ivory mb-3">
-                {step.title}
-              </h2>
-              <p className="w-full max-w-[34ch] text-[0.95rem] text-text-2 leading-relaxed">
-                {step.desc}
-              </p>
-              <div className="mt-5 w-12 h-px bg-gold/30 mx-auto" />
-            </motion.div>
-          </div>
-        ))}
       </section>
     );
   }
