@@ -6,6 +6,7 @@ import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow, MaskedWords } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { IG_POSTS, type IGCategory } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Heart, Upload, Link as LinkIcon } from "lucide-react";
@@ -24,6 +25,7 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
   const [activeFilter, setActiveFilter] = useState<IGCategory>("all");
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const { openModal } = useModal();
 
   const filtered =
     activeFilter === "all"
@@ -94,7 +96,10 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
                     <span className="text-gold text-[0.8rem]">
                       {post.availability}
                     </span>
-                    <button className="mt-2 px-5 py-2 rounded-full bg-gold text-ink text-[0.8rem] font-medium active:scale-[0.96] transition-transform">
+                    <button
+                      onClick={() => openModal("instagram", { pieceName: post.title })}
+                      className="mt-2 px-5 py-2 rounded-full bg-gold text-ink text-[0.8rem] font-medium active:scale-[0.96] transition-transform"
+                    >
                       {t(lang, "ig.ask")}
                     </button>
                   </div>

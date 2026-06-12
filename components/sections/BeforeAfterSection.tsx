@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import { Camera } from "lucide-react";
 
@@ -20,6 +21,7 @@ const TRANSFORMATIONS = [
 export function BeforeAfterSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const { openModal } = useModal();
 
   return (
     <section className="py-16 md:py-28 bg-ink">
@@ -50,7 +52,10 @@ export function BeforeAfterSection({ lang }: { lang: Lang }) {
         </div>
 
         <div className="mt-10 text-center">
-          <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gold/40 text-gold text-[0.9rem] font-medium hover:bg-gold/10 transition-colors active:scale-[0.96]">
+          <button
+            onClick={() => openModal("repair")}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gold/40 text-gold text-[0.9rem] font-medium hover:bg-gold/10 transition-colors active:scale-[0.96]"
+          >
             <Camera size={16} strokeWidth={1.5} />
             {lang === "fr" ? "Envoyez-nous des photos de votre réparation" : "Send us photos of your repair"}
           </button>

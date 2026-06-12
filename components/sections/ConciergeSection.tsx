@@ -4,11 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { MessageCircle, ArrowRight } from "lucide-react";
 
 export function ConciergeSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const { openModal } = useModal();
 
   return (
     <section className="py-16 md:py-24 bg-ink-2">
@@ -42,7 +44,10 @@ export function ConciergeSection({ lang }: { lang: Lang }) {
                   : "Tell Ormania what you are looking for and the boutique can guide you to the right pieces."
                 }
               </p>
-              <button className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-ink font-medium text-[0.9rem] btn-sheen active:scale-[0.96] transition-transform">
+              <button
+                onClick={() => openModal("concierge")}
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-ink font-medium text-[0.9rem] btn-sheen active:scale-[0.96] transition-transform"
+              >
                 <MessageCircle size={16} strokeWidth={1.5} />
                 {lang === "fr" ? "Demander à Ormania" : "Ask Ormania"}
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -70,7 +75,10 @@ export function ConciergeSection({ lang }: { lang: Lang }) {
                   rows={2}
                   className="w-full px-4 py-3 rounded-xl bg-ink-2 border border-(--line) text-ivory text-[0.9rem] placeholder:text-text-3 focus:border-gold/40 focus:outline-none transition-colors resize-none"
                 />
-                <button className="w-full h-11 rounded-xl bg-gold/10 border border-gold/30 text-gold text-[0.85rem] font-medium active:scale-[0.97] transition-transform">
+                <button
+                  onClick={() => openModal("quickAsk")}
+                  className="w-full h-11 rounded-xl bg-gold/10 border border-gold/30 text-gold text-[0.85rem] font-medium active:scale-[0.97] transition-transform"
+                >
                   {lang === "fr" ? "Envoyer" : "Send"}
                 </button>
               </div>
