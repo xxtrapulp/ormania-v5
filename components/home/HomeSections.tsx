@@ -46,7 +46,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       {/* ═══ FEATURED COLLECTIONS ═══ */}
       <section id="featured" className="pt-6 md:pt-12 pb-0">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
+          <div className="max-w-2xl mb-6 md:mb-8 mx-auto text-center">
             <TypeEyebrow text={t(lang, "collections.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "collections.title")}
@@ -131,7 +131,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ CUSTOM JEWELRY ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <Reveal className="card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5] max-h-[520px] w-full">
             <Image
@@ -151,7 +151,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
           </Reveal>
 
           <div>
-            <ParallaxText speed={0.4} className="max-w-xl mb-8 md:mb-12 mx-auto text-center">
+            <ParallaxText speed={0.4} className="max-w-xl mb-6 md:mb-8 mx-auto text-center">
               <TypeEyebrow text={t(lang, "custom.eyebrow")} className="block mb-3" />
               <BlurWords
                 text={t(lang, "custom.title")}
@@ -205,9 +205,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ REPAIRS ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <ParallaxText speed={0.35} className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
+          <ParallaxText speed={0.35} className="max-w-2xl mb-6 md:mb-8 mx-auto text-center">
             <TypeEyebrow text={t(lang, "repairs.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "repairs.title")}
@@ -265,10 +265,10 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ ENGAGEMENT ═══ */}
-      <section className="py-8 md:py-20">
+      <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <ParallaxText speed={0.4} className="max-w-xl mb-8 md:mb-12 mx-auto text-center">
+            <ParallaxText speed={0.4} className="max-w-xl mb-6 md:mb-8 mx-auto text-center">
               <TypeEyebrow text={t(lang, "engagement.eyebrow")} className="block mb-3" />
               <BlurWords
                 text={t(lang, "engagement.title")}
@@ -318,9 +318,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <GoldDivider className="mx-auto max-w-4xl" />
 
       {/* ═══ WHY ORMANIA ═══ */}
-      <section className="py-6 md:py-14">
+      <section className="py-5 md:py-10">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-6 md:mb-10 mx-auto text-center">
+          <div className="max-w-2xl mb-4 md:mb-6 mx-auto text-center">
             <TypeEyebrow text={t(lang, "why.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "why.title")}
@@ -379,9 +379,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
       </section>
 
       {/* ═══ TOOLS TEASER ═══ */}
-      <section className="py-6 md:py-14">
+      <section className="py-5 md:py-10">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl mb-4 md:mb-8 mx-auto text-center">
+          <div className="max-w-2xl mb-3 md:mb-5 mx-auto text-center">
             <TypeEyebrow text={t(lang, "tools.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "tools.title")}
@@ -437,9 +437,9 @@ export function HomeSections({ lang }: { lang: Lang }) {
       </section>
 
       {/* ═══ VISIT BAND ═══ */}
-      <section className="relative py-10 md:py-16 border-y border-(--line)">
+      <section className="relative py-8 md:py-12 border-y border-(--line)">
         <div className="mx-auto max-w-5xl px-4 md:px-8 text-center">
-          <ParallaxText speed={0.25} className="max-w-2xl mb-8 md:mb-12 mx-auto text-center">
+          <ParallaxText speed={0.25} className="max-w-2xl mb-6 md:mb-8 mx-auto text-center">
             <TypeEyebrow text={t(lang, "visit.eyebrow")} className="block mb-3" />
             <BlurWords
               text={t(lang, "visit.title")}

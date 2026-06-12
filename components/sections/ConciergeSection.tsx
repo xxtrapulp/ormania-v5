@@ -13,13 +13,15 @@ export function ConciergeSection({ lang }: { lang: Lang }) {
   const { openModal } = useModal();
 
   return (
-    <section className="py-16 md:py-24 bg-ink-2">
+    <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <motion.div
           ref={ref}
           className="relative overflow-hidden rounded-2xl border border-(--line) bg-ink p-8 md:p-12 lg:p-16"
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "80px" }}
           transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
         >
           {/* Subtle gold glow */}

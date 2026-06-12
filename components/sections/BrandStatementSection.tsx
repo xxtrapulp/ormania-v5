@@ -19,7 +19,7 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-40 overflow-hidden bg-ink"
+      className="relative py-16 md:py-24 overflow-hidden bg-ink"
     >
       {/* Horizontal scrolling text strip with parallax */}
       <motion.div
@@ -60,6 +60,8 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
             className="md:col-span-4 md:pb-2"
             initial={reduce ? undefined : { opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "80px" }}
             transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
           >
             <div className="w-12 h-px bg-gold/40 mb-4" />

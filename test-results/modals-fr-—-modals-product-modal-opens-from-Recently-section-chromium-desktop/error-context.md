@@ -19,6 +19,7 @@ Test timeout of 30000ms exceeded.
 Error: locator.scrollIntoViewIfNeeded: Test timeout of 30000ms exceeded.
 Call log:
   - waiting for locator('button').filter({ hasText: 'Demander' }).first()
+    - locator resolved to visible <button class="btn-sheen w-full min-h-11 h-11 rounded-full border border-gold/50 text-gold text-[0.8rem] md:text-[0.85rem] font-medium whitespace-nowrap transition-all duration-300 ease-(--ease-luxe) hover:bg-gold/10 hover:border-gold active:scale-[0.97] [-webkit-tap-highlight-color:transparent]">Demander</button>
 
 ```
 

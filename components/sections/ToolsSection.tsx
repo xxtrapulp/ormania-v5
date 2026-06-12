@@ -47,9 +47,9 @@ export function ToolsSection({ lang }: { lang: Lang }) {
   const { openModal } = useModal();
 
   return (
-    <section className="py-16 md:py-28 bg-ink-2">
+    <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-8 md:mb-10">
           <Eyebrow text={lang === "fr" ? "Outils et guides" : "Tools & Guides"} className="mb-3" />
           <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory">
             {lang === "fr" ? "Petits outils, grandes décisions." : "Little helpers, big decisions."}
@@ -65,6 +65,8 @@ export function ToolsSection({ lang }: { lang: Lang }) {
                 key={tool.titleEn}
                 initial={reduce ? undefined : { opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "80px" }}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 0.61, 0.36, 1] }}
               >
                 <GlassCard

@@ -15,7 +15,7 @@
 Error: expect(received).toBeLessThanOrEqual(expected)
 
 Expected: <= 2
-Received:    7
+Received:    24
 ```
 
 # Test source

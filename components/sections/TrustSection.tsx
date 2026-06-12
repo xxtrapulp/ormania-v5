@@ -44,7 +44,7 @@ export function TrustSection({ lang }: { lang: Lang }) {
   const storyY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "15%"]);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-28 bg-ink-2 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 md:py-20 bg-ink-2 relative overflow-hidden">
       {/* Parallax background glow */}
       <motion.div
         aria-hidden
@@ -52,7 +52,7 @@ export function TrustSection({ lang }: { lang: Lang }) {
         style={{ y: glowY, willChange: "transform" }}
       />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-8 md:mb-10">
           <Eyebrow text={lang === "fr" ? "Confiance" : "Trust"} className="mb-3" />
           <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory">
             {lang === "fr" ? "De confiance à Laval." : "Trusted in Laval."}
@@ -60,7 +60,7 @@ export function TrustSection({ lang }: { lang: Lang }) {
         </div>
 
         {/* Trust badges */}
-        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-10 md:mb-14">
+        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
           {TRUST_POINTS.map((point, i) => {
             const Icon = point.icon;
             return (
@@ -68,6 +68,8 @@ export function TrustSection({ lang }: { lang: Lang }) {
                 key={point.en}
                 initial={reduce ? undefined : { opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "80px" }}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
                 className="flex items-center gap-3 p-4 rounded-xl border border-(--line) bg-ink"
               >
@@ -85,6 +87,8 @@ export function TrustSection({ lang }: { lang: Lang }) {
               key={review.author}
               initial={reduce ? undefined : { opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <GlassCard className="p-5 md:p-6">
@@ -107,6 +111,8 @@ export function TrustSection({ lang }: { lang: Lang }) {
           className="mt-10 md:mt-14 rounded-2xl border border-(--line) bg-ink p-6 md:p-10 text-center"
           initial={reduce ? undefined : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "80px" }}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
           style={{ y: storyY, willChange: "transform" }}
         >

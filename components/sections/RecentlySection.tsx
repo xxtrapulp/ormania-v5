@@ -24,9 +24,9 @@ export function RecentlySection({ lang }: { lang: Lang }) {
   const { openModal } = useModal();
 
   return (
-    <section className="py-16 md:py-28 bg-ink">
+    <section className="py-12 md:py-20 bg-ink">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
           <div>
             <Eyebrow text={lang === "fr" ? "Récemment" : "Recently at Ormania"} className="mb-3" />
             <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory">
@@ -47,6 +47,8 @@ export function RecentlySection({ lang }: { lang: Lang }) {
               key={item.titleEn}
               initial={reduce ? undefined : { opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "80px" }}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <GlassCard className="p-4 h-full group cursor-pointer">

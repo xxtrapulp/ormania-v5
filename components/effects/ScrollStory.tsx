@@ -130,7 +130,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
   // Mobile: simple vertical reveal cards — no pin, no GSAP scrub fighting touch scroll
   if (isMobile) {
     return (
-      <section className="relative py-16 overflow-hidden">
+      <section className="relative py-10 overflow-hidden">
         <div aria-hidden className="absolute inset-0 z-[1] opacity-40">
           <ScrollStoryShader />
         </div>

@@ -50,13 +50,13 @@ export function ServicesSection({ lang }: { lang: Lang }) {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="py-16 md:py-28 bg-ink">
+    <section className="py-12 md:py-20 bg-ink">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Eyebrow
           text={lang === "fr" ? "Services phares" : "Signature Services"}
           className="mb-3"
         />
-        <h2 className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory mb-12 md:mb-16">
+        <h2 className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory mb-8 md:mb-10">
           {lang === "fr" ? "Notre savoir-faire, à votre service." : "Our craft, at your service."}
         </h2>
 

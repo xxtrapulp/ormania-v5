@@ -50,9 +50,9 @@ export function IntentionSection({ lang }: { lang: Lang }) {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section className="py-16 md:py-28 bg-ink-2">
+    <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-8 md:mb-10">
           <Eyebrow
             text={lang === "fr" ? "Shop par intention" : "Shop by Intention"}
             className="mb-3"
@@ -74,6 +74,8 @@ export function IntentionSection({ lang }: { lang: Lang }) {
                 className="group relative rounded-2xl border border-(--line) bg-ink p-5 md:p-6 transition-all duration-500 hover:border-(--line-2) hover:-translate-y-1 cursor-pointer"
                 initial={reduce ? undefined : { opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "80px" }}
                 transition={{
                   duration: 0.5,
                   delay: i * 0.08,

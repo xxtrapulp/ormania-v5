@@ -39,7 +39,7 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
       : IG_POSTS.filter((p) => p.cat === activeFilter);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-28 bg-ink relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 md:py-20 bg-ink relative overflow-hidden">
       {/* Parallax background glow */}
       <motion.div
         aria-hidden
@@ -143,6 +143,8 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
           className="mt-12 md:mt-16 p-6 md:p-8 rounded-2xl border border-(--line) bg-[rgba(255,255,255,0.02)]"
           initial={reduce ? undefined : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "80px" }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
         >
           <h3 className="font-serif text-[1.15rem] md:text-[1.35rem] text-ivory text-center mb-6">
