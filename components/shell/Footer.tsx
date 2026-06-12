@@ -36,6 +36,7 @@ export function Footer({ lang }: { lang: Lang }) {
     { href: `/${lang}/custom`, label: t(lang, "nav.custom") },
     { href: `/${lang}/repairs`, label: t(lang, "nav.repairs") },
     { href: `/${lang}/visit`, label: t(lang, "nav.visit") },
+    { href: `/${lang}/pitch`, label: lang === "fr" ? "Présentation" : "Pitch" },
   ];
 
   return (
