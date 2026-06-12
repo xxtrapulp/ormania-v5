@@ -4,8 +4,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
-import { MapPin, Shield, Star, MessageCircle } from "lucide-react";
+import { MapPin, Shield, Star, MessageCircle, ArrowRight } from "lucide-react";
 
 const TRUST_POINTS = [
   { icon: MapPin, en: "Local Laval boutique", fr: "Boutique locale de Laval" },
@@ -32,6 +33,7 @@ const REVIEWS = [
 export function TrustSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const { openModal } = useModal();
 
   return (
     <section className="py-16 md:py-28 bg-ink-2">
@@ -93,12 +95,19 @@ export function TrustSection({ lang }: { lang: Lang }) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
         >
-          <p className="text-[0.95rem] md:text-base text-text-2 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-[0.95rem] md:text-base text-text-2 leading-relaxed max-w-2xl mx-auto mb-6">
             {lang === "fr"
               ? "Bijouterie Ormania est une boutique familiale au cœur de Laval. Depuis des années, nous aidons nos clients à marquer les moments importants de leur vie avec des bijoux qui racontent une histoire."
               : "Bijouterie Ormania is a family-owned boutique in the heart of Laval. For years, we've helped our customers mark life's important moments with jewelry that tells a story."
             }
           </p>
+          <button
+            onClick={() => openModal("contact")}
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-ink font-medium text-[0.9rem] btn-sheen active:scale-[0.96] transition-transform"
+          >
+            {lang === "fr" ? "Contactez-nous" : "Contact Us"}
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+          </button>
         </motion.div>
       </div>
     </section>

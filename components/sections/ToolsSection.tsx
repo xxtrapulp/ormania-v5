@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import {
   Gift,
@@ -41,6 +43,8 @@ const STATUS_LABELS = {
 export function ToolsSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const router = useRouter();
+  const { openModal } = useModal();
 
   return (
     <section className="py-16 md:py-28 bg-ink-2">
@@ -63,7 +67,13 @@ export function ToolsSection({ lang }: { lang: Lang }) {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 0.61, 0.36, 1] }}
               >
-                <GlassCard className="p-4 md:p-5 h-full flex flex-col items-center text-center group cursor-pointer hover:shadow-[0_0_30px_rgba(201,168,106,0.08)]">
+                <GlassCard
+                  onClick={() => {
+                    if (tool.status === "soon") return;
+                    router.push(`/${lang}/explore`);
+                  }}
+                  className={`p-4 md:p-5 h-full flex flex-col items-center text-center group hover:shadow-[0_0_30px_rgba(201,168,106,0.08)] ${tool.status === "soon" ? "cursor-default" : "cursor-pointer"}`}
+                >
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gold/20 flex items-center justify-center text-gold mb-3 group-hover:bg-gold/10 transition-colors">
                     <Icon size={18} strokeWidth={1.5} />
                   </div>

@@ -8,6 +8,7 @@ interface GlassCardProps {
   className?: string;
   hover?: boolean;
   glow?: "none" | "soft" | "strong";
+  onClick?: () => void;
 }
 
 export function GlassCard({
@@ -15,6 +16,7 @@ export function GlassCard({
   className,
   hover = true,
   glow = "soft",
+  onClick,
 }: GlassCardProps) {
   const glowClasses = {
     none: "",
@@ -24,9 +26,11 @@ export function GlassCard({
 
   return (
     <div
+      onClick={onClick}
       className={cn(
         "bg-[rgba(255,255,255,0.04)] border border-[rgba(201,168,106,0.18)] rounded-2xl transition-all duration-500",
         hover && "hover:border-[rgba(201,168,106,0.3)] hover:-translate-y-[3px]",
+        onClick && "cursor-pointer",
         glowClasses[glow],
         className
       )}
