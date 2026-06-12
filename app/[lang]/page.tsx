@@ -17,6 +17,12 @@ import { InstagramInquiryModal } from "@/components/modals/InstagramInquiryModal
 import { CustomRequestModal } from "@/components/modals/CustomRequestModal";
 import { RepairEstimateModal } from "@/components/modals/RepairEstimateModal";
 import { AppointmentModal } from "@/components/modals/AppointmentModal";
+import { ConciergeModal } from "@/components/modals/ConciergeModal";
+import { SavedPiecesModal } from "@/components/modals/SavedPiecesModal";
+import { CompareModal } from "@/components/modals/CompareModal";
+import { ContactModal } from "@/components/modals/ContactModal";
+import { ReserveModal } from "@/components/modals/ReserveModal";
+import { ProposalModal } from "@/components/modals/ProposalModal";
 
 export async function generateMetadata({
   params,
@@ -85,6 +91,12 @@ export default async function HomePage({
       <CustomRequestModal lang={l} />
       <RepairEstimateModal lang={l} />
       <AppointmentModal lang={l} />
+      <ConciergeModal lang={l} />
+      <SavedPiecesModal lang={l} />
+      <CompareModal lang={l} />
+      <ContactModal lang={l} />
+      <ReserveModal lang={l} />
+      <ProposalModal lang={l} />
     </>
   );
 }

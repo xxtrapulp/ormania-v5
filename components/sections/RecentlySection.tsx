@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { useModal } from "@/components/modals/ModalSystem";
 import { HorizontalScroll } from "@/components/design-system/HorizontalScroll";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import { Heart, ArrowRight } from "lucide-react";
@@ -20,6 +21,7 @@ const RECENT_ITEMS = [
 export function RecentlySection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const { openModal } = useModal();
 
   return (
     <section className="py-16 md:py-28 bg-ink">
@@ -62,10 +64,13 @@ export function RecentlySection({ lang }: { lang: Lang }) {
                 <h3 className="font-serif text-[0.95rem] text-ivory group-hover:text-gold transition-colors">
                   {lang === "fr" ? item.titleFr : item.titleEn}
                 </h3>
-                <div className="mt-2 flex items-center gap-1 text-gold text-[0.75rem] opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={() => openModal("product", { pieceName: lang === "fr" ? item.titleFr : item.titleEn })}
+                  className="mt-2 flex items-center gap-1 text-gold text-[0.75rem] opacity-0 group-hover:opacity-100 transition-opacity"
+                >
                   <span>{lang === "fr" ? "Demander" : "Ask About This"}</span>
                   <ArrowRight size={12} />
-                </div>
+                </button>
               </GlassCard>
             </motion.div>
           ))}
