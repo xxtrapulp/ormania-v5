@@ -6,7 +6,6 @@ import { HomeSections } from "@/components/home/HomeSections";
 import { BrandStatementSection } from "@/components/sections/BrandStatementSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { IntentionSection } from "@/components/sections/IntentionSection";
-import { InstagramShowroomSection } from "@/components/sections/InstagramShowroomSection";
 import { ConciergeSection } from "@/components/sections/ConciergeSection";
 import { RecentlySection } from "@/components/sections/RecentlySection";
 import { BeforeAfterSection } from "@/components/sections/BeforeAfterSection";
@@ -81,7 +80,6 @@ export default async function HomePage({
       <ServicesSection lang={l} />
       <IntentionSection lang={l} />
       <HomeSections lang={l} />
-      <InstagramShowroomSection lang={l} />
       <ConciergeSection lang={l} />
       <RecentlySection lang={l} />
       <BeforeAfterSection lang={l} />

@@ -17,26 +17,10 @@ import { ScrollStory } from "@/components/effects/ScrollStory";
 import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
 import { ParallaxText } from "@/components/effects/ParallaxText";
 import { useScrollEffects } from "@/hooks/useScrollEffects";
+import { useScrollReveal } from "@/components/effects/useScrollReveal";
 
 function StepItem({ children, index }: { children: ReactNode; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "-80px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView } = useScrollReveal();
 
   return (
     <div
@@ -44,7 +28,7 @@ function StepItem({ children, index }: { children: ReactNode; index: number }) {
       className="flex gap-4 items-start"
       style={{
         opacity: 1,
-        transform: visible ? "translateY(0)" : "translateY(8px)",
+        transform: isInView ? "translateY(0)" : "translateY(8px)",
         transition: `transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) ${index * 0.08}s`,
       }}
     >

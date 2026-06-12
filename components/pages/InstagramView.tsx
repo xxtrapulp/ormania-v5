@@ -8,6 +8,7 @@ import { IGGrid } from "@/components/ig/IGGrid";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
+import { InstagramShowroomSection } from "@/components/sections/InstagramShowroomSection";
 
 export function InstagramView({ lang, title }: { lang: Lang; title: string }) {
   return (
@@ -21,6 +22,8 @@ export function InstagramView({ lang, title }: { lang: Lang; title: string }) {
       <section className="pb-16 md:pb-28">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <IGGrid lang={lang} showFilters showCtas />
+
+          <InstagramShowroomSection lang={lang} />
 
           <Reveal className="mt-14 text-center surface-card max-w-xl mx-auto p-7 md:p-10">
             <IgIcon className="w-7 h-7 text-gold mx-auto mb-4" />

@@ -47,6 +47,7 @@ const SERVICES = [
 
 export function ServicesSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
+  const { ref, isInView } = useScrollReveal();
 
   return (
     <section className="py-16 md:py-28 bg-ink">
@@ -59,17 +60,17 @@ export function ServicesSection({ lang }: { lang: Lang }) {
           {lang === "fr" ? "Notre savoir-faire, à votre service." : "Our craft, at your service."}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
-            const { ref, isInView } = useScrollReveal({ rootMargin: "-60px" });
             return (
               <motion.div
                 key={service.title.en}
-                ref={ref}
                 className="group relative overflow-hidden rounded-2xl border border-(--line) bg-[rgba(255,255,255,0.02)] p-6 md:p-8 transition-all duration-500 hover:border-(--line-2) hover:bg-[rgba(255,255,255,0.04)]"
                 initial={reduce ? undefined : { opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "80px" }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 0.61, 0.36, 1] }}
               >
                 <div className="flex items-start gap-4 md:gap-5">

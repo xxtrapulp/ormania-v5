@@ -438,6 +438,12 @@ body.has-action-bar {
   will-change: transform, opacity;
 }
 
+/* Safety net: elements that are stuck at opacity:0 after 3s force-visible */
+@keyframes force-visible {
+  0%, 99% { opacity: var(--initial-opacity, 0); }
+  100% { opacity: 1; }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,

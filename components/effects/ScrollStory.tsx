@@ -62,14 +62,16 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${window.innerHeight * panels.length}`,
+          end: `+=${window.innerHeight * panels.length * 0.7}`,
           pin: true,
-          scrub: 0.3,
+          scrub: true,
           anticipatePin: 1,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
           snap: {
             snapTo: 1 / (panels.length - 1),
-            duration: { min: 0.15, max: 0.35 },
-            delay: 0.03,
+            duration: { min: 0.12, max: 0.28 },
+            delay: 0.02,
             ease: "power2.inOut",
           },
           onLeaveBack: () => {
@@ -203,7 +205,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
             key={i}
             ref={(el) => setPanelRef(el, i)}
             className="col-start-1 row-start-1 w-full flex flex-col items-center justify-center"
-            style={{ opacity: i === 0 ? 1 : 0 }}
+            style={{ opacity: i === 0 ? 1 : 0, willChange: "transform, opacity" }}
           >
             <span className="step-counter eyebrow block mb-3 md:mb-6 text-gold/70 text-[0.65rem] md:text-[0.75rem]">
               0{i + 1} / 0{steps.length}
