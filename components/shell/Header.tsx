@@ -5,11 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Heart, Scale } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { luxeEase } from "@/lib/motion";
+import { useModal } from "@/components/modals/ModalSystem";
+import { useSavedPieces } from "@/hooks/useSavedPieces";
+import { useCompare } from "@/hooks/useCompare";
 
 const headerVariants = {
   hidden: { y: -20, opacity: 0 },
@@ -51,6 +54,9 @@ export function Header({ lang }: { lang: Lang }) {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { openModal } = useModal();
+  const { pieces } = useSavedPieces();
+  const { items } = useCompare();
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -164,6 +170,32 @@ export function Header({ lang }: { lang: Lang }) {
               <span className="mx-1 text-text-3">/</span>
               <span className={lang === "fr" ? "text-gold" : ""}>FR</span>
             </Link>
+
+            <button
+              onClick={() => openModal("saved")}
+              aria-label={lang === "fr" ? "Pièces sauvegardées" : "Saved pieces"}
+              className="relative min-h-11 min-w-11 inline-flex items-center justify-center text-text-2 hover:text-gold transition-colors"
+            >
+              <Heart size={18} strokeWidth={1.5} />
+              {pieces.length > 0 && (
+                <span className="absolute top-1.5 right-1 w-4 h-4 rounded-full bg-gold text-ink text-[0.6rem] font-bold flex items-center justify-center">
+                  {pieces.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => openModal("compare")}
+              aria-label={lang === "fr" ? "Comparer" : "Compare"}
+              className="relative min-h-11 min-w-11 inline-flex items-center justify-center text-text-2 hover:text-gold transition-colors"
+            >
+              <Scale size={18} strokeWidth={1.5} />
+              {items.length > 0 && (
+                <span className="absolute top-1.5 right-1 w-4 h-4 rounded-full bg-gold text-ink text-[0.6rem] font-bold flex items-center justify-center">
+                  {items.length}
+                </span>
+              )}
+            </button>
 
             <Link
               href={`/${lang}/engagement#book`}
