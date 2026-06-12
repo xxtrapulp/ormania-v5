@@ -3,6 +3,17 @@ import { isLang, type Lang } from "@/lib/i18n";
 import { GlobalBackground } from "@/components/effects/GlobalBackground";
 import { Hero } from "@/components/home/Hero";
 import { HomeSections } from "@/components/home/HomeSections";
+import { BrandStatementSection } from "@/components/sections/BrandStatementSection";
+import { ServicesSection } from "@/components/sections/ServicesSection";
+import { IntentionSection } from "@/components/sections/IntentionSection";
+import { InstagramShowroomSection } from "@/components/sections/InstagramShowroomSection";
+import { ConciergeSection } from "@/components/sections/ConciergeSection";
+import { RecentlySection } from "@/components/sections/RecentlySection";
+import { BeforeAfterSection } from "@/components/sections/BeforeAfterSection";
+import { ToolsSection } from "@/components/sections/ToolsSection";
+import { TrustSection } from "@/components/sections/TrustSection";
+import { QuickAskModal } from "@/components/modals/QuickAskModal";
+import { InstagramInquiryModal } from "@/components/modals/InstagramInquiryModal";
 
 export async function generateMetadata({
   params,
@@ -56,7 +67,18 @@ export default async function HomePage({
     <>
       <GlobalBackground />
       <Hero lang={l} />
+      <BrandStatementSection lang={l} />
+      <ServicesSection lang={l} />
+      <IntentionSection lang={l} />
       <HomeSections lang={l} />
+      <InstagramShowroomSection lang={l} />
+      <ConciergeSection lang={l} />
+      <RecentlySection lang={l} />
+      <BeforeAfterSection lang={l} />
+      <ToolsSection lang={l} />
+      <TrustSection lang={l} />
+      <QuickAskModal lang={l} />
+      <InstagramInquiryModal lang={l} />
     </>
   );
 }
