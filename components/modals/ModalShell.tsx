@@ -13,13 +13,46 @@ interface ModalShellProps {
   size?: "sm" | "md" | "lg" | "full";
 }
 
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export function ModalShell({ isOpen, title, children, size = "md" }: ModalShellProps) {
   const { closeModal } = useModal();
   const panelRef = useRef<HTMLDivElement>(null);
+  const lastFocused = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      lastFocused.current = document.activeElement as HTMLElement;
+      // Focus first focusable element in modal
+      const first = panelRef.current?.querySelector(FOCUSABLE) as HTMLElement | null;
+      first?.focus();
+    } else if (lastFocused.current) {
+      lastFocused.current.focus();
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (e.key !== "Tab" || !panelRef.current) return;
+      const focusables = Array.from(panelRef.current.querySelectorAll(FOCUSABLE)) as HTMLElement[];
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     if (isOpen) window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
