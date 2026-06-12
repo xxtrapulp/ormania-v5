@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow, MaskedWords } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
@@ -26,6 +26,12 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
   const { openModal } = useModal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "30%"]);
 
   const filtered =
     activeFilter === "all"
@@ -33,7 +39,13 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
       : IG_POSTS.filter((p) => p.cat === activeFilter);
 
   return (
-    <section className="py-16 md:py-28 bg-ink relative overflow-hidden">
+    <section ref={sectionRef} className="py-16 md:py-28 bg-ink relative overflow-hidden">
+      {/* Parallax background glow */}
+      <motion.div
+        aria-hidden
+        className="absolute -top-[20%] -right-[10%] w-[60%] h-[60%] rounded-full bg-gold/[0.03] blur-[120px] pointer-events-none"
+        style={{ y: bgY, willChange: "transform" }}
+      />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">

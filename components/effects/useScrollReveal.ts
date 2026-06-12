@@ -12,13 +12,21 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}): {
   ref: RefObject<HTMLDivElement | null>;
   isInView: boolean;
 } {
-  const { threshold = 0.1, rootMargin = "-80px", once = true } = options;
+  const { threshold = 0.05, rootMargin = "120px", once = true } = options;
   const ref = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Fallback: if element is already in viewport on mount, fire immediately
+    const rect = el.getBoundingClientRect();
+    const inViewport = rect.top < window.innerHeight + 120 && rect.bottom > -120;
+    if (inViewport) {
+      setIsInView(true);
+      if (once) return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { MaskedWords, Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
@@ -8,14 +9,23 @@ import { useScrollReveal } from "@/components/effects/useScrollReveal";
 export function BrandStatementSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const stripY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "40%"]);
 
   return (
     <section
-      ref={ref}
+      ref={sectionRef}
       className="relative py-24 md:py-40 overflow-hidden bg-ink"
     >
-      {/* Horizontal scrolling text strip */}
-      <div className="absolute top-8 left-0 right-0 overflow-hidden opacity-[0.04]">
+      {/* Horizontal scrolling text strip with parallax */}
+      <motion.div
+        className="absolute top-8 left-0 right-0 overflow-hidden opacity-[0.04]"
+        style={{ y: stripY, willChange: "transform" }}
+      >
         <motion.div
           className="flex gap-8 whitespace-nowrap"
           animate={reduce ? undefined : { x: [0, -1000] }}
@@ -27,7 +37,7 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
             </span>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end">

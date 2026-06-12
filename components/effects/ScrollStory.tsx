@@ -64,13 +64,23 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
           start: "top top",
           end: `+=${window.innerHeight * panels.length}`,
           pin: true,
-          scrub: 0.5,
+          scrub: 0.3,
           anticipatePin: 1,
           snap: {
-            snapTo: "labels",
-            duration: { min: 0.2, max: 0.5 },
-            delay: 0.05,
+            snapTo: 1 / (panels.length - 1),
+            duration: { min: 0.15, max: 0.35 },
+            delay: 0.03,
             ease: "power2.inOut",
+          },
+          onLeaveBack: () => {
+            // Reset all panels visible when scrolling back to top
+            panels.forEach((p) => gsap.set(p, { opacity: 1 }));
+            const firstCounter = panels[0].querySelector(".step-counter");
+            const firstTitle = panels[0].querySelector("h2");
+            const firstDesc = panels[0].querySelector("p");
+            if (firstCounter) gsap.set(firstCounter, { opacity: 1, scale: 1 });
+            if (firstTitle) gsap.set(firstTitle, { opacity: 1, y: 0 });
+            if (firstDesc) gsap.set(firstDesc, { opacity: 1, y: 0 });
           },
         },
       });
@@ -155,6 +165,7 @@ export function ScrollStory({ lang, steps }: { lang: Lang; steps: Step[] }) {
     <section
       ref={containerRef}
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
+      style={{ willChange: "transform" }}
     >
       {/* ── WebGL flowing filament background ── */}
       <div aria-hidden className="absolute inset-0 z-[1]">

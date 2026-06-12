@@ -424,6 +424,20 @@ body.has-action-bar {
   }
 }
 
+/* ── Compositor layer promotion for animated elements ── */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Promote scroll-animated elements to their own layer */
+[class*="motion"],
+[data-framer-motion] {
+  will-change: transform, opacity;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -220,6 +220,10 @@ export function Hero({ lang }: { lang: Lang }) {
             initial={reduce ? false : { opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.1, duration: 1.4, ease: luxeEase }}
+            style={{
+              y: useTransform(scrollYProgress, [0, 1], ["0%", isMobile || reduce ? "0%" : "60%"]),
+              willChange: "transform",
+            }}
           >
             <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(201,168,106,0.12)_0%,transparent_70%)]" />
             <ResponsiveRing mouse={{ x: mouse.normalizedX, y: mouse.normalizedY }} />

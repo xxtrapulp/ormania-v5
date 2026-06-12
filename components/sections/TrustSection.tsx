@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
@@ -34,9 +35,22 @@ export function TrustSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
   const { ref, isInView } = useScrollReveal();
   const { openModal } = useModal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const glowY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "25%"]);
+  const storyY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "15%"]);
 
   return (
-    <section className="py-16 md:py-28 bg-ink-2">
+    <section ref={sectionRef} className="py-16 md:py-28 bg-ink-2 relative overflow-hidden">
+      {/* Parallax background glow */}
+      <motion.div
+        aria-hidden
+        className="absolute -bottom-[30%] -left-[15%] w-[70%] h-[70%] rounded-full bg-gold/[0.02] blur-[140px] pointer-events-none"
+        style={{ y: glowY, willChange: "transform" }}
+      />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="text-center mb-10 md:mb-14">
           <Eyebrow text={lang === "fr" ? "Confiance" : "Trust"} className="mb-3" />
@@ -94,6 +108,7 @@ export function TrustSection({ lang }: { lang: Lang }) {
           initial={reduce ? undefined : { opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
+          style={{ y: storyY, willChange: "transform" }}
         >
           <p className="text-[0.95rem] md:text-base text-text-2 leading-relaxed max-w-2xl mx-auto mb-6">
             {lang === "fr"
