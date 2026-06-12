@@ -14,6 +14,9 @@ import { ToolsSection } from "@/components/sections/ToolsSection";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { QuickAskModal } from "@/components/modals/QuickAskModal";
 import { InstagramInquiryModal } from "@/components/modals/InstagramInquiryModal";
+import { CustomRequestModal } from "@/components/modals/CustomRequestModal";
+import { RepairEstimateModal } from "@/components/modals/RepairEstimateModal";
+import { AppointmentModal } from "@/components/modals/AppointmentModal";
 
 export async function generateMetadata({
   params,
@@ -79,6 +82,9 @@ export default async function HomePage({
       <TrustSection lang={l} />
       <QuickAskModal lang={l} />
       <InstagramInquiryModal lang={l} />
+      <CustomRequestModal lang={l} />
+      <RepairEstimateModal lang={l} />
+      <AppointmentModal lang={l} />
     </>
   );
 }

@@ -16,6 +16,11 @@ import { track } from "@/lib/analytics";
 import { luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { IgIcon } from "@/components/ui/icons";
+import { AdminShell } from "@/components/admin/AdminShell";
+import { OverviewCards } from "@/components/admin/OverviewCards";
+import { LeadsTable } from "@/components/admin/LeadsTable";
+import { LeadDetailPanel } from "@/components/admin/LeadDetailPanel";
+import { MessageTemplates } from "@/components/admin/MessageTemplates";
 
 const TYPE_LABELS: Record<LeadType, { en: string; fr: string }> = {
   product: { en: "Product", fr: "Produit" },
@@ -54,6 +59,18 @@ function StatusPill({ status, lang }: { status: LeadStatus; lang: Lang }) {
       {statusLabel(status, lang)}
     </span>
   );
+}
+
+function computeStats(leads: Lead[]) {
+  return {
+    total: leads.length,
+    new: leads.filter((l) => l.status === "new").length,
+    pending: leads.filter((l) => ["contacted", "waiting", "quote"].includes(l.status)).length,
+    instagram: leads.filter((l) => l.type === "instagram").length,
+    repair: leads.filter((l) => l.type === "repair").length,
+    custom: leads.filter((l) => l.type === "custom").length,
+    appointment: leads.filter((l) => l.type === "appointment").length,
+  };
 }
 
 /* ── Login screen ── */
@@ -392,208 +409,77 @@ export function AdminView({ lang }: { lang: Lang }) {
   const [authed, setAuthed] = useState(false);
   const [ready, setReady] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [typeFilter, setTypeFilter] = useState<LeadType | "all">("all");
-  const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all");
-  const [q, setQ] = useState("");
-  const [selected, setSelected] = useState<string | null>(null);
-  const reduce = useReducedMotion();
+  const [activeView, setActiveView] = useState("overview");
+  const [selected, setSelected] = useState<Lead | null>(null);
   const fr = lang === "fr";
 
   const refresh = () => setLeads(getLeads());
 
   useEffect(() => {
-    // One-time client init: sessionStorage/localStorage don't exist during SSG,
-    // so auth + leads must be hydrated after mount.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAuthed(sessionStorage.getItem("ormania.admin.auth") === "1");
     setReady(true);
     refresh();
   }, []);
 
-  const filtered = useMemo(
-    () =>
-      leads.filter((l) => {
-        if (typeFilter !== "all" && l.type !== typeFilter) return false;
-        if (statusFilter !== "all" && l.status !== statusFilter) return false;
-        if (q) {
-          const hay = `${l.id} ${l.name} ${l.email ?? ""} ${l.phone ?? ""} ${l.message ?? ""}`.toLowerCase();
-          if (!hay.includes(q.toLowerCase())) return false;
-        }
-        return true;
-      }),
-    [leads, typeFilter, statusFilter, q]
-  );
-
-  const selectedLead = leads.find((l) => l.id === selected);
-
-  if (!ready) return <div className="min-h-[70vh]" />;
+  if (!ready) return <div className="min-h-screen bg-ink" />;
   if (!authed) return <Login lang={lang} onAuth={() => { setAuthed(true); refresh(); }} />;
 
-  const kpis: { label: string; value: number; icon: React.ReactNode }[] = [
-    {
-      label: fr ? "Nouveaux leads" : "New leads",
-      value: leads.filter((l) => l.status === "new").length,
-      icon: <ChevronRight size={16} aria-hidden />,
-    },
-    {
-      label: fr ? "En cours" : "In progress",
-      value: leads.filter((l) => ["contacted", "waiting", "quote", "approved", "progress"].includes(l.status)).length,
-      icon: <Hammer size={16} aria-hidden />,
-    },
-    {
-      label: fr ? "Prêts / terminés" : "Ready / done",
-      value: leads.filter((l) => ["ready", "done"].includes(l.status)).length,
-      icon: <Check size={16} aria-hidden />,
-    },
-    {
-      label: fr ? "Demandes Instagram" : "Instagram inquiries",
-      value: leads.filter((l) => l.type === "instagram").length,
-      icon: <IgIcon className="w-4 h-4" />,
-    },
-  ];
+  const stats = computeStats(leads);
+
+  const filteredByType = activeView === "all" || activeView === "overview" || activeView === "leads"
+    ? leads
+    : leads.filter((l) => l.type === activeView);
 
   return (
-    <div className="pt-24 md:pt-32 pb-16 md:pb-24">
-      <div className="mx-auto max-w-6xl px-4 md:px-8">
-        <div className="flex items-end justify-between gap-3 mb-7">
-          <div>
-            <span className="eyebrow block mb-2">{fr ? "Espace personnel" : "Staff dashboard"}</span>
-            <h1 className="font-serif text-[clamp(1.7rem,5vw,2.5rem)] text-ivory leading-tight">
-              {fr ? "Leads et demandes" : "Leads & requests"}
-            </h1>
-          </div>
-          <button
-            onClick={() => {
-              sessionStorage.removeItem("ormania.admin.auth");
-              setAuthed(false);
-            }}
-            className="min-h-11 px-4 rounded-full border border-(--line) text-[0.8rem] text-text-2
-              hover:border-gold/40 hover:text-ivory transition-all shrink-0"
-          >
-            {fr ? "Quitter" : "Sign out"}
-          </button>
+    <AdminShell lang={lang} activeView={activeView} onChangeView={setActiveView}>
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3 mb-8">
+        <div>
+          <span className="eyebrow block mb-2">{fr ? "Espace personnel" : "Staff dashboard"}</span>
+          <h1 className="font-serif text-[clamp(1.5rem,4vw,2.25rem)] text-ivory leading-tight">
+            {activeView === "overview" && (fr ? "Vue d'ensemble" : "Overview")}
+            {activeView === "leads" && (fr ? "Tous les leads" : "All leads")}
+            {activeView === "instagram" && "Instagram"}
+            {activeView === "custom" && (fr ? "Sur mesure" : "Custom")}
+            {activeView === "repair" && (fr ? "Réparations" : "Repairs")}
+            {activeView === "appointment" && (fr ? "Rendez-vous" : "Appointments")}
+            {activeView === "templates" && (fr ? "Modèles de messages" : "Message templates")}
+            {!["overview", "leads", "instagram", "custom", "repair", "appointment", "templates"].includes(activeView) && (fr ? "Vue d'ensemble" : "Overview")}
+          </h1>
         </div>
-
-        {/* KPI cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-7">
-          {kpis.map((k, i) => (
-            <motion.div
-              key={k.label}
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.07, duration: 0.5, ease: luxeEase }}
-              className="surface-card p-4 md:p-5"
-            >
-              <span className="text-gold">{k.icon}</span>
-              <p className="font-serif text-[2rem] text-ivory leading-none mt-2">{k.value}</p>
-              <p className="text-[0.75rem] text-text-3 mt-1">{k.label}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-3 mb-5">
-          <label className="relative md:max-w-60 w-full">
-            <span className="sr-only">{fr ? "Rechercher" : "Search"}</span>
-            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-3 pointer-events-none" aria-hidden />
-            <input
-              type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder={fr ? "Rechercher…" : "Search…"}
-              className="w-full min-h-11 pl-9 pr-3.5 rounded-full bg-(--surface) border border-(--line) text-ivory text-[16px]
-                placeholder:text-text-3 focus:outline-none focus:border-gold/60 transition-all"
-            />
-          </label>
-          <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {(["all", ...Object.keys(TYPE_LABELS)] as (LeadType | "all")[]).map((tp) => (
-              <button
-                key={tp}
-                onClick={() => setTypeFilter(tp)}
-                className={cn(
-                  "shrink-0 min-h-11 px-3.5 rounded-full border text-[0.78rem] whitespace-nowrap transition-all active:scale-[0.96]",
-                  typeFilter === tp
-                    ? "border-gold bg-gold/15 text-gold"
-                    : "border-(--line) text-text-2 hover:border-gold/40"
-                )}
-              >
-                {tp === "all" ? (fr ? "Tous" : "All") : TYPE_LABELS[tp][lang]}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="flex gap-1.5 overflow-x-auto pb-1 mb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {(["all", ...LEAD_STATUSES.map((s) => s.id)] as (LeadStatus | "all")[]).map((s) => (
-            <button
-              key={s}
-              onClick={() => setStatusFilter(s)}
-              className={cn(
-                "shrink-0 min-h-9 px-3 rounded-full border text-[0.7rem] whitespace-nowrap transition-all active:scale-[0.96]",
-                statusFilter === s
-                  ? "border-gold bg-gold/15 text-gold"
-                  : "border-white/10 text-text-3 hover:text-text-2"
-              )}
-            >
-              {s === "all" ? (fr ? "Tous statuts" : "All statuses") : statusLabel(s, lang)}
-            </button>
-          ))}
-        </div>
-
-        {/* Lead list */}
-        <div className="flex flex-col gap-2">
-          <AnimatePresence initial={false}>
-            {filtered.map((l, i) => (
-              <motion.button
-                key={l.id}
-                layout
-                initial={reduce ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35, ease: luxeEase, delay: Math.min(i * 0.03, 0.3) }}
-                onClick={() => setSelected(l.id)}
-                className="surface-card card-glow w-full text-left p-4 flex items-center gap-3 md:gap-4
-                  [-webkit-tap-highlight-color:transparent]"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-ivory text-[0.95rem]">{l.name || "—"}</span>
-                    <StatusPill status={l.status} lang={lang} />
-                    <span className="text-[0.7rem] text-text-3 uppercase tracking-[0.08em]">
-                      {TYPE_LABELS[l.type][lang]}
-                    </span>
-                  </div>
-                  <p className="text-[0.8rem] text-text-3 truncate mt-0.5">
-                    {l.message || Object.values(l.extras).filter(Boolean).join(" · ") || l.id}
-                  </p>
-                </div>
-                <div className="text-right shrink-0 hidden xs:block">
-                  <p className="font-mono text-[0.68rem] text-gold/80">{l.id}</p>
-                  <p className="text-[0.7rem] text-text-3">
-                    {new Date(l.createdAt).toLocaleDateString(fr ? "fr-CA" : "en-CA")}
-                  </p>
-                </div>
-                <ChevronRight size={16} className="text-text-3 shrink-0" aria-hidden />
-              </motion.button>
-            ))}
-          </AnimatePresence>
-          {filtered.length === 0 && (
-            <p className="text-center text-text-3 py-14 text-[0.9rem]">
-              {fr ? "Aucun lead trouvé." : "No leads found."}
-            </p>
-          )}
-        </div>
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("ormania.admin.auth");
+            setAuthed(false);
+          }}
+          className="min-h-10 px-4 rounded-full border border-(--line) text-[0.8rem] text-text-2
+            hover:border-gold/40 hover:text-ivory transition-all shrink-0"
+        >
+          {fr ? "Quitter" : "Sign out"}
+        </button>
       </div>
 
+      {/* Overview cards for overview + leads views */}
+      {(activeView === "overview" || activeView === "leads") && (
+        <div className="mb-8">
+          <OverviewCards stats={stats} />
+        </div>
+      )}
+
+      {/* Leads table */}
+      {activeView !== "templates" && (
+        <LeadsTable leads={filteredByType} onSelect={(lead) => setSelected(lead)} />
+      )}
+
+      {/* Message templates */}
+      {activeView === "templates" && <MessageTemplates />}
+
+      {/* Lead detail drawer */}
       <AnimatePresence>
-        {selectedLead && (
-          <LeadDrawer
-            lead={selectedLead}
-            lang={lang}
-            onClose={() => setSelected(null)}
-            onChange={refresh}
-          />
+        {selected && (
+          <LeadDetailPanel lead={selected} onClose={() => setSelected(null)} />
         )}
       </AnimatePresence>
-    </div>
+    </AdminShell>
   );
 }
