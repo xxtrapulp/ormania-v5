@@ -979,14 +979,14 @@ Error: page.evaluate: Test timeout of 30000ms exceeded.
   12 |       await expect(page.locator("h1").first()).toBeVisible();
   13 | 
   14 |       // Scroll through the page and verify key sections appear
-  15 |       const viewportHeight = await page.evaluate(() => window.innerHeight);
+> 15 |       const viewportHeight = await page.evaluate(() => window.innerHeight);
+     |                                         ^ Error: page.evaluate: Test timeout of 30000ms exceeded.
   16 |       const documentHeight = await page.evaluate(() => document.body.scrollHeight);
   17 | 
   18 |       let scrollY = 0;
   19 |       while (scrollY < documentHeight - viewportHeight) {
   20 |         scrollY += viewportHeight * 0.8;
-> 21 |         await page.evaluate((y) => window.scrollTo(0, y), scrollY);
-     |                    ^ Error: page.evaluate: Test timeout of 30000ms exceeded.
+  21 |         await page.evaluate((y) => window.scrollTo(0, y), scrollY);
   22 |         await page.waitForTimeout(300);
   23 | 
   24 |         // Assert no section has stuck opacity: 0 on key text elements

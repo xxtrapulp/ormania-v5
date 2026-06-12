@@ -19,12 +19,6 @@ Test timeout of 30000ms exceeded.
 Error: locator.click: Test timeout of 30000ms exceeded.
 Call log:
   - waiting for locator('button[aria-label*=\'saved\' i], button[aria-label*=\'sauvegard\' i]').first()
-    - locator resolved to <button aria-label="Saved pieces" class="relative min-h-11 min-w-11 inline-flex items-center justify-center text-text-2 hover:text-gold transition-colors">…</button>
-  - attempting click action
-    - waiting for element to be visible, enabled and stable
-    - element is visible, enabled and stable
-    - scrolling into view if needed
-    - done scrolling
 
 ```
 
@@ -34,941 +28,942 @@ Call log:
 - generic [active] [ref=e1]:
   - link "Skip to content" [ref=e2]:
     - /url: "#main"
-  - banner [ref=e3]:
-    - generic [ref=e4]:
-      - link "Ormania home" [ref=e5]:
+  - img "Ormania" [ref=e5]
+  - banner [ref=e7]:
+    - generic [ref=e8]:
+      - link "Ormania home" [ref=e9]:
         - /url: /en/
-        - img "Ormania" [ref=e6]
-      - navigation "Main" [ref=e7]:
-        - link "Home" [ref=e9]:
+        - img "Ormania" [ref=e10]
+      - navigation "Main" [ref=e11]:
+        - link "Home" [ref=e13]:
           - /url: /en/
           - text: Home
-        - link "Collections" [ref=e12]:
+        - link "Collections" [ref=e16]:
           - /url: /en/collections/
-        - link "Instagram" [ref=e14]:
+        - link "Instagram" [ref=e18]:
           - /url: /en/instagram/
-        - link "Custom" [ref=e16]:
+        - link "Custom" [ref=e20]:
           - /url: /en/custom/
-        - link "Repairs" [ref=e18]:
+        - link "Repairs" [ref=e22]:
           - /url: /en/repairs/
-        - link "Engagement" [ref=e20]:
+        - link "Engagement" [ref=e24]:
           - /url: /en/engagement/
-        - link "Visit" [ref=e22]:
+        - link "Visit" [ref=e26]:
           - /url: /en/visit/
-      - generic [ref=e23]:
-        - link "Passer au français" [ref=e24]:
+      - generic [ref=e27]:
+        - link "Passer au français" [ref=e28]:
           - /url: /fr/
-          - generic [ref=e25]: EN
-          - generic [ref=e26]: /
-          - generic [ref=e27]: FR
-        - button "Saved pieces" [ref=e28]:
-          - img [ref=e29]
-        - button "Compare" [ref=e31]:
-          - img [ref=e32]
-        - link "Book Consultation" [ref=e36]:
+          - generic [ref=e29]: EN
+          - generic [ref=e30]: /
+          - generic [ref=e31]: FR
+        - button "Saved pieces" [ref=e32]:
+          - img [ref=e33]
+        - button "Compare" [ref=e35]:
+          - img [ref=e36]
+        - link "Book Consultation" [ref=e40]:
           - /url: /en/engagement/#book
-  - main [ref=e38]:
-    - region "Hero" [ref=e42]:
+  - main [ref=e42]:
+    - region "Hero" [ref=e46]:
       - generic: ORMANIA
-      - generic [ref=e44]:
-        - img "Bijouterie Ormania" [ref=e47]
-        - generic [ref=e49]:
-          - generic [ref=e50]: Bijouterie Ormania — Laval
-          - heading "J e w e l r y m a d e t o b e r e m e m b e r e d ." [level=1] [ref=e52]:
-            - generic [ref=e53]:
-              - generic [ref=e54]:
-                - generic [ref=e55]: J
-                - generic [ref=e56]: e
-                - generic [ref=e57]: w
-                - generic [ref=e58]: e
-                - generic [ref=e59]: l
-                - generic [ref=e60]: r
-                - generic [ref=e61]: "y"
-              - generic [ref=e64]:
-                - generic [ref=e65]: m
-                - generic [ref=e66]: a
-                - generic [ref=e67]: d
-                - generic [ref=e68]: e
-              - generic [ref=e71]:
-                - generic [ref=e72]: t
-                - generic [ref=e73]: o
-              - generic [ref=e76]:
-                - generic [ref=e77]: b
-                - generic [ref=e78]: e
-              - generic [ref=e81]:
-                - generic [ref=e82]: r
-                - generic [ref=e83]: e
-                - generic [ref=e84]: m
-                - generic [ref=e85]: e
-                - generic [ref=e86]: m
-                - generic [ref=e87]: b
-                - generic [ref=e88]: e
-                - generic [ref=e89]: r
-                - generic [ref=e90]: e
-                - generic [ref=e91]: d
-                - generic [ref=e92]: .
-          - paragraph [ref=e94]: Fine jewelry, custom pieces, repairs, watches, and timeless gifts — in the heart of Laval.
-          - generic [ref=e95]:
-            - link "Explore Collections" [ref=e96]:
+      - generic [ref=e48]:
+        - img "Bijouterie Ormania" [ref=e51]
+        - generic [ref=e53]:
+          - generic [ref=e54]: Bijouterie Ormania — Laval
+          - heading "J e w e l r y m a d e t o b e r e m e m b e r e d ." [level=1] [ref=e56]:
+            - generic [ref=e57]:
+              - generic [ref=e58]:
+                - generic [ref=e59]: J
+                - generic [ref=e60]: e
+                - generic [ref=e61]: w
+                - generic [ref=e62]: e
+                - generic [ref=e63]: l
+                - generic [ref=e64]: r
+                - generic [ref=e65]: "y"
+              - generic [ref=e68]:
+                - generic [ref=e69]: m
+                - generic [ref=e70]: a
+                - generic [ref=e71]: d
+                - generic [ref=e72]: e
+              - generic [ref=e75]:
+                - generic [ref=e76]: t
+                - generic [ref=e77]: o
+              - generic [ref=e80]:
+                - generic [ref=e81]: b
+                - generic [ref=e82]: e
+              - generic [ref=e85]:
+                - generic [ref=e86]: r
+                - generic [ref=e87]: e
+                - generic [ref=e88]: m
+                - generic [ref=e89]: e
+                - generic [ref=e90]: m
+                - generic [ref=e91]: b
+                - generic [ref=e92]: e
+                - generic [ref=e93]: r
+                - generic [ref=e94]: e
+                - generic [ref=e95]: d
+                - generic [ref=e96]: .
+          - paragraph [ref=e98]: Fine jewelry, custom pieces, repairs, watches, and timeless gifts — in the heart of Laval.
+          - generic [ref=e99]:
+            - link "Explore Collections" [ref=e100]:
               - /url: /en/collections/
-              - generic [ref=e97]: Explore Collections
-              - generic [ref=e98]: →
-            - link "Book a Consultation" [ref=e99]:
+              - generic [ref=e101]: Explore Collections
+              - generic [ref=e102]: →
+            - link "Book a Consultation" [ref=e103]:
               - /url: /en/engagement/#book
-              - generic [ref=e100]: Book a Consultation
-          - link "Seen something on Instagram?" [ref=e102]:
+              - generic [ref=e104]: Book a Consultation
+          - link "Seen something on Instagram?" [ref=e106]:
             - /url: /en/instagram/
-            - img [ref=e103]
+            - img [ref=e107]
             - text: Seen something on Instagram?
-            - generic [ref=e106]: →
-      - link "Scroll" [ref=e110]:
+            - generic [ref=e110]: →
+      - link "Scroll" [ref=e114]:
         - /url: "#featured"
         - text: Scroll
-        - img [ref=e111]
-    - generic [ref=e112]:
-      - generic [ref=e114]:
-        - generic [ref=e115]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
-        - generic [ref=e116]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
-        - generic [ref=e117]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
-        - generic [ref=e118]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
+        - img [ref=e115]
+    - generic [ref=e116]:
+      - generic [ref=e118]:
         - generic [ref=e119]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
         - generic [ref=e120]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
-      - generic [ref=e122]:
-        - generic [ref=e123]:
+        - generic [ref=e121]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
+        - generic [ref=e122]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
+        - generic [ref=e123]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
+        - generic [ref=e124]: Laval · Custom · Repair · Gold · Engagement · Gifts · Watches · Ormania ·
+      - generic [ref=e126]:
+        - generic [ref=e127]:
           - text: Bijouterie Ormania — Laval
-          - heading "Ormania turns everyday moments into pieces you keep close." [level=2] [ref=e124]:
-            - generic [ref=e125]:
-              - generic [ref=e127]: Ormania
-              - generic [ref=e129]: turns
-              - generic [ref=e131]: everyday
-              - generic [ref=e133]: moments
-              - generic [ref=e135]: into
-              - generic [ref=e137]: pieces
-              - generic [ref=e139]: you
-              - generic [ref=e141]: keep
-              - generic [ref=e143]: close.
-        - paragraph [ref=e146]: A Laval jewelry boutique for fine pieces, meaningful gifts, custom work, repairs, watches, and engagement moments.
-    - generic [ref=e148]:
+          - heading "Ormania turns everyday moments into pieces you keep close." [level=2] [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e131]: Ormania
+              - generic [ref=e133]: turns
+              - generic [ref=e135]: everyday
+              - generic [ref=e137]: moments
+              - generic [ref=e139]: into
+              - generic [ref=e141]: pieces
+              - generic [ref=e143]: you
+              - generic [ref=e145]: keep
+              - generic [ref=e147]: close.
+        - paragraph [ref=e150]: A Laval jewelry boutique for fine pieces, meaningful gifts, custom work, repairs, watches, and engagement moments.
+    - generic [ref=e152]:
       - text: Signature Services
-      - heading "Our craft, at your service." [level=2] [ref=e149]
-      - generic [ref=e150]:
-        - generic [ref=e152]:
-          - img [ref=e154]
-          - generic [ref=e157]:
-            - heading "Custom Design" [level=3] [ref=e158]
-            - paragraph [ref=e159]: From idea to finished piece.
-            - paragraph [ref=e160]: Bring us a sketch, a photo, or just a feeling. We guide you through materials, stones, and design until it feels exactly right.
-        - generic [ref=e162]:
-          - img [ref=e164]
-          - generic [ref=e166]:
-            - heading "Jewelry Restoration" [level=3] [ref=e167]
-            - paragraph [ref=e168]: Repairs, resizing, polishing, and stone work.
-            - paragraph [ref=e169]: Sizing, stones, clasps, polish, watch batteries — most repairs are done in-house in Laval with care and precision.
-        - generic [ref=e171]:
-          - img [ref=e173]
-          - generic [ref=e175]:
-            - heading "Engagement Guidance" [level=3] [ref=e176]
-            - paragraph [ref=e177]: Personal help choosing or creating the ring.
-            - paragraph [ref=e178]: Natural and lab-grown diamonds, private consultations, and a ring made for one story — yours.
-        - generic [ref=e180]:
-          - img [ref=e182]
-          - generic [ref=e186]:
-            - heading "Gift Curation" [level=3] [ref=e187]
-            - paragraph [ref=e188]: Help finding something meaningful.
-            - paragraph [ref=e189]: Not sure what to choose? Tell us about the person and the occasion. We'll suggest pieces that feel personal and lasting.
-    - generic [ref=e191]:
-      - generic [ref=e192]:
+      - heading "Our craft, at your service." [level=2] [ref=e153]
+      - generic [ref=e154]:
+        - generic [ref=e156]:
+          - img [ref=e158]
+          - generic [ref=e161]:
+            - heading "Custom Design" [level=3] [ref=e162]
+            - paragraph [ref=e163]: From idea to finished piece.
+            - paragraph [ref=e164]: Bring us a sketch, a photo, or just a feeling. We guide you through materials, stones, and design until it feels exactly right.
+        - generic [ref=e166]:
+          - img [ref=e168]
+          - generic [ref=e170]:
+            - heading "Jewelry Restoration" [level=3] [ref=e171]
+            - paragraph [ref=e172]: Repairs, resizing, polishing, and stone work.
+            - paragraph [ref=e173]: Sizing, stones, clasps, polish, watch batteries — most repairs are done in-house in Laval with care and precision.
+        - generic [ref=e175]:
+          - img [ref=e177]
+          - generic [ref=e179]:
+            - heading "Engagement Guidance" [level=3] [ref=e180]
+            - paragraph [ref=e181]: Personal help choosing or creating the ring.
+            - paragraph [ref=e182]: Natural and lab-grown diamonds, private consultations, and a ring made for one story — yours.
+        - generic [ref=e184]:
+          - img [ref=e186]
+          - generic [ref=e190]:
+            - heading "Gift Curation" [level=3] [ref=e191]
+            - paragraph [ref=e192]: Help finding something meaningful.
+            - paragraph [ref=e193]: Not sure what to choose? Tell us about the person and the occasion. We'll suggest pieces that feel personal and lasting.
+    - generic [ref=e195]:
+      - generic [ref=e196]:
         - text: Shop by Intention
-        - heading "How can we help you?" [level=2] [ref=e193]
-      - generic [ref=e194]:
-        - generic [ref=e195] [cursor=pointer]:
-          - generic [ref=e196]:
-            - img [ref=e198]
-            - generic [ref=e201]: Custom
-          - heading "Make it personal" [level=3] [ref=e202]
-          - paragraph [ref=e203]: Custom jewelry, engraving, meaningful pieces.
-          - generic [ref=e204]:
-            - generic [ref=e205]: Explore
-            - generic [ref=e206]: →
-        - generic [ref=e207] [cursor=pointer]:
+        - heading "How can we help you?" [level=2] [ref=e197]
+      - generic [ref=e198]:
+        - generic [ref=e199] [cursor=pointer]:
+          - generic [ref=e200]:
+            - img [ref=e202]
+            - generic [ref=e205]: Custom
+          - heading "Make it personal" [level=3] [ref=e206]
+          - paragraph [ref=e207]: Custom jewelry, engraving, meaningful pieces.
           - generic [ref=e208]:
-            - img [ref=e210]
-            - generic [ref=e212]: Engagement
-          - heading "Mark a milestone" [level=3] [ref=e213]
-          - paragraph [ref=e214]: Engagement, anniversary, graduation, special moments.
-          - generic [ref=e215]:
-            - generic [ref=e216]: Explore
-            - generic [ref=e217]: →
-        - generic [ref=e218] [cursor=pointer]:
+            - generic [ref=e209]: Explore
+            - generic [ref=e210]: →
+        - generic [ref=e211] [cursor=pointer]:
+          - generic [ref=e212]:
+            - img [ref=e214]
+            - generic [ref=e216]: Engagement
+          - heading "Mark a milestone" [level=3] [ref=e217]
+          - paragraph [ref=e218]: Engagement, anniversary, graduation, special moments.
           - generic [ref=e219]:
-            - img [ref=e221]
-            - generic [ref=e227]: Explore
-          - heading "Everyday gold" [level=3] [ref=e228]
-          - paragraph [ref=e229]: Chains, rings, bracelets, and daily pieces.
-          - generic [ref=e230]:
+            - generic [ref=e220]: Explore
+            - generic [ref=e221]: →
+        - generic [ref=e222] [cursor=pointer]:
+          - generic [ref=e223]:
+            - img [ref=e225]
             - generic [ref=e231]: Explore
-            - generic [ref=e232]: →
-        - generic [ref=e233] [cursor=pointer]:
+          - heading "Everyday gold" [level=3] [ref=e232]
+          - paragraph [ref=e233]: Chains, rings, bracelets, and daily pieces.
           - generic [ref=e234]:
-            - img [ref=e236]
-            - generic [ref=e240]: Men's
-          - heading "Something for him" [level=3] [ref=e241]
-          - paragraph [ref=e242]: Men's rings, chains, watches, and gifts.
-          - generic [ref=e243]:
-            - generic [ref=e244]: Explore
-            - generic [ref=e245]: →
-        - generic [ref=e246] [cursor=pointer]:
+            - generic [ref=e235]: Explore
+            - generic [ref=e236]: →
+        - generic [ref=e237] [cursor=pointer]:
+          - generic [ref=e238]:
+            - img [ref=e240]
+            - generic [ref=e244]: Men's
+          - heading "Something for him" [level=3] [ref=e245]
+          - paragraph [ref=e246]: Men's rings, chains, watches, and gifts.
           - generic [ref=e247]:
-            - img [ref=e249]
-            - generic [ref=e251]: Repair
-          - heading "Repair what matters" [level=3] [ref=e252]
-          - paragraph [ref=e253]: Resize, restore, polish, and fix the pieces you love.
-          - generic [ref=e254]:
-            - generic [ref=e255]: Explore
-            - generic [ref=e256]: →
-        - generic [ref=e257] [cursor=pointer]:
+            - generic [ref=e248]: Explore
+            - generic [ref=e249]: →
+        - generic [ref=e250] [cursor=pointer]:
+          - generic [ref=e251]:
+            - img [ref=e253]
+            - generic [ref=e255]: Repair
+          - heading "Repair what matters" [level=3] [ref=e256]
+          - paragraph [ref=e257]: Resize, restore, polish, and fix the pieces you love.
           - generic [ref=e258]:
-            - img [ref=e260]
-            - generic [ref=e263]: Gift Finder
-          - heading "Find a gift" [level=3] [ref=e264]
-          - paragraph [ref=e265]: Guided gift ideas by occasion, style, and budget.
-          - generic [ref=e266]:
-            - generic [ref=e267]: Explore
-            - generic [ref=e268]: →
-    - generic [ref=e269]:
-      - generic [ref=e271]:
-        - generic [ref=e272]:
-          - generic [ref=e273]:
-            - generic [ref=e274]: D
-            - generic [ref=e275]: i
-            - generic [ref=e276]: s
-            - generic [ref=e277]: c
-            - generic [ref=e278]: o
-            - generic [ref=e279]: v
-            - generic [ref=e280]: e
-            - generic [ref=e281]: r
-          - heading "Our collections, ready in store." [level=2] [ref=e282]:
-            - generic [ref=e284]: Our
-            - generic [ref=e286]: collections,
-            - generic [ref=e288]: ready
-            - generic [ref=e290]: in
-            - generic [ref=e292]: store.
-          - paragraph [ref=e294]: From everyday pieces to heirloom commissions — browse what's at Ormania this season.
-        - generic [ref=e295]:
-          - link "Chains & Necklaces Chains & Necklaces Cuban links, torsades, and diamond pieces — solid gold, ready in store. View" [ref=e298]:
+            - generic [ref=e259]: Explore
+            - generic [ref=e260]: →
+        - generic [ref=e261] [cursor=pointer]:
+          - generic [ref=e262]:
+            - img [ref=e264]
+            - generic [ref=e267]: Gift Finder
+          - heading "Find a gift" [level=3] [ref=e268]
+          - paragraph [ref=e269]: Guided gift ideas by occasion, style, and budget.
+          - generic [ref=e270]:
+            - generic [ref=e271]: Explore
+            - generic [ref=e272]: →
+    - generic [ref=e273]:
+      - generic [ref=e275]:
+        - generic [ref=e276]:
+          - generic [ref=e277]:
+            - generic [ref=e278]: D
+            - generic [ref=e279]: i
+            - generic [ref=e280]: s
+            - generic [ref=e281]: c
+            - generic [ref=e282]: o
+            - generic [ref=e283]: v
+            - generic [ref=e284]: e
+            - generic [ref=e285]: r
+          - heading "Our collections, ready in store." [level=2] [ref=e286]:
+            - generic [ref=e288]: Our
+            - generic [ref=e290]: collections,
+            - generic [ref=e292]: ready
+            - generic [ref=e294]: in
+            - generic [ref=e296]: store.
+          - paragraph [ref=e298]: From everyday pieces to heirloom commissions — browse what's at Ormania this season.
+        - generic [ref=e299]:
+          - link "Chains & Necklaces Chains & Necklaces Cuban links, torsades, and diamond pieces — solid gold, ready in store. View" [ref=e302]:
             - /url: /en/collections/#chains
-            - img "Chains & Necklaces" [ref=e299]
-            - generic [ref=e301]:
-              - heading "Chains & Necklaces" [level=3] [ref=e302]
+            - img "Chains & Necklaces" [ref=e303]
+            - generic [ref=e305]:
+              - heading "Chains & Necklaces" [level=3] [ref=e306]
               - paragraph: Cuban links, torsades, and diamond pieces — solid gold, ready in store.
-              - generic [ref=e303]:
+              - generic [ref=e307]:
                 - text: View
-                - generic [ref=e304]: →
-          - link "Rings Rings Stackable bands, statement gold, and everyday diamonds. View" [ref=e307]:
+                - generic [ref=e308]: →
+          - link "Rings Rings Stackable bands, statement gold, and everyday diamonds. View" [ref=e311]:
             - /url: /en/collections/#rings
-            - img "Rings" [ref=e308]
-            - generic [ref=e310]:
-              - heading "Rings" [level=3] [ref=e311]
+            - img "Rings" [ref=e312]
+            - generic [ref=e314]:
+              - heading "Rings" [level=3] [ref=e315]
               - paragraph: Stackable bands, statement gold, and everyday diamonds.
-              - generic [ref=e312]:
+              - generic [ref=e316]:
                 - text: View
-                - generic [ref=e313]: →
-          - link "Bracelets Bracelets Tennis bracelets and gold bangles that never come off. View" [ref=e316]:
+                - generic [ref=e317]: →
+          - link "Bracelets Bracelets Tennis bracelets and gold bangles that never come off. View" [ref=e320]:
             - /url: /en/collections/#bracelets
-            - img "Bracelets" [ref=e317]
-            - generic [ref=e319]:
-              - heading "Bracelets" [level=3] [ref=e320]
+            - img "Bracelets" [ref=e321]
+            - generic [ref=e323]:
+              - heading "Bracelets" [level=3] [ref=e324]
               - paragraph: Tennis bracelets and gold bangles that never come off.
-              - generic [ref=e321]:
+              - generic [ref=e325]:
                 - text: View
-                - generic [ref=e322]: →
-          - link "Watches Watches Selected Swiss timepieces, batteries, and service. View" [ref=e325]:
+                - generic [ref=e326]: →
+          - link "Watches Watches Selected Swiss timepieces, batteries, and service. View" [ref=e329]:
             - /url: /en/collections/#watches
-            - img "Watches" [ref=e326]
-            - generic [ref=e328]:
-              - heading "Watches" [level=3] [ref=e329]
+            - img "Watches" [ref=e330]
+            - generic [ref=e332]:
+              - heading "Watches" [level=3] [ref=e333]
               - paragraph: Selected Swiss timepieces, batteries, and service.
-              - generic [ref=e330]:
+              - generic [ref=e334]:
                 - text: View
-                - generic [ref=e331]: →
-          - link "Engagement Engagement Natural and lab-grown diamonds, set to be remembered. View" [ref=e334]:
+                - generic [ref=e335]: →
+          - link "Engagement Engagement Natural and lab-grown diamonds, set to be remembered. View" [ref=e338]:
             - /url: /en/collections/#engagement
-            - img "Engagement" [ref=e335]
-            - generic [ref=e337]:
-              - heading "Engagement" [level=3] [ref=e338]
+            - img "Engagement" [ref=e339]
+            - generic [ref=e341]:
+              - heading "Engagement" [level=3] [ref=e342]
               - paragraph: Natural and lab-grown diamonds, set to be remembered.
-              - generic [ref=e339]:
+              - generic [ref=e343]:
                 - text: View
-                - generic [ref=e340]: →
-          - link "Custom Pieces Custom Pieces One-of-one commissions, designed with you at the bench. View" [ref=e343]:
+                - generic [ref=e344]: →
+          - link "Custom Pieces Custom Pieces One-of-one commissions, designed with you at the bench. View" [ref=e347]:
             - /url: /en/collections/#custom
-            - img "Custom Pieces" [ref=e344]
-            - generic [ref=e346]:
-              - heading "Custom Pieces" [level=3] [ref=e347]
+            - img "Custom Pieces" [ref=e348]
+            - generic [ref=e350]:
+              - heading "Custom Pieces" [level=3] [ref=e351]
               - paragraph: One-of-one commissions, designed with you at the bench.
-              - generic [ref=e348]:
+              - generic [ref=e352]:
                 - text: View
-                - generic [ref=e349]: →
-      - generic [ref=e351]:
-        - paragraph [ref=e352]: Seen on Instagram
-        - generic [ref=e353]:
-          - generic [ref=e354]:
-            - article [ref=e355]:
-              - link "Lab-Grown Tennis Bracelet — Instagram" [ref=e356]:
+                - generic [ref=e353]: →
+      - generic [ref=e355]:
+        - paragraph [ref=e356]: Seen on Instagram
+        - generic [ref=e357]:
+          - generic [ref=e358]:
+            - article [ref=e359]:
+              - link "Lab-Grown Tennis Bracelet — Instagram" [ref=e360]:
                 - /url: https://www.instagram.com/p/DSAifEiDouU/
-                - generic [ref=e357]:
-                  - img "Lab-Grown Tennis Bracelet" [ref=e358]
-                  - generic [ref=e361]: In stock
-                  - generic [ref=e362]: Recently posted
-                  - generic [ref=e363]:
-                    - heading "Lab-Grown Tennis Bracelet" [level=3] [ref=e364]
-                    - paragraph [ref=e365]: Your new never-taking-it-off bracelet — lab-grown tennis, made to shine all season long.
-              - button "Ask About This" [ref=e367]
-            - article [ref=e368]:
-              - link "Halo Diamond Necklace — Instagram" [ref=e369]:
+                - generic [ref=e361]:
+                  - img "Lab-Grown Tennis Bracelet" [ref=e362]
+                  - generic [ref=e365]: In stock
+                  - generic [ref=e366]: Recently posted
+                  - generic [ref=e367]:
+                    - heading "Lab-Grown Tennis Bracelet" [level=3] [ref=e368]
+                    - paragraph [ref=e369]: Your new never-taking-it-off bracelet — lab-grown tennis, made to shine all season long.
+              - button "Ask About This" [ref=e371]
+            - article [ref=e372]:
+              - link "Halo Diamond Necklace — Instagram" [ref=e373]:
                 - /url: https://www.instagram.com/reel/DSdMAuPETdF/
-                - generic [ref=e370]:
-                  - img "Halo Diamond Necklace" [ref=e371]
-                  - generic [ref=e373]:
-                    - generic [ref=e374]: In store
-                    - generic [ref=e375]:
-                      - img [ref=e376]
+                - generic [ref=e374]:
+                  - img "Halo Diamond Necklace" [ref=e375]
+                  - generic [ref=e377]:
+                    - generic [ref=e378]: In store
+                    - generic [ref=e379]:
+                      - img [ref=e380]
                       - text: Reel
-                  - generic [ref=e378]: Recently posted
-                  - generic [ref=e379]:
-                    - heading "Halo Diamond Necklace" [level=3] [ref=e380]
-                    - paragraph [ref=e381]: Halo diamond necklace, available in store.
-              - button "Ask About This" [ref=e383]
-            - article [ref=e384]:
-              - link "Stack Your Rings — Instagram" [ref=e385]:
+                  - generic [ref=e382]: Recently posted
+                  - generic [ref=e383]:
+                    - heading "Halo Diamond Necklace" [level=3] [ref=e384]
+                    - paragraph [ref=e385]: Halo diamond necklace, available in store.
+              - button "Ask About This" [ref=e387]
+            - article [ref=e388]:
+              - link "Stack Your Rings — Instagram" [ref=e389]:
                 - /url: https://www.instagram.com/reel/DSaTiT1jgKb/
-                - generic [ref=e386]:
-                  - img "Stack Your Rings" [ref=e387]
-                  - generic [ref=e389]:
-                    - generic [ref=e390]: In store
-                    - generic [ref=e391]:
-                      - img [ref=e392]
+                - generic [ref=e390]:
+                  - img "Stack Your Rings" [ref=e391]
+                  - generic [ref=e393]:
+                    - generic [ref=e394]: In store
+                    - generic [ref=e395]:
+                      - img [ref=e396]
                       - text: Reel
-                  - generic [ref=e394]: Recently posted
-                  - generic [ref=e395]:
-                    - heading "Stack Your Rings" [level=3] [ref=e396]
-                    - paragraph [ref=e397]: This is your sign to stack — custom jewelry, Laval.
-              - button "Ask About This" [ref=e399]
-            - article [ref=e400]:
-              - link "Sterling Silver & Moissanite — Instagram" [ref=e401]:
+                  - generic [ref=e398]: Recently posted
+                  - generic [ref=e399]:
+                    - heading "Stack Your Rings" [level=3] [ref=e400]
+                    - paragraph [ref=e401]: This is your sign to stack — custom jewelry, Laval.
+              - button "Ask About This" [ref=e403]
+            - article [ref=e404]:
+              - link "Sterling Silver & Moissanite — Instagram" [ref=e405]:
                 - /url: https://www.instagram.com/reel/DSVUrrLDrSl/
-                - generic [ref=e402]:
-                  - img "Sterling Silver & Moissanite" [ref=e403]
-                  - generic [ref=e405]:
-                    - generic [ref=e406]: In store
-                    - generic [ref=e407]:
-                      - img [ref=e408]
+                - generic [ref=e406]:
+                  - img "Sterling Silver & Moissanite" [ref=e407]
+                  - generic [ref=e409]:
+                    - generic [ref=e410]: In store
+                    - generic [ref=e411]:
+                      - img [ref=e412]
                       - text: Reel
-                  - generic [ref=e410]: Recently posted
-                  - generic [ref=e411]:
-                    - heading "Sterling Silver & Moissanite" [level=3] [ref=e412]
-                    - paragraph [ref=e413]: Silver at its all-time high — S925 sterling silver moissanite pieces in store.
-              - button "Ask About This" [ref=e415]
-            - article [ref=e416]:
-              - link "A Gift She'll Wear Every Day — Instagram" [ref=e417]:
+                  - generic [ref=e414]: Recently posted
+                  - generic [ref=e415]:
+                    - heading "Sterling Silver & Moissanite" [level=3] [ref=e416]
+                    - paragraph [ref=e417]: Silver at its all-time high — S925 sterling silver moissanite pieces in store.
+              - button "Ask About This" [ref=e419]
+            - article [ref=e420]:
+              - link "A Gift She'll Wear Every Day — Instagram" [ref=e421]:
                 - /url: https://www.instagram.com/reel/DRzvxN2kWfn/
-                - generic [ref=e418]:
-                  - img "A Gift She'll Wear Every Day" [ref=e419]
-                  - generic [ref=e421]:
-                    - generic [ref=e422]: In store
-                    - generic [ref=e423]:
-                      - img [ref=e424]
+                - generic [ref=e422]:
+                  - img "A Gift She'll Wear Every Day" [ref=e423]
+                  - generic [ref=e425]:
+                    - generic [ref=e426]: In store
+                    - generic [ref=e427]:
+                      - img [ref=e428]
                       - text: Reel
-                  - generic [ref=e426]:
-                    - heading "A Gift She'll Wear Every Day" [level=3] [ref=e427]
-                    - paragraph [ref=e428]: Not sure what to get her? Start with something she'll wear every day.
-              - button "Ask About This" [ref=e430]
-            - article [ref=e431]:
-              - link "Custom Pearl Earrings — Instagram" [ref=e432]:
+                  - generic [ref=e430]:
+                    - heading "A Gift She'll Wear Every Day" [level=3] [ref=e431]
+                    - paragraph [ref=e432]: Not sure what to get her? Start with something she'll wear every day.
+              - button "Ask About This" [ref=e434]
+            - article [ref=e435]:
+              - link "Custom Pearl Earrings — Instagram" [ref=e436]:
                 - /url: https://www.instagram.com/reel/DRP2awpjmhB/
-                - generic [ref=e433]:
-                  - img "Custom Pearl Earrings" [ref=e434]
-                  - generic [ref=e436]:
-                    - generic [ref=e437]: Commission
-                    - generic [ref=e438]:
-                      - img [ref=e439]
+                - generic [ref=e437]:
+                  - img "Custom Pearl Earrings" [ref=e438]
+                  - generic [ref=e440]:
+                    - generic [ref=e441]: Commission
+                    - generic [ref=e442]:
+                      - img [ref=e443]
                       - text: Reel
-                  - generic [ref=e441]:
-                    - heading "Custom Pearl Earrings" [level=3] [ref=e442]
-                    - paragraph [ref=e443]: A custom pair of earrings designed to match her pearls — a 65th birthday gift.
-              - button "Ask About This" [ref=e445]
-            - article [ref=e446]:
-              - link "Baume & Mercier M0A10619 — Instagram" [ref=e447]:
+                  - generic [ref=e445]:
+                    - heading "Custom Pearl Earrings" [level=3] [ref=e446]
+                    - paragraph [ref=e447]: A custom pair of earrings designed to match her pearls — a 65th birthday gift.
+              - button "Ask About This" [ref=e449]
+            - article [ref=e450]:
+              - link "Baume & Mercier M0A10619 — Instagram" [ref=e451]:
                 - /url: https://www.instagram.com/p/DHuHBHMuREj/
-                - generic [ref=e448]:
-                  - img "Baume & Mercier M0A10619" [ref=e449]
-                  - generic [ref=e452]: In stock
-                  - generic [ref=e453]:
-                    - heading "Baume & Mercier M0A10619" [level=3] [ref=e454]
-                    - paragraph [ref=e455]: New arrival — Baume & Mercier M0A10619, in stock and ready.
-              - button "Ask About This" [ref=e457]
-            - article [ref=e458]:
-              - link "Men's Solitaire Diamond Ring — Instagram" [ref=e459]:
+                - generic [ref=e452]:
+                  - img "Baume & Mercier M0A10619" [ref=e453]
+                  - generic [ref=e456]: In stock
+                  - generic [ref=e457]:
+                    - heading "Baume & Mercier M0A10619" [level=3] [ref=e458]
+                    - paragraph [ref=e459]: New arrival — Baume & Mercier M0A10619, in stock and ready.
+              - button "Ask About This" [ref=e461]
+            - article [ref=e462]:
+              - link "Men's Solitaire Diamond Ring — Instagram" [ref=e463]:
                 - /url: https://www.instagram.com/reel/DCu5JdFO5TV/
-                - generic [ref=e460]:
-                  - img "Men's Solitaire Diamond Ring" [ref=e461]
-                  - generic [ref=e463]:
-                    - generic [ref=e464]: In store
-                    - generic [ref=e465]:
-                      - img [ref=e466]
+                - generic [ref=e464]:
+                  - img "Men's Solitaire Diamond Ring" [ref=e465]
+                  - generic [ref=e467]:
+                    - generic [ref=e468]: In store
+                    - generic [ref=e469]:
+                      - img [ref=e470]
                       - text: Reel
-                  - generic [ref=e468]:
-                    - heading "Men's Solitaire Diamond Ring" [level=3] [ref=e469]
-                    - paragraph [ref=e470]: Our men's ring collection — crafted to bring elegance to every occasion.
-              - button "Ask About This" [ref=e472]
-          - generic [ref=e473]:
-            - button "Upload a Screenshot" [ref=e474]:
-              - img [ref=e475]
-              - text: Upload a Screenshot
-            - button "Paste an Instagram Link" [ref=e478]:
+                  - generic [ref=e472]:
+                    - heading "Men's Solitaire Diamond Ring" [level=3] [ref=e473]
+                    - paragraph [ref=e474]: Our men's ring collection — crafted to bring elegance to every occasion.
+              - button "Ask About This" [ref=e476]
+          - generic [ref=e477]:
+            - button "Upload a Screenshot" [ref=e478]:
               - img [ref=e479]
+              - text: Upload a Screenshot
+            - button "Paste an Instagram Link" [ref=e482]:
+              - img [ref=e483]
               - text: Paste an Instagram Link
-        - link "See the Full Showroom" [ref=e483]:
+        - link "See the Full Showroom" [ref=e487]:
           - /url: /en/instagram/
           - text: See the Full Showroom
-          - generic [ref=e484]: →
-      - generic [ref=e486]:
-        - generic [ref=e497]: The Craft
-        - generic [ref=e498]:
-          - generic [ref=e499]:
-            - generic [ref=e500]: 01 / 04
-            - heading "Design" [level=2] [ref=e501]
-            - paragraph [ref=e502]: Every piece starts with a conversation. We sketch, model, and refine until it feels like yours.
-          - generic [ref=e504]:
-            - generic [ref=e505]: 02 / 04
-            - heading "Source" [level=2] [ref=e506]
-            - paragraph [ref=e507]: Natural and lab-grown diamonds, ethically sourced and hand-selected for brilliance.
-          - generic [ref=e509]:
-            - generic [ref=e510]: 03 / 04
-            - heading "Craft" [level=2] [ref=e511]
-            - paragraph [ref=e512]: Our bench in Laval brings it to life — casting, setting, polishing, all in-house.
-          - generic [ref=e514]:
-            - generic [ref=e515]: 04 / 04
-            - heading "Restore" [level=2] [ref=e516]
-            - paragraph [ref=e517]: Repairs, restorations, and watch services — trusted by generations.
-      - generic [ref=e520]:
-        - generic [ref=e521]:
-          - img "Custom pearl earrings made at Ormania" [ref=e522]
-          - generic [ref=e524]: “Earrings made to match her pearls — a 65th birthday gift.”
+          - generic [ref=e488]: →
+      - generic [ref=e490]:
+        - generic [ref=e501]: The Craft
+        - generic [ref=e502]:
+          - generic [ref=e503]:
+            - generic [ref=e504]: 01 / 04
+            - heading "Design" [level=2] [ref=e505]
+            - paragraph [ref=e506]: Every piece starts with a conversation. We sketch, model, and refine until it feels like yours.
+          - generic [ref=e508]:
+            - generic [ref=e509]: 02 / 04
+            - heading "Source" [level=2] [ref=e510]
+            - paragraph [ref=e511]: Natural and lab-grown diamonds, ethically sourced and hand-selected for brilliance.
+          - generic [ref=e513]:
+            - generic [ref=e514]: 03 / 04
+            - heading "Craft" [level=2] [ref=e515]
+            - paragraph [ref=e516]: Our bench in Laval brings it to life — casting, setting, polishing, all in-house.
+          - generic [ref=e518]:
+            - generic [ref=e519]: 04 / 04
+            - heading "Restore" [level=2] [ref=e520]
+            - paragraph [ref=e521]: Repairs, restorations, and watch services — trusted by generations.
+      - generic [ref=e524]:
         - generic [ref=e525]:
-          - generic [ref=e526]:
-            - generic [ref=e527]:
-              - generic [ref=e528]: C
-              - generic [ref=e529]: u
-              - generic [ref=e530]: s
-              - generic [ref=e531]: t
-              - generic [ref=e532]: o
-              - generic [ref=e533]: m
-              - generic [ref=e535]: J
-              - generic [ref=e536]: e
-              - generic [ref=e537]: w
-              - generic [ref=e538]: e
-              - generic [ref=e539]: l
-              - generic [ref=e540]: r
-              - generic [ref=e541]: "y"
-            - heading "If you can imagine it, we can make it." [level=2] [ref=e542]:
-              - generic [ref=e544]: If
-              - generic [ref=e546]: you
-              - generic [ref=e548]: can
-              - generic [ref=e550]: imagine
-              - generic [ref=e552]: it,
-              - generic [ref=e554]: we
-              - generic [ref=e556]: can
-              - generic [ref=e558]: make
-              - generic [ref=e560]: it.
-            - paragraph [ref=e562]: From a sketch on a napkin to a screenshot from Instagram — our bench brings one-of-one pieces to life.
-          - generic [ref=e563]:
-            - generic [ref=e564]:
-              - generic [ref=e565]: "1"
-              - generic [ref=e566]:
-                - heading "Share your idea" [level=3] [ref=e567]
-                - paragraph [ref=e568]: Photos, sketches, a story — anything that inspires you.
-            - generic [ref=e569]:
-              - generic [ref=e570]: "2"
-              - generic [ref=e571]:
-                - heading "Design together" [level=3] [ref=e572]
-                - paragraph [ref=e573]: We refine the design, metal, and stones with you.
-            - generic [ref=e574]:
-              - generic [ref=e575]: "3"
-              - generic [ref=e576]:
-                - heading "Crafted at the bench" [level=3] [ref=e577]
-                - paragraph [ref=e578]: Your piece is made with care, with updates along the way.
-            - generic [ref=e579]:
-              - generic [ref=e580]: "4"
-              - generic [ref=e581]:
-                - heading "Made to be remembered" [level=3] [ref=e582]
-                - paragraph [ref=e583]: Pick it up in store — a piece that exists only once.
-          - generic [ref=e584]:
-            - button "Start a Custom Request" [ref=e585]:
-              - generic [ref=e586]: Start a Custom Request
-              - generic [ref=e587]: →
-            - link "Learn more" [ref=e588]:
+          - img "Custom pearl earrings made at Ormania" [ref=e526]
+          - generic [ref=e528]: “Earrings made to match her pearls — a 65th birthday gift.”
+        - generic [ref=e529]:
+          - generic [ref=e530]:
+            - generic [ref=e531]:
+              - generic [ref=e532]: C
+              - generic [ref=e533]: u
+              - generic [ref=e534]: s
+              - generic [ref=e535]: t
+              - generic [ref=e536]: o
+              - generic [ref=e537]: m
+              - generic [ref=e539]: J
+              - generic [ref=e540]: e
+              - generic [ref=e541]: w
+              - generic [ref=e542]: e
+              - generic [ref=e543]: l
+              - generic [ref=e544]: r
+              - generic [ref=e545]: "y"
+            - heading "If you can imagine it, we can make it." [level=2] [ref=e546]:
+              - generic [ref=e548]: If
+              - generic [ref=e550]: you
+              - generic [ref=e552]: can
+              - generic [ref=e554]: imagine
+              - generic [ref=e556]: it,
+              - generic [ref=e558]: we
+              - generic [ref=e560]: can
+              - generic [ref=e562]: make
+              - generic [ref=e564]: it.
+            - paragraph [ref=e566]: From a sketch on a napkin to a screenshot from Instagram — our bench brings one-of-one pieces to life.
+          - generic [ref=e567]:
+            - generic [ref=e568]:
+              - generic [ref=e569]: "1"
+              - generic [ref=e570]:
+                - heading "Share your idea" [level=3] [ref=e571]
+                - paragraph [ref=e572]: Photos, sketches, a story — anything that inspires you.
+            - generic [ref=e573]:
+              - generic [ref=e574]: "2"
+              - generic [ref=e575]:
+                - heading "Design together" [level=3] [ref=e576]
+                - paragraph [ref=e577]: We refine the design, metal, and stones with you.
+            - generic [ref=e578]:
+              - generic [ref=e579]: "3"
+              - generic [ref=e580]:
+                - heading "Crafted at the bench" [level=3] [ref=e581]
+                - paragraph [ref=e582]: Your piece is made with care, with updates along the way.
+            - generic [ref=e583]:
+              - generic [ref=e584]: "4"
+              - generic [ref=e585]:
+                - heading "Made to be remembered" [level=3] [ref=e586]
+                - paragraph [ref=e587]: Pick it up in store — a piece that exists only once.
+          - generic [ref=e588]:
+            - button "Start a Custom Request" [ref=e589]:
+              - generic [ref=e590]: Start a Custom Request
+              - generic [ref=e591]: →
+            - link "Learn more" [ref=e592]:
               - /url: /en/custom/
-              - img [ref=e589]
+              - img [ref=e593]
               - text: Learn more
-      - generic [ref=e593]:
-        - generic [ref=e594]:
-          - generic [ref=e595]:
-            - generic [ref=e596]: R
-            - generic [ref=e597]: e
-            - generic [ref=e598]: p
-            - generic [ref=e599]: a
-            - generic [ref=e600]: i
-            - generic [ref=e601]: r
-            - generic [ref=e602]: s
-            - generic [ref=e604]: "&"
-            - generic [ref=e606]: C
-            - generic [ref=e607]: a
-            - generic [ref=e608]: r
-            - generic [ref=e609]: e
-          - heading "Bring it back to life." [level=2] [ref=e610]:
-            - generic [ref=e612]: Bring
-            - generic [ref=e614]: it
-            - generic [ref=e616]: back
-            - generic [ref=e618]: to
-            - generic [ref=e620]: life.
-          - paragraph [ref=e622]: Sizing, stones, clasps, polish, watch batteries — most repairs are done in-house in Laval.
-        - generic [ref=e623]:
-          - button "Ring sizing Up or down, most sizings done in-house." [ref=e625]:
-            - img [ref=e626]
-            - heading "Ring sizing" [level=3] [ref=e628]
-            - paragraph [ref=e629]: Up or down, most sizings done in-house.
-          - button "Chain & clasp repair Broken links, clasps, and solder work." [ref=e631]:
-            - img [ref=e632]
-            - heading "Chain & clasp repair" [level=3] [ref=e634]
-            - paragraph [ref=e635]: Broken links, clasps, and solder work.
-          - button "Stone setting & replacement Tighten, reset, or replace stones." [ref=e637]:
-            - img [ref=e638]
-            - heading "Stone setting & replacement" [level=3] [ref=e640]
-            - paragraph [ref=e641]: Tighten, reset, or replace stones.
-          - button "Polishing & rhodium Bring back the original shine." [ref=e643]:
-            - img [ref=e644]
-            - heading "Polishing & rhodium" [level=3] [ref=e646]
-            - paragraph [ref=e647]: Bring back the original shine.
-          - button "Watch batteries & service Batteries while you wait." [ref=e649]:
-            - img [ref=e650]
-            - heading "Watch batteries & service" [level=3] [ref=e652]
-            - paragraph [ref=e653]: Batteries while you wait.
-          - button "Cleaning & inspection Complimentary check of your pieces." [ref=e655]:
-            - img [ref=e656]
-            - heading "Cleaning & inspection" [level=3] [ref=e658]
-            - paragraph [ref=e659]: Complimentary check of your pieces.
-        - generic [ref=e660]:
-          - button "Request a Repair Estimate" [ref=e661]:
-            - generic [ref=e662]: Request a Repair Estimate
-            - generic [ref=e663]: →
-          - link "See repairs" [ref=e664]:
+      - generic [ref=e597]:
+        - generic [ref=e598]:
+          - generic [ref=e599]:
+            - generic [ref=e600]: R
+            - generic [ref=e601]: e
+            - generic [ref=e602]: p
+            - generic [ref=e603]: a
+            - generic [ref=e604]: i
+            - generic [ref=e605]: r
+            - generic [ref=e606]: s
+            - generic [ref=e608]: "&"
+            - generic [ref=e610]: C
+            - generic [ref=e611]: a
+            - generic [ref=e612]: r
+            - generic [ref=e613]: e
+          - heading "Bring it back to life." [level=2] [ref=e614]:
+            - generic [ref=e616]: Bring
+            - generic [ref=e618]: it
+            - generic [ref=e620]: back
+            - generic [ref=e622]: to
+            - generic [ref=e624]: life.
+          - paragraph [ref=e626]: Sizing, stones, clasps, polish, watch batteries — most repairs are done in-house in Laval.
+        - generic [ref=e627]:
+          - button "Ring sizing Up or down, most sizings done in-house." [ref=e629]:
+            - img [ref=e630]
+            - heading "Ring sizing" [level=3] [ref=e632]
+            - paragraph [ref=e633]: Up or down, most sizings done in-house.
+          - button "Chain & clasp repair Broken links, clasps, and solder work." [ref=e635]:
+            - img [ref=e636]
+            - heading "Chain & clasp repair" [level=3] [ref=e638]
+            - paragraph [ref=e639]: Broken links, clasps, and solder work.
+          - button "Stone setting & replacement Tighten, reset, or replace stones." [ref=e641]:
+            - img [ref=e642]
+            - heading "Stone setting & replacement" [level=3] [ref=e644]
+            - paragraph [ref=e645]: Tighten, reset, or replace stones.
+          - button "Polishing & rhodium Bring back the original shine." [ref=e647]:
+            - img [ref=e648]
+            - heading "Polishing & rhodium" [level=3] [ref=e650]
+            - paragraph [ref=e651]: Bring back the original shine.
+          - button "Watch batteries & service Batteries while you wait." [ref=e653]:
+            - img [ref=e654]
+            - heading "Watch batteries & service" [level=3] [ref=e656]
+            - paragraph [ref=e657]: Batteries while you wait.
+          - button "Cleaning & inspection Complimentary check of your pieces." [ref=e659]:
+            - img [ref=e660]
+            - heading "Cleaning & inspection" [level=3] [ref=e662]
+            - paragraph [ref=e663]: Complimentary check of your pieces.
+        - generic [ref=e664]:
+          - button "Request a Repair Estimate" [ref=e665]:
+            - generic [ref=e666]: Request a Repair Estimate
+            - generic [ref=e667]: →
+          - link "See repairs" [ref=e668]:
             - /url: /en/repairs/
-            - img [ref=e665]
+            - img [ref=e669]
             - text: See repairs
-      - generic [ref=e670]:
-        - generic [ref=e671]:
-          - generic [ref=e672]:
-            - generic [ref=e673]:
-              - generic [ref=e674]: E
-              - generic [ref=e675]: "n"
-              - generic [ref=e676]: g
-              - generic [ref=e677]: a
-              - generic [ref=e678]: g
-              - generic [ref=e679]: e
-              - generic [ref=e680]: m
-              - generic [ref=e681]: e
-              - generic [ref=e682]: "n"
-              - generic [ref=e683]: t
-            - heading "The yes deserves Ormania." [level=2] [ref=e684]:
-              - generic [ref=e686]: The
-              - generic [ref=e688]: "yes"
-              - generic [ref=e690]: deserves
-              - generic [ref=e692]: Ormania.
-            - paragraph [ref=e694]: Natural and lab-grown diamonds, private consultations, and a ring made for one story — yours.
-          - generic [ref=e695]:
-            - button "Book Engagement Consultation" [ref=e696]:
-              - generic [ref=e697]: Book Engagement Consultation
-              - generic [ref=e698]: →
-            - link "Engagement guide" [ref=e699]:
+      - generic [ref=e674]:
+        - generic [ref=e675]:
+          - generic [ref=e676]:
+            - generic [ref=e677]:
+              - generic [ref=e678]: E
+              - generic [ref=e679]: "n"
+              - generic [ref=e680]: g
+              - generic [ref=e681]: a
+              - generic [ref=e682]: g
+              - generic [ref=e683]: e
+              - generic [ref=e684]: m
+              - generic [ref=e685]: e
+              - generic [ref=e686]: "n"
+              - generic [ref=e687]: t
+            - heading "The yes deserves Ormania." [level=2] [ref=e688]:
+              - generic [ref=e690]: The
+              - generic [ref=e692]: "yes"
+              - generic [ref=e694]: deserves
+              - generic [ref=e696]: Ormania.
+            - paragraph [ref=e698]: Natural and lab-grown diamonds, private consultations, and a ring made for one story — yours.
+          - generic [ref=e699]:
+            - button "Book Engagement Consultation" [ref=e700]:
+              - generic [ref=e701]: Book Engagement Consultation
+              - generic [ref=e702]: →
+            - link "Engagement guide" [ref=e703]:
               - /url: /en/engagement/
-              - img [ref=e700]
+              - img [ref=e704]
               - text: Engagement guide
-        - img "Diamond engagement rings at Ormania" [ref=e703]
-      - generic [ref=e706]:
-        - generic [ref=e707]:
-          - generic [ref=e708]:
-            - generic [ref=e709]: W
-            - generic [ref=e710]: h
-            - generic [ref=e711]: "y"
-            - generic [ref=e713]: O
-            - generic [ref=e714]: r
-            - generic [ref=e715]: m
-            - generic [ref=e716]: a
-            - generic [ref=e717]: "n"
-            - generic [ref=e718]: i
-            - generic [ref=e719]: a
-          - heading "A boutique, not a counter." [level=2] [ref=e720]:
-            - generic [ref=e722]: A
-            - generic [ref=e724]: boutique,
-            - generic [ref=e726]: not
-            - generic [ref=e728]: a
-            - generic [ref=e730]: counter.
-        - generic [ref=e731]:
-          - generic [ref=e733]:
-            - generic [ref=e734]: "01"
-            - img [ref=e735]
-            - heading "Real pieces, in store" [level=3] [ref=e738]
-            - paragraph [ref=e739]: Everything on our Instagram exists — come see it in person.
-          - generic [ref=e741]:
-            - generic [ref=e742]: "02"
-            - img [ref=e743]
-            - heading "Work done in-house" [level=3] [ref=e747]
-            - paragraph [ref=e748]: Repairs and custom work at our own bench, not shipped away.
-          - generic [ref=e750]:
-            - generic [ref=e751]: "03"
-            - img [ref=e752]
-            - heading "Family service" [level=3] [ref=e754]
-            - paragraph [ref=e755]: A boutique where you're a name, not a ticket number.
-          - generic [ref=e757]:
-            - generic [ref=e758]: "04"
-            - img [ref=e759]
-            - heading "In the heart of Laval" [level=3] [ref=e762]
-            - paragraph [ref=e763]: Boulevard des Laurentides — easy parking, easy visit.
-      - generic [ref=e765]:
-        - generic [ref=e766]:
-          - generic [ref=e767]:
-            - generic [ref=e768]: T
-            - generic [ref=e769]: o
-            - generic [ref=e770]: o
-            - generic [ref=e771]: l
-            - generic [ref=e772]: s
-          - heading "Little helpers, big decisions." [level=2] [ref=e773]:
-            - generic [ref=e775]: Little
-            - generic [ref=e777]: helpers,
-            - generic [ref=e779]: big
-            - generic [ref=e781]: decisions.
-        - generic [ref=e782]:
-          - link "Preview Gift Finder Quiz Answer 3 questions, get a shortlist." [ref=e784]:
+        - img "Diamond engagement rings at Ormania" [ref=e707]
+      - generic [ref=e710]:
+        - generic [ref=e711]:
+          - generic [ref=e712]:
+            - generic [ref=e713]: W
+            - generic [ref=e714]: h
+            - generic [ref=e715]: "y"
+            - generic [ref=e717]: O
+            - generic [ref=e718]: r
+            - generic [ref=e719]: m
+            - generic [ref=e720]: a
+            - generic [ref=e721]: "n"
+            - generic [ref=e722]: i
+            - generic [ref=e723]: a
+          - heading "A boutique, not a counter." [level=2] [ref=e724]:
+            - generic [ref=e726]: A
+            - generic [ref=e728]: boutique,
+            - generic [ref=e730]: not
+            - generic [ref=e732]: a
+            - generic [ref=e734]: counter.
+        - generic [ref=e735]:
+          - generic [ref=e737]:
+            - generic [ref=e738]: "01"
+            - img [ref=e739]
+            - heading "Real pieces, in store" [level=3] [ref=e742]
+            - paragraph [ref=e743]: Everything on our Instagram exists — come see it in person.
+          - generic [ref=e745]:
+            - generic [ref=e746]: "02"
+            - img [ref=e747]
+            - heading "Work done in-house" [level=3] [ref=e751]
+            - paragraph [ref=e752]: Repairs and custom work at our own bench, not shipped away.
+          - generic [ref=e754]:
+            - generic [ref=e755]: "03"
+            - img [ref=e756]
+            - heading "Family service" [level=3] [ref=e758]
+            - paragraph [ref=e759]: A boutique where you're a name, not a ticket number.
+          - generic [ref=e761]:
+            - generic [ref=e762]: "04"
+            - img [ref=e763]
+            - heading "In the heart of Laval" [level=3] [ref=e766]
+            - paragraph [ref=e767]: Boulevard des Laurentides — easy parking, easy visit.
+      - generic [ref=e769]:
+        - generic [ref=e770]:
+          - generic [ref=e771]:
+            - generic [ref=e772]: T
+            - generic [ref=e773]: o
+            - generic [ref=e774]: o
+            - generic [ref=e775]: l
+            - generic [ref=e776]: s
+          - heading "Little helpers, big decisions." [level=2] [ref=e777]:
+            - generic [ref=e779]: Little
+            - generic [ref=e781]: helpers,
+            - generic [ref=e783]: big
+            - generic [ref=e785]: decisions.
+        - generic [ref=e786]:
+          - link "Preview Gift Finder Quiz Answer 3 questions, get a shortlist." [ref=e788]:
             - /url: /en/explore/#gift
-            - generic [ref=e786]:
-              - img [ref=e787]
-              - generic [ref=e791]: Preview
-            - heading "Gift Finder Quiz" [level=3] [ref=e792]
-            - paragraph [ref=e793]: Answer 3 questions, get a shortlist.
-            - generic [ref=e794]: →
-          - link "Preview Ring Size Guide Find their size without asking." [ref=e796]:
+            - generic [ref=e790]:
+              - img [ref=e791]
+              - generic [ref=e795]: Preview
+            - heading "Gift Finder Quiz" [level=3] [ref=e796]
+            - paragraph [ref=e797]: Answer 3 questions, get a shortlist.
+            - generic [ref=e798]: →
+          - link "Preview Ring Size Guide Find their size without asking." [ref=e800]:
             - /url: /en/explore/#size
-            - generic [ref=e798]:
-              - img [ref=e799]
-              - generic [ref=e801]: Preview
-            - heading "Ring Size Guide" [level=3] [ref=e802]
-            - paragraph [ref=e803]: Find their size without asking.
-            - generic [ref=e804]: →
-          - link "Preview Chain Length Visualizer See where each length falls." [ref=e806]:
+            - generic [ref=e802]:
+              - img [ref=e803]
+              - generic [ref=e805]: Preview
+            - heading "Ring Size Guide" [level=3] [ref=e806]
+            - paragraph [ref=e807]: Find their size without asking.
+            - generic [ref=e808]: →
+          - link "Preview Chain Length Visualizer See where each length falls." [ref=e810]:
             - /url: /en/explore/#chain
-            - generic [ref=e808]:
-              - img [ref=e809]
-              - generic [ref=e812]: Preview
-            - heading "Chain Length Visualizer" [level=3] [ref=e813]
-            - paragraph [ref=e814]: See where each length falls.
-            - generic [ref=e815]: →
-          - link "Live Repair Status Lookup Check your repair by reference number." [ref=e817]:
+            - generic [ref=e812]:
+              - img [ref=e813]
+              - generic [ref=e816]: Preview
+            - heading "Chain Length Visualizer" [level=3] [ref=e817]
+            - paragraph [ref=e818]: See where each length falls.
+            - generic [ref=e819]: →
+          - link "Live Repair Status Lookup Check your repair by reference number." [ref=e821]:
             - /url: /en/explore/#status
-            - generic [ref=e819]:
-              - img [ref=e820]
-              - generic [ref=e823]: Live
-            - heading "Repair Status Lookup" [level=3] [ref=e824]
-            - paragraph [ref=e825]: Check your repair by reference number.
-            - generic [ref=e826]: →
-          - link "Preview Jewelry Care Guide Keep gold and stones looking new." [ref=e828]:
+            - generic [ref=e823]:
+              - img [ref=e824]
+              - generic [ref=e827]: Live
+            - heading "Repair Status Lookup" [level=3] [ref=e828]
+            - paragraph [ref=e829]: Check your repair by reference number.
+            - generic [ref=e830]: →
+          - link "Preview Jewelry Care Guide Keep gold and stones looking new." [ref=e832]:
             - /url: /en/explore/#care
-            - generic [ref=e830]:
-              - img [ref=e831]
-              - generic [ref=e834]: Preview
-            - heading "Jewelry Care Guide" [level=3] [ref=e835]
-            - paragraph [ref=e836]: Keep gold and stones looking new.
-            - generic [ref=e837]: →
-      - generic [ref=e839]:
-        - generic [ref=e840]:
-          - generic [ref=e841]:
-            - generic [ref=e842]: V
-            - generic [ref=e843]: i
-            - generic [ref=e844]: s
-            - generic [ref=e845]: i
-            - generic [ref=e846]: t
-            - generic [ref=e848]: U
-            - generic [ref=e849]: s
-          - heading "In the heart of Laval." [level=2] [ref=e850]:
-            - generic [ref=e852]: In
-            - generic [ref=e854]: the
-            - generic [ref=e856]: heart
-            - generic [ref=e858]: of
-            - generic [ref=e860]: Laval.
-          - paragraph [ref=e862]: 3000 Boulevard des Laurentides, Laval, QC H7K 3G5
-        - generic [ref=e863]:
-          - link "(450) 629-2959" [ref=e864]:
+            - generic [ref=e834]:
+              - img [ref=e835]
+              - generic [ref=e838]: Preview
+            - heading "Jewelry Care Guide" [level=3] [ref=e839]
+            - paragraph [ref=e840]: Keep gold and stones looking new.
+            - generic [ref=e841]: →
+      - generic [ref=e843]:
+        - generic [ref=e844]:
+          - generic [ref=e845]:
+            - generic [ref=e846]: V
+            - generic [ref=e847]: i
+            - generic [ref=e848]: s
+            - generic [ref=e849]: i
+            - generic [ref=e850]: t
+            - generic [ref=e852]: U
+            - generic [ref=e853]: s
+          - heading "In the heart of Laval." [level=2] [ref=e854]:
+            - generic [ref=e856]: In
+            - generic [ref=e858]: the
+            - generic [ref=e860]: heart
+            - generic [ref=e862]: of
+            - generic [ref=e864]: Laval.
+          - paragraph [ref=e866]: 3000 Boulevard des Laurentides, Laval, QC H7K 3G5
+        - generic [ref=e867]:
+          - link "(450) 629-2959" [ref=e868]:
             - /url: tel:+14506292959
-            - img [ref=e865]
-            - generic [ref=e867]: (450) 629-2959
-          - link "Directions" [ref=e868]:
-            - /url: https://www.google.com/maps/dir/?api=1&destination=3000+Boulevard+des+Laurentides+Laval+QC+H7K+3G5
             - img [ref=e869]
-            - text: Directions
-          - link "Instagram" [ref=e872]:
-            - /url: https://www.instagram.com/bijouterie_ormania
+            - generic [ref=e871]: (450) 629-2959
+          - link "Directions" [ref=e872]:
+            - /url: https://www.google.com/maps/dir/?api=1&destination=3000+Boulevard+des+Laurentides+Laval+QC+H7K+3G5
             - img [ref=e873]
+            - text: Directions
+          - link "Instagram" [ref=e876]:
+            - /url: https://www.instagram.com/bijouterie_ormania
+            - img [ref=e877]
             - text: Instagram
-    - generic [ref=e879]:
-      - generic [ref=e880]:
+    - generic [ref=e883]:
+      - generic [ref=e884]:
         - text: Need help choosing?
-        - heading "Let Ormania guide you." [level=2] [ref=e881]
-        - paragraph [ref=e882]: Tell Ormania what you are looking for and the boutique can guide you to the right pieces.
-        - button "Ask Ormania" [ref=e883]:
-          - img [ref=e884]
+        - heading "Let Ormania guide you." [level=2] [ref=e885]
+        - paragraph [ref=e886]: Tell Ormania what you are looking for and the boutique can guide you to the right pieces.
+        - button "Ask Ormania" [ref=e887]:
+          - img [ref=e888]
           - text: Ask Ormania
-          - img [ref=e886]
-      - generic [ref=e888]:
-        - heading "Quick Ask" [level=3] [ref=e889]
-        - generic [ref=e890]:
-          - textbox "Name" [ref=e891]
-          - textbox "Phone" [ref=e892]
-          - textbox "Message" [ref=e893]
-          - button "Send" [ref=e894]
-    - generic [ref=e896]:
-      - generic [ref=e897]:
-        - generic [ref=e898]:
-          - text: Recently at Ormania
-          - heading "Recently at Ormania" [level=2] [ref=e899]
-        - paragraph [ref=e900]: What's happening in the boutique right now.
+          - img [ref=e890]
+      - generic [ref=e892]:
+        - heading "Quick Ask" [level=3] [ref=e893]
+        - generic [ref=e894]:
+          - textbox "Name" [ref=e895]
+          - textbox "Phone" [ref=e896]
+          - textbox "Message" [ref=e897]
+          - button "Send" [ref=e898]
+    - generic [ref=e900]:
       - generic [ref=e901]:
-        - generic [ref=e903] [cursor=pointer]:
-          - generic [ref=e904]:
-            - generic [ref=e905]: New this week
-            - button [ref=e906]:
-              - img [ref=e907]
-          - generic [ref=e910]: Image placeholder
-          - heading "Lab-Grown Tennis Bracelet" [level=3] [ref=e911]
-          - button "Ask About This" [ref=e912]:
-            - generic [ref=e913]: Ask About This
-            - img [ref=e914]
-        - generic [ref=e917] [cursor=pointer]:
-          - generic [ref=e918]:
-            - generic [ref=e919]: Popular in store
-            - button [ref=e920]:
-              - img [ref=e921]
-          - generic [ref=e924]: Image placeholder
-          - heading "Halo Diamond Necklace" [level=3] [ref=e925]
-          - button "Ask About This" [ref=e926]:
-            - generic [ref=e927]: Ask About This
-            - img [ref=e928]
-        - generic [ref=e931] [cursor=pointer]:
-          - generic [ref=e932]:
-            - generic [ref=e933]: Custom piece
-            - button [ref=e934]:
-              - img [ref=e935]
-          - generic [ref=e938]: Image placeholder
-          - heading "Stack Your Rings" [level=3] [ref=e939]
-          - button "Ask About This" [ref=e940]:
-            - generic [ref=e941]: Ask About This
-            - img [ref=e942]
-        - generic [ref=e945] [cursor=pointer]:
-          - generic [ref=e946]:
-            - generic [ref=e947]: Gift idea
-            - button [ref=e948]:
-              - img [ref=e949]
-          - generic [ref=e952]: Image placeholder
-          - heading "Pearl Earrings" [level=3] [ref=e953]
-          - button "Ask About This" [ref=e954]:
-            - generic [ref=e955]: Ask About This
-            - img [ref=e956]
-        - generic [ref=e959] [cursor=pointer]:
-          - generic [ref=e960]:
-            - generic [ref=e961]: Recently featured
-            - button [ref=e962]:
-              - img [ref=e963]
-          - generic [ref=e966]: Image placeholder
-          - heading "Gold Chain 18\"" [level=3] [ref=e967]
-          - button "Ask About This" [ref=e968]:
-            - generic [ref=e969]: Ask About This
-            - img [ref=e970]
-        - generic [ref=e973] [cursor=pointer]:
-          - generic [ref=e974]:
-            - generic [ref=e975]: Ask for availability
-            - button [ref=e976]:
-              - img [ref=e977]
-          - generic [ref=e980]: Image placeholder
-          - heading "Engagement Ring" [level=3] [ref=e981]
-          - button "Ask About This" [ref=e982]:
-            - generic [ref=e983]: Ask About This
-            - img [ref=e984]
-    - generic [ref=e987]:
-      - generic [ref=e988]:
+        - generic [ref=e902]:
+          - text: Recently at Ormania
+          - heading "Recently at Ormania" [level=2] [ref=e903]
+        - paragraph [ref=e904]: What's happening in the boutique right now.
+      - generic [ref=e905]:
+        - generic [ref=e907] [cursor=pointer]:
+          - generic [ref=e908]:
+            - generic [ref=e909]: New this week
+            - button [ref=e910]:
+              - img [ref=e911]
+          - generic [ref=e914]: Image placeholder
+          - heading "Lab-Grown Tennis Bracelet" [level=3] [ref=e915]
+          - button "Ask About This" [ref=e916]:
+            - generic [ref=e917]: Ask About This
+            - img [ref=e918]
+        - generic [ref=e921] [cursor=pointer]:
+          - generic [ref=e922]:
+            - generic [ref=e923]: Popular in store
+            - button [ref=e924]:
+              - img [ref=e925]
+          - generic [ref=e928]: Image placeholder
+          - heading "Halo Diamond Necklace" [level=3] [ref=e929]
+          - button "Ask About This" [ref=e930]:
+            - generic [ref=e931]: Ask About This
+            - img [ref=e932]
+        - generic [ref=e935] [cursor=pointer]:
+          - generic [ref=e936]:
+            - generic [ref=e937]: Custom piece
+            - button [ref=e938]:
+              - img [ref=e939]
+          - generic [ref=e942]: Image placeholder
+          - heading "Stack Your Rings" [level=3] [ref=e943]
+          - button "Ask About This" [ref=e944]:
+            - generic [ref=e945]: Ask About This
+            - img [ref=e946]
+        - generic [ref=e949] [cursor=pointer]:
+          - generic [ref=e950]:
+            - generic [ref=e951]: Gift idea
+            - button [ref=e952]:
+              - img [ref=e953]
+          - generic [ref=e956]: Image placeholder
+          - heading "Pearl Earrings" [level=3] [ref=e957]
+          - button "Ask About This" [ref=e958]:
+            - generic [ref=e959]: Ask About This
+            - img [ref=e960]
+        - generic [ref=e963] [cursor=pointer]:
+          - generic [ref=e964]:
+            - generic [ref=e965]: Recently featured
+            - button [ref=e966]:
+              - img [ref=e967]
+          - generic [ref=e970]: Image placeholder
+          - heading "Gold Chain 18\"" [level=3] [ref=e971]
+          - button "Ask About This" [ref=e972]:
+            - generic [ref=e973]: Ask About This
+            - img [ref=e974]
+        - generic [ref=e977] [cursor=pointer]:
+          - generic [ref=e978]:
+            - generic [ref=e979]: Ask for availability
+            - button [ref=e980]:
+              - img [ref=e981]
+          - generic [ref=e984]: Image placeholder
+          - heading "Engagement Ring" [level=3] [ref=e985]
+          - button "Ask About This" [ref=e986]:
+            - generic [ref=e987]: Ask About This
+            - img [ref=e988]
+    - generic [ref=e991]:
+      - generic [ref=e992]:
         - text: Before / After
-        - heading "Restored, resized, repaired, remembered." [level=2] [ref=e989]
-      - generic [ref=e990]:
-        - generic [ref=e993]:
-          - generic [ref=e995]: After
-          - generic [ref=e997]: Before
-          - generic [ref=e999]: ↔
-          - generic [ref=e1000]: Broken chain → repaired
-        - generic [ref=e1003]:
-          - generic [ref=e1005]: After
-          - generic [ref=e1007]: Before
-          - generic [ref=e1009]: ↔
-          - generic [ref=e1010]: Ring resized → ready to wear
-        - generic [ref=e1013]:
-          - generic [ref=e1015]: After
-          - generic [ref=e1017]: Before
-          - generic [ref=e1019]: ↔
-          - generic [ref=e1020]: Loose stone → secured
-        - generic [ref=e1023]:
-          - generic [ref=e1025]: After
-          - generic [ref=e1027]: Before
-          - generic [ref=e1029]: ↔
-          - generic [ref=e1030]: Watch battery → replaced
-        - generic [ref=e1033]:
-          - generic [ref=e1035]: After
-          - generic [ref=e1037]: Before
-          - generic [ref=e1039]: ↔
-          - generic [ref=e1040]: Tarnished piece → polished
-        - generic [ref=e1043]:
-          - generic [ref=e1045]: After
-          - generic [ref=e1047]: Before
-          - generic [ref=e1049]: ↔
-          - generic [ref=e1050]: Clasp replaced → wearable again
-      - button "Send us photos of your repair" [ref=e1052]:
-        - img [ref=e1053]
+        - heading "Restored, resized, repaired, remembered." [level=2] [ref=e993]
+      - generic [ref=e994]:
+        - generic [ref=e997]:
+          - generic [ref=e999]: After
+          - generic [ref=e1001]: Before
+          - generic [ref=e1003]: ↔
+          - generic [ref=e1004]: Broken chain → repaired
+        - generic [ref=e1007]:
+          - generic [ref=e1009]: After
+          - generic [ref=e1011]: Before
+          - generic [ref=e1013]: ↔
+          - generic [ref=e1014]: Ring resized → ready to wear
+        - generic [ref=e1017]:
+          - generic [ref=e1019]: After
+          - generic [ref=e1021]: Before
+          - generic [ref=e1023]: ↔
+          - generic [ref=e1024]: Loose stone → secured
+        - generic [ref=e1027]:
+          - generic [ref=e1029]: After
+          - generic [ref=e1031]: Before
+          - generic [ref=e1033]: ↔
+          - generic [ref=e1034]: Watch battery → replaced
+        - generic [ref=e1037]:
+          - generic [ref=e1039]: After
+          - generic [ref=e1041]: Before
+          - generic [ref=e1043]: ↔
+          - generic [ref=e1044]: Tarnished piece → polished
+        - generic [ref=e1047]:
+          - generic [ref=e1049]: After
+          - generic [ref=e1051]: Before
+          - generic [ref=e1053]: ↔
+          - generic [ref=e1054]: Clasp replaced → wearable again
+      - button "Send us photos of your repair" [ref=e1056]:
+        - img [ref=e1057]
         - text: Send us photos of your repair
-    - generic [ref=e1057]:
-      - generic [ref=e1058]:
+    - generic [ref=e1061]:
+      - generic [ref=e1062]:
         - text: Tools & Guides
-        - heading "Little helpers, big decisions." [level=2] [ref=e1059]
-      - generic [ref=e1060]:
-        - generic [ref=e1062] [cursor=pointer]:
-          - img [ref=e1064]
-          - heading "Gift Finder" [level=3] [ref=e1068]
-          - generic [ref=e1069]: Live
-        - generic [ref=e1071] [cursor=pointer]:
-          - img [ref=e1073]
-          - heading "Ring Size Guide" [level=3] [ref=e1079]
-          - generic [ref=e1080]: Live
-        - generic [ref=e1082] [cursor=pointer]:
-          - img [ref=e1084]
-          - heading "Chain Length" [level=3] [ref=e1087]
-          - generic [ref=e1088]: Live
-        - generic [ref=e1090] [cursor=pointer]:
-          - img [ref=e1092]
-          - heading "Repair Status" [level=3] [ref=e1095]
-          - generic [ref=e1096]: Preview
-        - generic [ref=e1098] [cursor=pointer]:
-          - img [ref=e1100]
-          - heading "Care Guide" [level=3] [ref=e1102]
-          - generic [ref=e1103]: Live
-        - generic [ref=e1105]:
-          - img [ref=e1107]
-          - heading "Occasion Finder" [level=3] [ref=e1109]
-          - generic [ref=e1110]: Soon
-        - generic [ref=e1112]:
-          - img [ref=e1114]
-          - heading "Style Finder" [level=3] [ref=e1117]
-          - generic [ref=e1118]: Soon
-        - generic [ref=e1120]:
-          - img [ref=e1122]
-          - heading "Gold Care Reminder" [level=3] [ref=e1125]
-          - generic [ref=e1126]: Soon
-        - generic [ref=e1128]:
-          - img [ref=e1130]
-          - heading "Battery Reminder" [level=3] [ref=e1135]
-          - generic [ref=e1136]: Soon
-        - generic [ref=e1138]:
-          - img [ref=e1140]
-          - heading "Cleaning Reminder" [level=3] [ref=e1143]
-          - generic [ref=e1144]: Soon
-    - generic [ref=e1146]:
-      - generic [ref=e1147]:
+        - heading "Little helpers, big decisions." [level=2] [ref=e1063]
+      - generic [ref=e1064]:
+        - generic [ref=e1066] [cursor=pointer]:
+          - img [ref=e1068]
+          - heading "Gift Finder" [level=3] [ref=e1072]
+          - generic [ref=e1073]: Live
+        - generic [ref=e1075] [cursor=pointer]:
+          - img [ref=e1077]
+          - heading "Ring Size Guide" [level=3] [ref=e1083]
+          - generic [ref=e1084]: Live
+        - generic [ref=e1086] [cursor=pointer]:
+          - img [ref=e1088]
+          - heading "Chain Length" [level=3] [ref=e1091]
+          - generic [ref=e1092]: Live
+        - generic [ref=e1094] [cursor=pointer]:
+          - img [ref=e1096]
+          - heading "Repair Status" [level=3] [ref=e1099]
+          - generic [ref=e1100]: Preview
+        - generic [ref=e1102] [cursor=pointer]:
+          - img [ref=e1104]
+          - heading "Care Guide" [level=3] [ref=e1106]
+          - generic [ref=e1107]: Live
+        - generic [ref=e1109]:
+          - img [ref=e1111]
+          - heading "Occasion Finder" [level=3] [ref=e1113]
+          - generic [ref=e1114]: Soon
+        - generic [ref=e1116]:
+          - img [ref=e1118]
+          - heading "Style Finder" [level=3] [ref=e1121]
+          - generic [ref=e1122]: Soon
+        - generic [ref=e1124]:
+          - img [ref=e1126]
+          - heading "Gold Care Reminder" [level=3] [ref=e1129]
+          - generic [ref=e1130]: Soon
+        - generic [ref=e1132]:
+          - img [ref=e1134]
+          - heading "Battery Reminder" [level=3] [ref=e1139]
+          - generic [ref=e1140]: Soon
+        - generic [ref=e1142]:
+          - img [ref=e1144]
+          - heading "Cleaning Reminder" [level=3] [ref=e1147]
+          - generic [ref=e1148]: Soon
+    - generic [ref=e1150]:
+      - generic [ref=e1151]:
         - text: Trust
-        - heading "Trusted in Laval." [level=2] [ref=e1148]
-      - generic [ref=e1149]:
-        - generic [ref=e1150]:
-          - img [ref=e1151]
-          - generic [ref=e1154]: Local Laval boutique
-        - generic [ref=e1155]:
-          - img [ref=e1156]
-          - generic [ref=e1158]: Personalized service
+        - heading "Trusted in Laval." [level=2] [ref=e1152]
+      - generic [ref=e1153]:
+        - generic [ref=e1154]:
+          - img [ref=e1155]
+          - generic [ref=e1158]: Local Laval boutique
         - generic [ref=e1159]:
           - img [ref=e1160]
-          - generic [ref=e1162]: Repairs and custom work
+          - generic [ref=e1162]: Personalized service
         - generic [ref=e1163]:
           - img [ref=e1164]
-          - generic [ref=e1166]: Instagram inquiries welcome
-      - generic [ref=e1167]:
-        - generic [ref=e1169]:
-          - generic [ref=e1170]:
-            - img [ref=e1171]
-            - img [ref=e1173]
+          - generic [ref=e1166]: Repairs and custom work
+        - generic [ref=e1167]:
+          - img [ref=e1168]
+          - generic [ref=e1170]: Instagram inquiries welcome
+      - generic [ref=e1171]:
+        - generic [ref=e1173]:
+          - generic [ref=e1174]:
             - img [ref=e1175]
             - img [ref=e1177]
             - img [ref=e1179]
-          - paragraph [ref=e1181]: "\"Ormania resized my grandmother's ring and it fits perfectly. The care they took was incredible.\""
+            - img [ref=e1181]
+            - img [ref=e1183]
+          - paragraph [ref=e1185]: "\"Ormania resized my grandmother's ring and it fits perfectly. The care they took was incredible.\""
           - text: Sarah M.
-        - generic [ref=e1183]:
-          - generic [ref=e1184]:
-            - img [ref=e1185]
-            - img [ref=e1187]
+        - generic [ref=e1187]:
+          - generic [ref=e1188]:
             - img [ref=e1189]
             - img [ref=e1191]
             - img [ref=e1193]
-          - paragraph [ref=e1195]: "\"Found my engagement ring here after searching for months. The team made it feel special.\""
+            - img [ref=e1195]
+            - img [ref=e1197]
+          - paragraph [ref=e1199]: "\"Found my engagement ring here after searching for months. The team made it feel special.\""
           - text: Alex T.
-      - generic [ref=e1196]:
-        - paragraph [ref=e1197]: Bijouterie Ormania is a family-owned boutique in the heart of Laval. For years, we've helped our customers mark life's important moments with jewelry that tells a story.
-        - button "Contact Us" [ref=e1198]:
+      - generic [ref=e1200]:
+        - paragraph [ref=e1201]: Bijouterie Ormania is a family-owned boutique in the heart of Laval. For years, we've helped our customers mark life's important moments with jewelry that tells a story.
+        - button "Contact Us" [ref=e1202]:
           - text: Contact Us
-          - img [ref=e1199]
-  - contentinfo [ref=e1201]:
-    - generic [ref=e1202]:
-      - navigation "Footer navigation" [ref=e1203]:
-        - link "Collections" [ref=e1205]:
+          - img [ref=e1203]
+  - contentinfo [ref=e1205]:
+    - generic [ref=e1206]:
+      - navigation "Footer navigation" [ref=e1207]:
+        - link "Collections" [ref=e1209]:
           - /url: /en/collections/
-        - link "Instagram" [ref=e1208]:
+        - link "Instagram" [ref=e1212]:
           - /url: /en/instagram/
-        - link "Engagement" [ref=e1211]:
+        - link "Engagement" [ref=e1215]:
           - /url: /en/engagement/
-        - link "Tools" [ref=e1214]:
+        - link "Tools" [ref=e1218]:
           - /url: /en/explore/
-        - link "Custom" [ref=e1217]:
+        - link "Custom" [ref=e1221]:
           - /url: /en/custom/
-        - link "Repairs" [ref=e1220]:
+        - link "Repairs" [ref=e1224]:
           - /url: /en/repairs/
-        - link "Visit" [ref=e1223]:
+        - link "Visit" [ref=e1227]:
           - /url: /en/visit/
-        - link "Pitch" [ref=e1226]:
+        - link "Pitch" [ref=e1230]:
           - /url: /en/pitch/
-      - generic [ref=e1227]:
+      - generic [ref=e1231]:
         - generic:
           - img
-        - img "Ormania" [ref=e1228]
-        - paragraph [ref=e1229]: Jewelry made to be remembered.
-        - generic [ref=e1230]:
-          - link "Instagram" [ref=e1231]:
+        - img "Ormania" [ref=e1232]
+        - paragraph [ref=e1233]: Jewelry made to be remembered.
+        - generic [ref=e1234]:
+          - link "Instagram" [ref=e1235]:
             - /url: https://www.instagram.com/bijouterie_ormania
-            - img [ref=e1232]
-          - link "Phone" [ref=e1235]:
+            - img [ref=e1236]
+          - link "Phone" [ref=e1239]:
             - /url: tel:+14506292959
             - text: (450) 629-2959
-      - generic [ref=e1236]:
-        - generic [ref=e1237]: © 2026 Bijouterie Ormania. All rights reserved.
-        - generic [ref=e1238]:
-          - link "Privacy" [ref=e1239]:
+      - generic [ref=e1240]:
+        - generic [ref=e1241]: © 2026 Bijouterie Ormania. All rights reserved.
+        - generic [ref=e1242]:
+          - link "Privacy" [ref=e1243]:
             - /url: /en/privacy/
-          - link "Terms" [ref=e1240]:
+          - link "Terms" [ref=e1244]:
             - /url: /en/terms/
-          - link "Staff" [ref=e1241]:
+          - link "Staff" [ref=e1245]:
             - /url: /en/admin/
-  - button "Open Next.js Dev Tools" [ref=e1247] [cursor=pointer]:
-    - img [ref=e1248]
-  - alert [ref=e1251]
+  - button "Open Next.js Dev Tools" [ref=e1251] [cursor=pointer]:
+    - img [ref=e1252]
+  - alert [ref=e1255]
 ```
 
 # Test source

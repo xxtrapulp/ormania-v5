@@ -10,33 +10,40 @@ const luxeEase = [0.22, 0.61, 0.36, 1] as const;
 export function MaskedWords({
   text,
   className,
-  as: Tag = "span",
   delay = 0,
 }: {
   text: string;
   className?: string;
-  as?: "span" | "h1" | "h2" | "h3" | "p";
   delay?: number;
 }) {
   const reduce = useReducedMotion();
   const words = text.split(" ");
 
   return (
-    <Tag className={cn("inline-flex flex-wrap gap-x-[0.25em]", className)}>
+    <motion.span
+      className={cn("inline-flex flex-wrap gap-x-[0.25em]", className)}
+      initial={reduce ? undefined : "hidden"}
+      whileInView="visible"
+      viewport={viewport}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.04, delayChildren: delay } },
+      }}
+    >
       {words.map((word, i) => (
         <span key={i} className="overflow-hidden inline-block">
           <motion.span
             className="inline-block"
-            initial={reduce ? undefined : { y: "100%", opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={viewport}
-            transition={{ duration: 0.75, ease: luxeEase, delay: delay + i * 0.04 }}
+            variants={{
+              hidden: { y: "100%", opacity: 0 },
+              visible: { y: 0, opacity: 1, transition: { duration: 0.75, ease: luxeEase } },
+            }}
           >
             {word}
           </motion.span>
         </span>
       ))}
-    </Tag>
+    </motion.span>
   );
 }
 

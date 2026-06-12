@@ -20,8 +20,6 @@ Error: locator.click: Test timeout of 30000ms exceeded.
 Call log:
   - waiting for locator('button[aria-label*=\'saved\' i], button[aria-label*=\'sauvegard\' i]').first()
     - locator resolved to <button aria-label="Pièces sauvegardées" class="relative min-h-11 min-w-11 inline-flex items-center justify-center text-text-2 hover:text-gold transition-colors">…</button>
-  - attempting click action
-    - waiting for element to be visible, enabled and stable
 
 ```
 

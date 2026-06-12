@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import { Camera } from "lucide-react";
@@ -20,7 +19,6 @@ const TRANSFORMATIONS = [
 
 export function BeforeAfterSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
   const { openModal } = useModal();
 
   return (
@@ -36,12 +34,11 @@ export function BeforeAfterSection({ lang }: { lang: Lang }) {
           </h2>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {TRANSFORMATIONS.map((item, i) => (
             <motion.div
               key={item.en}
               initial={reduce ? undefined : { opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "80px" }}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
