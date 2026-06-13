@@ -46,7 +46,11 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
             <SectionReveal.Support>
               <Eyebrow text="Bijouterie Ormania — Laval" className="mb-6" />
             </SectionReveal.Support>
-            <SectionReveal.Title as="h2" className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.08] text-ivory text-balance block">
+            {/* h2 is plain (no SectionReveal.Title wrapper) so the
+                MaskedWords child has its own animation system —
+                nesting the two would have caused variant collisions
+                that stranded word spans at opacity: 0 mid-transition. */}
+            <h2 className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.08] text-ivory text-balance block">
               <MaskedWords
                 text={lang === "fr"
                   ? "Ormania transforme les moments de la vie en pièces que vous gardez près de vous."
@@ -54,7 +58,7 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
                 }
                 delay={0.1}
               />
-            </SectionReveal.Title>
+            </h2>
           </div>
 
           {/* Supporting copy */}
