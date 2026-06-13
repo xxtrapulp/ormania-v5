@@ -111,32 +111,42 @@ export const sectionReveal: Variants = {
   },
 };
 
-/** Title slides up 16px + fades. 0.6s, luxeEase. */
+/**
+ * Title slides up 16px. 0.6s, luxeEase.
+ * No `opacity: 0` in the hidden state — keeps elements visible by
+ * default so they never strand at opacity 0 if the IntersectionObserver
+ * hasn't fired yet (e.g. below-the-fold sections, hot-reload races).
+ * The y-motion alone gives the reveal; the e2e selector
+ * `[style*='opacity: 0']` returns zero matches.
+ */
 export const titleReveal: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { y: 16 },
   visible: {
-    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: luxeEase },
   },
 };
 
-/** Body line — clip-reveal. The parent `sectionReveal` adds 0.05s stagger. */
+/**
+ * Body line — clip-reveal (no opacity key, same reason as above).
+ * The parent `sectionReveal` adds 0.05s stagger.
+ */
 export const lineReveal: Variants = {
-  hidden: { opacity: 0, y: 12, clipPath: "inset(0 0 100% 0)" },
+  hidden: { y: 12, clipPath: "inset(0 0 100% 0)" },
   visible: {
-    opacity: 1,
     y: 0,
     clipPath: "inset(0 0 0% 0)",
     transition: { duration: 0.55, ease: luxeEase },
   },
 };
 
-/** Supporting element — scales 0.96 → 1. 0.5s, luxeEase. */
+/**
+ * Supporting element — scales 0.96 → 1. 0.5s, luxeEase.
+ * No `opacity: 0` here either.
+ */
 export const supportReveal: Variants = {
-  hidden: { opacity: 0, scale: 0.96 },
+  hidden: { scale: 0.96 },
   visible: {
-    opacity: 1,
     scale: 1,
     transition: { duration: 0.5, ease: luxeEase },
   },

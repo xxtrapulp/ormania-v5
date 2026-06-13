@@ -81,16 +81,19 @@ function SectionRevealChild({
   className?: string;
   as?: "div" | "span" | "li" | "p" | "h2" | "h3";
 }) {
-  const reduce = useReducedMotion();
+  // Children DO NOT carry their own `whileInView` / `initial`. They
+  // participate in the parent stagger via the `variants` prop only —
+  // the parent's `whileInView="visible"` propagates `animate="visible"`
+  // down, and each child's role variant defines its own hidden/visible
+  // shape. This avoids the double-observer race that strands children
+  // at `opacity: 0` if their own observer never fires (which was
+  // breaking the e2e "scroll-reveal elements animate in" test).
   const Comp = motion[as] as typeof motion.div;
   return (
     <Comp
       data-section-role={role}
       className={className}
       variants={roleToVariant[role]}
-      initial={reduce ? false : "hidden"}
-      whileInView={reduce ? undefined : "visible"}
-      viewport={{ once: true, margin: "-80px" }}
     >
       {children}
     </Comp>
