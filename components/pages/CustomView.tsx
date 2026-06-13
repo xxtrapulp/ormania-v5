@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Camera } from "lucide-react";
 import { CUSTOM_STEPS } from "@/lib/data";
 import { t, type Lang } from "@/lib/i18n";
@@ -9,6 +8,7 @@ import { useLeadModal } from "@/components/forms/LeadModalProvider";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal, RevealGroup, RevealItem, GoldDivider, SectionHeading } from "@/components/ui/Reveal";
 import { Button, ResponsiveLabel } from "@/components/ui/Button";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 const GALLERY = [
   { image: "/instagram/ig-DRP2awpjmhB.jpg", en: "Custom pearl earrings — a 65th birthday gift", fr: "Boucles d'oreilles en perles — cadeau de 65e anniversaire" },
@@ -92,15 +92,16 @@ export function CustomView({ lang }: { lang: Lang }) {
             title={lang === "fr" ? "Faites une seule fois, pour une seule personne." : "Made once, for one person."}
           />
           <RevealGroup className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5">
-            {GALLERY.map((g) => (
+            {GALLERY.map((g, i) => (
               <RevealItem key={g.image}>
                 <figure className="card-glow card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]">
-                  <Image
+                  <ResponsiveIgImage
                     src={g.image}
                     alt={lang === "fr" ? g.fr : g.en}
                     fill
                     sizes="(max-width: 640px) 100vw, 33vw"
-                    loading="lazy"
+                    priority={i === 0}
+                    objectFit="cover"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent" />

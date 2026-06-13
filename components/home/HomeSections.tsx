@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRef, useState, useEffect, type ReactNode } from "react";
 import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench, Gift, Circle, Link as LinkIcon, Search } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
@@ -18,6 +17,7 @@ import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReve
 import { ParallaxText } from "@/components/effects/ParallaxText";
 import { useScrollEffects } from "@/hooks/useScrollEffects";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 function StepItem({ children, index }: { children: ReactNode; index: number }) {
   const { ref, isInView } = useScrollReveal();
@@ -60,7 +60,7 @@ export function HomeSections({ lang }: { lang: Lang }) {
             </FadeLines>
           </div>
           <RevealGroup className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-            {COLLECTIONS.map((c) => (
+            {COLLECTIONS.map((c, i) => (
               <RevealItem key={c.id} className="reveal-card">
                 <TiltCard>
                   <Link
@@ -68,12 +68,13 @@ export function HomeSections({ lang }: { lang: Lang }) {
                     onClick={() => track("collection_card_click", { id: c.id })}
                     className="card-glow card-zoom card-tilt-inner group block relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]"
                   >
-                  <Image
+                  <ResponsiveIgImage
                     src={c.image}
                     alt={c[lang]}
                     fill
                     sizes="(max-width: 768px) 50vw, 33vw"
-                    loading="lazy"
+                    priority={i < 3}
+                    objectFit="cover"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
@@ -134,12 +135,12 @@ export function HomeSections({ lang }: { lang: Lang }) {
       <section className="py-6 md:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <Reveal className="card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5] max-h-[520px] w-full">
-            <Image
+            <ResponsiveIgImage
               src="/instagram/ig-DRP2awpjmhB.jpg"
               alt={lang === "fr" ? "Boucles d'oreilles sur mesure en perles" : "Custom pearl earrings made at Ormania"}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              loading="lazy"
+              objectFit="cover"
               className="object-cover parallax-img scale-[1.12]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
@@ -302,12 +303,12 @@ export function HomeSections({ lang }: { lang: Lang }) {
             </Reveal>
           </div>
           <Reveal className="order-1 lg:order-2 card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5] max-h-[520px] w-full">
-            <Image
+            <ResponsiveIgImage
               src="/instagram/ig-DXxuRoEGDfb.jpg"
               alt={lang === "fr" ? "Bagues de fiançailles en diamant" : "Diamond engagement rings at Ormania"}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              loading="lazy"
+              objectFit="cover"
               className="object-cover parallax-img reveal-img scale-[1.12]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />

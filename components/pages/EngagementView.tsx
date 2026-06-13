@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Gem, Heart } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
@@ -12,6 +11,7 @@ import { Reveal, RevealGroup, RevealItem, GoldDivider, SectionHeading } from "@/
 import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 const GUIDE = {
   stones: {
@@ -136,12 +136,13 @@ export function EngagementView({ lang }: { lang: Lang }) {
       <section className="py-12 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8 grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           <Reveal className="card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5] max-h-[560px] w-full">
-            <Image
+            <ResponsiveIgImage
               src="/instagram/ig-DCu5JdFO5TV.jpg"
               alt={lang === "fr" ? "Bague solitaire Ormania" : "Ormania solitaire ring"}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              loading="lazy"
+              priority
+              objectFit="cover"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />

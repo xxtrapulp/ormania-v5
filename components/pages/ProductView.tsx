@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft, Play } from "lucide-react";
 import type { IGPost } from "@/lib/data";
 import { IG_POSTS } from "@/lib/data";
@@ -12,6 +11,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
 import { BlurWords, FadeLines } from "@/components/effects/TextReveal";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 export function ProductView({ post, lang }: { post: IGPost; lang: Lang }) {
   const { open } = useLeadModal();
@@ -30,12 +30,13 @@ export function ProductView({ post, lang }: { post: IGPost; lang: Lang }) {
 
         <div className="grid md:grid-cols-2 gap-7 md:gap-12 items-start">
           <Reveal className="card-zoom relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]">
-            <Image
+            <ResponsiveIgImage
               src={post.image}
               alt={post.title}
               fill
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
+              objectFit="cover"
               className="object-cover"
             />
             {post.type === "reel" && (
@@ -101,12 +102,11 @@ export function ProductView({ post, lang }: { post: IGPost; lang: Lang }) {
                     onClick={() => track("product_card_click", { code: p.code, source: "related" })}
                     className="card-glow card-zoom group block relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/5]"
                   >
-                    <Image
+                    <ResponsiveIgImage
                       src={p.image}
                       alt={p.title}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
-                      loading="lazy"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />

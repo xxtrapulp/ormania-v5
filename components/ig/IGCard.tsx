@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Play } from "lucide-react";
 import type { IGPost } from "@/lib/data";
@@ -8,13 +7,14 @@ import { t, type Lang } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { useLeadModal } from "@/components/forms/LeadModalProvider";
 import { luxeEase } from "@/lib/motion";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 /**
  * Premium IG showroom card — editorial, not an embedded-feed clone.
  * Reels render vertical (9:16); posts render square.
  * "Ask About This" is always visible (never hover-only).
  */
-export function IGCard({ post, lang, index = 0 }: { post: IGPost; lang: Lang; index?: number }) {
+export function IGCard({ post, lang, index = 0, priority = false }: { post: IGPost; lang: Lang; index?: number; priority?: boolean }) {
   const { open } = useLeadModal();
   const reduce = useReducedMotion();
 
@@ -37,12 +37,13 @@ export function IGCard({ post, lang, index = 0 }: { post: IGPost; lang: Lang; in
         className="block relative"
       >
         <div className={post.type === "reel" ? "relative aspect-[4/5]" : "relative aspect-square"}>
-          <Image
+          <ResponsiveIgImage
             src={post.image}
             alt={post.title}
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-            loading="lazy"
+            priority={priority}
+            objectFit="cover"
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />

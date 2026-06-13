@@ -65,6 +65,8 @@ type ButtonBaseProps = VariantProps<typeof buttonVariants> & {
   children: React.ReactNode;
   /** Animated arrow that slides on hover */
   arrow?: boolean;
+  /** Disable the magnetic effect for this instance (default false). */
+  noMagnetic?: boolean;
 };
 
 type ButtonAsButton = ButtonBaseProps &
@@ -79,9 +81,11 @@ type ButtonAsLink = ButtonBaseProps &
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 export function Button(props: ButtonProps) {
-  const { className, variant, size, full, arrow, children, ...rest } = props;
+  const { className, variant, size, full, arrow, children, noMagnetic, ...rest } = props;
   const classes = cn(buttonVariants({ variant, size, full }), className, "group magnetic-btn");
-  const { ref, handleMouseMove, handleMouseLeave } = useMagnetic(0.2);
+  const { ref, handleMouseMove, handleMouseLeave, style } = useMagnetic(
+    noMagnetic ? { enabled: false } : { maxTravel: 8, strength: 0.2 }
+  );
 
   const content = (
     <>
@@ -100,7 +104,7 @@ export function Button(props: ButtonProps) {
   const magneticProps = {
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
-    style: { willChange: "transform" },
+    style,
   };
 
   if ("href" in props && props.href !== undefined) {

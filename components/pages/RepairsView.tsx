@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Camera, Check, Wrench } from "lucide-react";
 import { REPAIR_SERVICES, REPAIR_STEPS } from "@/lib/data";
@@ -12,24 +11,24 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Reveal, RevealGroup, RevealItem, GoldDivider, SectionHeading } from "@/components/ui/Reveal";
 import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { luxeEase } from "@/lib/motion";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 /** Before/after comparison — “before” is a desaturated treatment of the same piece (demo asset). */
 function BeforeAfter({ image, lang }: { image: string; lang: Lang }) {
   const [pos, setPos] = useState(50);
   return (
     <div className="relative rounded-2xl overflow-hidden border border-(--line) aspect-[4/3] select-none">
-      <Image src={image} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" className="object-cover" />
+      <ResponsiveIgImage src={image} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
         aria-hidden
       >
-        <Image
+        <ResponsiveIgImage
           src={image}
           alt=""
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          loading="lazy"
           className="object-cover grayscale brightness-[0.55] contrast-75 sepia-[0.25]"
         />
       </div>

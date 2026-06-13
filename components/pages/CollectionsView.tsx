@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Search } from "lucide-react";
 import { COLLECTIONS, IG_POSTS, type IGCategory } from "@/lib/data";
@@ -15,6 +14,7 @@ import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReve
 import { ParallaxText } from "@/components/effects/ParallaxText";
 import { luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 export function CollectionsView({ lang }: { lang: Lang }) {
   const [cat, setCat] = useState<IGCategory>("all");
@@ -119,12 +119,13 @@ export function CollectionsView({ lang }: { lang: Lang }) {
                     onClick={() => track("product_card_click", { code: p.code })}
                     className="block relative aspect-[4/5]"
                   >
-                    <Image
+                    <ResponsiveIgImage
                       src={p.image}
                       alt={p.title}
                       fill
                       sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                      loading="lazy"
+                      priority={i < 3}
+                      objectFit="cover"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />

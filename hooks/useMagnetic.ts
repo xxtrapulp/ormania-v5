@@ -1,33 +1,109 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect, useState, type CSSProperties } from "react";
 
-export function useMagnetic(strength = 0.3) {
+/**
+ * useMagnetic — subtle cursor-following shift for primary CTAs.
+ *
+ * Track A3 spec (Layer 1):
+ *   - Travel capped to 8px per axis (use `maxTravel` to override).
+ *   - Returns to origin on `mouseleave` with a 0.4s ease-luxe snap.
+ *   - Disabled on touch devices (`(hover: none)`) AND when
+ *     `prefers-reduced-motion: reduce` is set.
+ *
+ * Implementation: writes the translate to `el.style.transform` on
+ * `mousemove` and clears it (with a brief transition) on `mouseleave`.
+ * On touch + reduced-motion, returns a no-op `style` so consumers can
+ * spread it without affecting their Tailwind classes.
+ */
+export interface UseMagneticOptions {
+  /** Per-axis travel cap, in CSS pixels. Default 8 (per A3 brief). */
+  maxTravel?: number;
+  /** How much of the cursor offset to follow. Default 0.2. */
+  strength?: number;
+  /**
+   * Whether to attach listeners at all. Lets a parent gate on its own
+   * condition (e.g. inside a feature flag). Defaults to true.
+   */
+  enabled?: boolean;
+}
+
+export function useMagnetic(
+  optionsOrStrength: UseMagneticOptions | number = {}
+) {
+  // Backwards-compat: the v1 API was `useMagnetic(strength)`. Normalize.
+  const options: UseMagneticOptions =
+    typeof optionsOrStrength === "number"
+      ? { strength: optionsOrStrength }
+      : optionsOrStrength;
+  const { maxTravel = 8, strength = 0.2, enabled = true } = options;
   const ref = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(false);
+
+  // Detect hover-capable + motion-allowed once on mount.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hoverNone = window.matchMedia("(hover: none)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setActive(enabled && !hoverNone && !reduce);
+  }, [enabled]);
+
+  const applyTransform = useCallback(
+    (dx: number, dy: number) => {
+      const el = ref.current;
+      if (!el) return;
+      // Clamp to ±maxTravel on each axis.
+      const cx = Math.max(-maxTravel, Math.min(maxTravel, dx * strength));
+      const cy = Math.max(-maxTravel, Math.min(maxTravel, dy * strength));
+      el.style.transform = `translate(${cx}px, ${cy}px)`;
+    },
+    [maxTravel, strength]
+  );
+
+  const clearTransform = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = "translate(0, 0)";
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
+      if (!active) return;
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) * strength;
-      const dy = (e.clientY - cy) * strength;
-      el.style.transform = `translate(${dx}px, ${dy}px)`;
+      applyTransform(e.clientX - cx, e.clientY - cy);
     },
-    [strength]
+    [active, applyTransform]
   );
 
   const handleMouseLeave = useCallback(() => {
     const el = ref.current;
     if (!el) return;
+    // Snap back through a brief transition; clear it after the snap so it
+    // doesn't interfere with the next hover.
     el.style.transition = "transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1)";
-    el.style.transform = "translate(0, 0)";
-    setTimeout(() => {
-      if (el) el.style.transition = "";
+    clearTransform();
+    const node = el;
+    const t = window.setTimeout(() => {
+      if (node.isConnected) node.style.transition = "";
     }, 400);
-  }, []);
+    return () => window.clearTimeout(t);
+  }, [clearTransform]);
 
-  return { ref, handleMouseMove, handleMouseLeave };
+  // Spreadable event listeners (preferred path for new code).
+  const magneticProps = {
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
+  };
+
+  // `style` is intentionally `undefined` when not active, so the
+  // consumer can spread it without overriding their own classes.
+  const style: CSSProperties | undefined = active
+    ? ({ willChange: "transform" } as CSSProperties)
+    : undefined;
+
+  return { ref, magneticProps, active, style, handleMouseMove, handleMouseLeave };
 }
