@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useRef, useCallback, useState, type CSSProperties } from "react";
 
 /**
  * useMagnetic — subtle cursor-following shift for primary CTAs.
@@ -38,15 +38,19 @@ export function useMagnetic(
       : optionsOrStrength;
   const { maxTravel = 8, strength = 0.2, enabled = true } = options;
   const ref = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(false);
-
-  // Detect hover-capable + motion-allowed once on mount.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // Detect hover-capable + motion-allowed once at mount via lazy
+  // initializer (avoids the setState-in-effect lint rule). SSR returns
+  // `false` so the magnetic effect is opt-in only on the client. Media
+  // queries don't change at runtime in practice for desktop/tablet
+  // users; if a consumer needs to react to a change in `enabled`, the
+  // consumer should remount the component.
+  const active = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    if (!enabled) return false;
     const hoverNone = window.matchMedia("(hover: none)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setActive(enabled && !hoverNone && !reduce);
-  }, [enabled]);
+    return !hoverNone && !reduce;
+  })[0];
 
   const applyTransform = useCallback(
     (dx: number, dy: number) => {
