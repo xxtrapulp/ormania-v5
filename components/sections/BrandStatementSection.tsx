@@ -2,13 +2,13 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { t, type Lang } from "@/lib/i18n";
+import { type Lang } from "@/lib/i18n";
 import { MaskedWords, Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 
 export function BrandStatementSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -40,11 +40,13 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
       </motion.div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end">
+        <SectionReveal className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end">
           {/* Main statement — oversized */}
           <div className="md:col-span-8">
-            <Eyebrow text="Bijouterie Ormania — Laval" className="mb-6" />
-            <h2 className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.08] text-ivory text-balance">
+            <SectionReveal.Support>
+              <Eyebrow text="Bijouterie Ormania — Laval" className="mb-6" />
+            </SectionReveal.Support>
+            <SectionReveal.Title as="h2" className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.08] text-ivory text-balance block">
               <MaskedWords
                 text={lang === "fr"
                   ? "Ormania transforme les moments de la vie en pièces que vous gardez près de vous."
@@ -52,18 +54,11 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
                 }
                 delay={0.1}
               />
-            </h2>
+            </SectionReveal.Title>
           </div>
 
           {/* Supporting copy */}
-          <motion.div
-            className="md:col-span-4 md:pb-2"
-            initial={reduce ? undefined : { opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "80px" }}
-            transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
-          >
+          <SectionReveal.Support className="md:col-span-4 md:pb-2">
             <div className="w-12 h-px bg-gold/40 mb-4" />
             <p className="text-[0.9rem] md:text-base text-text-2 leading-relaxed">
               {lang === "fr"
@@ -71,17 +66,18 @@ export function BrandStatementSection({ lang }: { lang: Lang }) {
                 : "A Laval jewelry boutique for fine pieces, meaningful gifts, custom work, repairs, watches, and engagement moments."
               }
             </p>
-          </motion.div>
-        </div>
+            <p className="mt-3 text-[0.85rem] text-text-3">
+              <CursorUnderline.Span>
+                {lang === "fr" ? "En savoir plus sur Ormania" : "Learn more about Ormania"}
+              </CursorUnderline.Span>
+            </p>
+          </SectionReveal.Support>
 
-        {/* Gold accent line */}
-        <motion.div
-          className="mt-16 md:mt-24 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
-          initial={reduce ? undefined : { scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
-          style={{ transformOrigin: "center" }}
-        />
+          {/* Gold accent line */}
+          <SectionReveal.Support className="col-span-full mt-16 md:mt-24">
+            <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+          </SectionReveal.Support>
+        </SectionReveal>
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import { MapPin, Shield, Star, MessageCircle, ArrowRight } from "lucide-react";
@@ -52,12 +54,14 @@ export function TrustSection({ lang }: { lang: Lang }) {
         style={{ y: glowY, willChange: "transform" }}
       />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-8 md:mb-10">
-          <Eyebrow text={lang === "fr" ? "Confiance" : "Trust"} className="mb-3" />
-          <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory">
+        <SectionReveal className="text-center mb-8 md:mb-10">
+          <SectionReveal.Support>
+            <Eyebrow text={lang === "fr" ? "Confiance" : "Trust"} className="mb-3" />
+          </SectionReveal.Support>
+          <SectionReveal.Title className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory block">
             {lang === "fr" ? "De confiance à Laval." : "Trusted in Laval."}
-          </h2>
-        </div>
+          </SectionReveal.Title>
+        </SectionReveal>
 
         {/* Trust badges */}
         <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
@@ -98,7 +102,7 @@ export function TrustSection({ lang }: { lang: Lang }) {
                   ))}
                 </div>
                 <p className="text-[0.9rem] text-ivory leading-relaxed mb-4 italic">
-                  "{review[lang]}"
+                  &ldquo;{review[lang]}&rdquo;
                 </p>
                 <span className="text-[0.8rem] text-text-3 font-medium">{review.author}</span>
               </GlassCard>
@@ -129,6 +133,11 @@ export function TrustSection({ lang }: { lang: Lang }) {
             {lang === "fr" ? "Contactez-nous" : "Contact Us"}
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
           </button>
+          <p className="mt-4 text-[0.8rem] text-text-3">
+            <CursorUnderline.Span>
+              {lang === "fr" ? "ou voir notre page dédiée" : "or see our dedicated page"}
+            </CursorUnderline.Span>
+          </p>
         </motion.div>
       </div>
     </section>

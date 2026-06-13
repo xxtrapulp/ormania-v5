@@ -13,6 +13,7 @@ import { luxeEase } from "@/lib/motion";
 import { useModal } from "@/components/modals/ModalSystem";
 import { useSavedPieces } from "@/hooks/useSavedPieces";
 import { useCompare } from "@/hooks/useCompare";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 
 const headerVariants = {
   hidden: { y: -20, opacity: 0 },
@@ -139,22 +140,16 @@ export function Header({ lang }: { lang: Lang }) {
                   : pathname.startsWith(href);
               return (
                 <motion.span key={item.key} variants={navItem}>
-                  <Link
+                  <CursorUnderline
                     href={href}
+                    active={active}
                     className={cn(
-                      "relative text-[0.8rem] tracking-[0.14em] uppercase transition-colors duration-300 group",
+                      "relative text-[0.8rem] tracking-[0.14em] uppercase transition-colors duration-300",
                       active ? "text-gold" : "text-text-2 hover:text-ivory"
                     )}
                   >
                     {t(lang, item.key)}
-                    <span
-                      aria-hidden
-                      className={cn(
-                        "absolute -bottom-1 left-1/2 -translate-x-1/2 h-px bg-gold transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)]",
-                        active ? "w-full" : "w-0 group-hover:w-full"
-                      )}
-                    />
-                  </Link>
+                  </CursorUnderline>
                 </motion.span>
               );
             })}

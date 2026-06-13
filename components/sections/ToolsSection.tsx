@@ -6,6 +6,8 @@ import { type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
 import {
@@ -49,12 +51,19 @@ export function ToolsSection({ lang }: { lang: Lang }) {
   return (
     <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-8 md:mb-10">
-          <Eyebrow text={lang === "fr" ? "Outils et guides" : "Tools & Guides"} className="mb-3" />
-          <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory">
+        <SectionReveal className="text-center mb-8 md:mb-10">
+          <SectionReveal.Support>
+            <Eyebrow text={lang === "fr" ? "Outils et guides" : "Tools & Guides"} className="mb-3" />
+          </SectionReveal.Support>
+          <SectionReveal.Title className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory block">
             {lang === "fr" ? "Petits outils, grandes décisions." : "Little helpers, big decisions."}
-          </h2>
-        </div>
+          </SectionReveal.Title>
+          <SectionReveal.Body className="mt-3 text-[0.85rem] text-text-3 block">
+            <CursorUnderline.Span>
+              {lang === "fr" ? "Tous les outils sont gratuits" : "All tools are free to use"}
+            </CursorUnderline.Span>
+          </SectionReveal.Body>
+        </SectionReveal>
 
         <div ref={ref} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {TOOLS.map((tool, i) => {

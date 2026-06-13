@@ -1,9 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { t, type Lang } from "@/lib/i18n";
+import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { User, Crown, Sun, CircleUser, Wrench, Search } from "lucide-react";
 
 const INTENTIONS = [
@@ -52,15 +54,17 @@ export function IntentionSection({ lang }: { lang: Lang }) {
   return (
     <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="text-center mb-8 md:mb-10">
-          <Eyebrow
-            text={lang === "fr" ? "Shop par intention" : "Shop by Intention"}
-            className="mb-3"
-          />
-          <h2 className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory">
+        <SectionReveal className="text-center mb-8 md:mb-10">
+          <SectionReveal.Support>
+            <Eyebrow
+              text={lang === "fr" ? "Shop par intention" : "Shop by Intention"}
+              className="mb-3"
+            />
+          </SectionReveal.Support>
+          <SectionReveal.Title className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory block">
             {lang === "fr" ? "Comment pouvons-nous vous aider ?" : "How can we help you?"}
-          </h2>
-        </div>
+          </SectionReveal.Title>
+        </SectionReveal>
 
         <div
           ref={ref}
@@ -97,7 +101,9 @@ export function IntentionSection({ lang }: { lang: Lang }) {
                   {item.desc[lang]}
                 </p>
                 <div className="mt-4 flex items-center gap-1 text-gold text-[0.8rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span>{lang === "fr" ? "Explorer" : "Explore"}</span>
+                  <CursorUnderline.Span>
+                    {lang === "fr" ? "Explorer" : "Explore"}
+                  </CursorUnderline.Span>
                   <span aria-hidden>→</span>
                 </div>
               </motion.div>

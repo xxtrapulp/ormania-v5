@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow, MaskedWords } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { TiltCard } from "@/components/effects/TiltCard";
 import { useModal } from "@/components/modals/ModalSystem";
 import { IG_POSTS, type IGCategory } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Heart, Upload, Link as LinkIcon } from "lucide-react";
+import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
 
 const FILTERS: { key: IGCategory; labelEn: string; labelFr: string }[] = [
   { key: "all", labelEn: "All", labelFr: "Tout" },
@@ -48,18 +50,20 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
       />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <Eyebrow text={lang === "fr" ? "Vu sur Instagram" : "Seen on Instagram"} className="mb-3" />
-          <h2 className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory mb-4">
+        <SectionReveal className="text-center mb-8 md:mb-12">
+          <SectionReveal.Support>
+            <Eyebrow text={lang === "fr" ? "Vu sur Instagram" : "Seen on Instagram"} className="mb-3" />
+          </SectionReveal.Support>
+          <SectionReveal.Title as="h2" className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory mb-4 block">
             <MaskedWords text={lang === "fr" ? "De notre Instagram à vos mains." : "From Instagram to your hands."} />
-          </h2>
-          <p className="text-[0.95rem] text-text-2 max-w-xl mx-auto">
+          </SectionReveal.Title>
+          <SectionReveal.Body className="text-[0.95rem] text-text-2 max-w-xl mx-auto block">
             {lang === "fr"
               ? "Vous avez vu quelque chose que vous aimez ? Téléversez une capture d'écran, collez un lien ou demandez-nous des informations."
               : "Saw something you love? Upload a screenshot, paste a post link, or ask us about a piece."
             }
-          </p>
-        </div>
+          </SectionReveal.Body>
+        </SectionReveal>
 
         {/* Filter chips */}
         <div className="flex flex-wrap justify-center gap-2 mb-8 md:mb-10">
@@ -90,49 +94,58 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: i * 0.03, ease: [0.22, 0.61, 0.36, 1] }}
-                className="group relative overflow-hidden rounded-xl cursor-pointer"
+                className="cursor-pointer"
               >
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105"
-                  />
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-ink/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
-                    <span className="text-ivory font-serif text-[1.1rem] text-center px-4">
-                      {post.title}
-                    </span>
-                    <span className="text-gold text-[0.8rem]">
-                      {post.availability}
-                    </span>
-                    <button
-                      onClick={() => openModal("instagram", { pieceName: post.title })}
-                      className="mt-2 px-5 py-2 rounded-full bg-gold text-ink text-[0.8rem] font-medium active:scale-[0.96] transition-transform"
-                    >
-                      {t(lang, "ig.ask")}
+                <TiltCard
+                  className="rounded-xl"
+                  innerClassName="rounded-xl border-gold/30 group-hover:border-gold/60 overflow-hidden"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    <TiltCard.Image className="absolute inset-0">
+                      <ResponsiveIgImage
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        priority={i < 4}
+                        objectFit="cover"
+                        className="object-cover"
+                      />
+                    </TiltCard.Image>
+                    {/* Hover overlay */}
+                    <TiltCard.Info className="absolute inset-0 bg-ink/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
+                      <span className="text-ivory font-serif text-[1.1rem] text-center px-4">
+                        {post.title}
+                      </span>
+                      <span className="text-gold text-[0.8rem]">
+                        {post.availability}
+                      </span>
+                      <button
+                        onClick={() => openModal("instagram", { pieceName: post.title })}
+                        className="mt-2 px-5 py-2 rounded-full bg-gold text-ink text-[0.8rem] font-medium active:scale-[0.96] transition-transform"
+                      >
+                        {t(lang, "ig.ask")}
+                      </button>
+                    </TiltCard.Info>
+                    {/* Top-right badges */}
+                    <div className="absolute top-2 right-2 flex gap-1.5 z-10">
+                      {post.recent && (
+                        <span className="px-2 py-0.5 rounded-full bg-gold/90 text-ink text-[0.65rem] font-medium">
+                          {t(lang, "ig.recent")}
+                        </span>
+                      )}
+                      {post.type === "reel" && (
+                        <span className="px-2 py-0.5 rounded-full bg-ink/80 text-ivory text-[0.65rem] font-medium border border-(--line)">
+                          {t(lang, "ig.reel")}
+                        </span>
+                      )}
+                    </div>
+                    {/* Bottom save button */}
+                    <button className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-ink/60 border border-(--line) flex items-center justify-center text-ivory opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-gold hover:border-gold/40 z-10">
+                      <Heart size={14} strokeWidth={1.5} />
                     </button>
                   </div>
-                  {/* Top-right badges */}
-                  <div className="absolute top-2 right-2 flex gap-1.5">
-                    {post.recent && (
-                      <span className="px-2 py-0.5 rounded-full bg-gold/90 text-ink text-[0.65rem] font-medium">
-                        {t(lang, "ig.recent")}
-                      </span>
-                    )}
-                    {post.type === "reel" && (
-                      <span className="px-2 py-0.5 rounded-full bg-ink/80 text-ivory text-[0.65rem] font-medium border border-(--line)">
-                        {t(lang, "ig.reel")}
-                      </span>
-                    )}
-                  </div>
-                  {/* Bottom save button */}
-                  <button className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-ink/60 border border-(--line) flex items-center justify-center text-ivory opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-gold hover:border-gold/40">
-                    <Heart size={14} strokeWidth={1.5} />
-                  </button>
-                </div>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>

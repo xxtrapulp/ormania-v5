@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
+import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { useModal } from "@/components/modals/ModalSystem";
 import { MessageCircle, ArrowRight } from "lucide-react";
 
@@ -29,32 +31,41 @@ export function ConciergeSection({ lang }: { lang: Lang }) {
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left: CTA */}
-            <div>
-              <Eyebrow
-                text={lang === "fr" ? "Besoin d'aide ?" : "Need help choosing?"}
-                className="mb-3"
-              />
-              <h2 className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory mb-4">
+            <SectionReveal>
+              <SectionReveal.Support>
+                <Eyebrow
+                  text={lang === "fr" ? "Besoin d'aide ?" : "Need help choosing?"}
+                  className="mb-3"
+                />
+              </SectionReveal.Support>
+              <SectionReveal.Title className="font-serif text-[clamp(1.5rem,4vw,2.5rem)] text-ivory mb-4 block">
                 {lang === "fr"
                   ? "Laissez Ormania vous guider."
                   : "Let Ormania guide you."
                 }
-              </h2>
-              <p className="text-[0.95rem] text-text-2 leading-relaxed mb-6 max-w-md">
+              </SectionReveal.Title>
+              <SectionReveal.Body className="text-[0.95rem] text-text-2 leading-relaxed mb-6 max-w-md block">
                 {lang === "fr"
                   ? "Dites-nous ce que vous recherchez et la boutique pourra vous orienter vers les bonnes pièces."
                   : "Tell Ormania what you are looking for and the boutique can guide you to the right pieces."
                 }
-              </p>
-              <button
-                onClick={() => openModal("concierge")}
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-ink font-medium text-[0.9rem] btn-sheen active:scale-[0.96] transition-transform"
-              >
-                <MessageCircle size={16} strokeWidth={1.5} />
-                {lang === "fr" ? "Demander à Ormania" : "Ask Ormania"}
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
+              </SectionReveal.Body>
+              <SectionReveal.Support>
+                <button
+                  onClick={() => openModal("concierge")}
+                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-ink font-medium text-[0.9rem] btn-sheen active:scale-[0.96] transition-transform"
+                >
+                  <MessageCircle size={16} strokeWidth={1.5} />
+                  {lang === "fr" ? "Demander à Ormania" : "Ask Ormania"}
+                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                </button>
+                <span className="ml-4 inline-block text-[0.8rem] text-text-3 align-middle">
+                  <CursorUnderline.Span>
+                    {lang === "fr" ? "ou envoyez un message rapide" : "or send a quick message"}
+                  </CursorUnderline.Span>
+                </span>
+              </SectionReveal.Support>
+            </SectionReveal>
 
             {/* Right: Mini form */}
             <div className="rounded-xl border border-(--line) bg-[rgba(255,255,255,0.02)] p-5 md:p-6">

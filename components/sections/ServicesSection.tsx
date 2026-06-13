@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { t, type Lang } from "@/lib/i18n";
+import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
+import { SectionReveal } from "@/components/effects/SectionReveal";
 import { Gem, Wrench, Heart, Gift } from "lucide-react";
 
 const SERVICES = [
@@ -52,13 +53,17 @@ export function ServicesSection({ lang }: { lang: Lang }) {
   return (
     <section className="py-12 md:py-20 bg-ink">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <Eyebrow
-          text={lang === "fr" ? "Services phares" : "Signature Services"}
-          className="mb-3"
-        />
-        <h2 className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory mb-8 md:mb-10">
-          {lang === "fr" ? "Notre savoir-faire, à votre service." : "Our craft, at your service."}
-        </h2>
+        <SectionReveal className="mb-8 md:mb-10">
+          <SectionReveal.Support>
+            <Eyebrow
+              text={lang === "fr" ? "Services phares" : "Signature Services"}
+              className="mb-3"
+            />
+          </SectionReveal.Support>
+          <SectionReveal.Title className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory block">
+            {lang === "fr" ? "Notre savoir-faire, à votre service." : "Our craft, at your service."}
+          </SectionReveal.Title>
+        </SectionReveal>
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {SERVICES.map((service, i) => {
