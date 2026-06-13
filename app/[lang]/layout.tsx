@@ -4,6 +4,7 @@ import { Header } from "@/components/shell/Header";
 import { Footer } from "@/components/shell/Footer";
 import { StickyBar } from "@/components/shell/StickyBar";
 import { LeadModalProvider } from "@/components/forms/LeadModalProvider";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 import { PageTransition } from "@/components/effects/PageTransition";
 import { SparkleTrail } from "@/components/effects/SparkleTrail";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
@@ -13,6 +14,7 @@ import { Preloader } from "@/components/effects/Preloader";
 import { CustomCursor } from "@/components/effects/CustomCursor";
 import { BackToTop } from "@/components/effects/BackToTop";
 import { MouseSpotlight } from "@/components/effects/MouseSpotlight";
+import { ModalFaviconSwap } from "@/components/effects/ModalFaviconSwap";
 import { STORE, HOURS_LABELS } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -64,30 +66,33 @@ export default async function LangLayout({
   const l: Lang = lang;
 
   return (
-    <LeadModalProvider lang={l}>
-      <a className="skip-link" href="#main">
-        {t(l, "skip")}
-      </a>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Preloader />
-      <CustomCursor />
-      <MouseSpotlight />
-      <ScrollProgress />
-      <GrainOverlay />
-      <SparkleTrail />
-      <SmoothAnchorProvider />
-      <Header lang={l} />
-      <PageTransition>
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-      </PageTransition>
-      <Footer lang={l} />
-      <StickyBar lang={l} />
-      <BackToTop />
-    </LeadModalProvider>
+    <ToastProvider>
+      <LeadModalProvider lang={l}>
+        <a className="skip-link" href="#main">
+          {t(l, "skip")}
+        </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Preloader />
+        <CustomCursor />
+        <MouseSpotlight />
+        <ScrollProgress />
+        <GrainOverlay />
+        <SparkleTrail />
+        <SmoothAnchorProvider />
+        <Header lang={l} />
+        <PageTransition>
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+        </PageTransition>
+        <Footer lang={l} />
+        <StickyBar lang={l} />
+        <BackToTop />
+        <ModalFaviconSwap />
+      </LeadModalProvider>
+    </ToastProvider>
   );
 }

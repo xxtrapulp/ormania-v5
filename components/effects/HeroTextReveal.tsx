@@ -16,15 +16,24 @@ export function HeroTextReveal({
   parts,
   className = "",
   baseDelay = 0.6,
+  /** Per-character delay in ms. Default 28 for the original typewriter feel. */
+  charDelayMs = 28,
+  /** Per-character fade-in duration in ms. Default 30. */
+  charDurationMs = 30,
+  /** If true, render fully visible on mount with no animation. */
+  instant = false,
   onComplete,
 }: {
   parts: Part[];
   className?: string;
   baseDelay?: number;
+  charDelayMs?: number;
+  charDurationMs?: number;
+  instant?: boolean;
   onComplete?: () => void;
 }) {
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(instant ? Number.MAX_SAFE_INTEGER : 0);
+  const [showCursor, setShowCursor] = useState(!instant);
 
   // Build a flat list of words, each with its characters and cumulative char index.
   const words: { chars: { char: string; className?: string }[]; globalStart: number }[] = [];
@@ -51,6 +60,13 @@ export function HeroTextReveal({
   const totalChars = charIndex;
 
   useEffect(() => {
+    if (instant) {
+      // Fire the completion callback after a tick so any listener can react.
+      const t = setTimeout(() => {
+        onComplete?.();
+      }, 50);
+      return () => clearTimeout(t);
+    }
     if (visibleCount >= totalChars) {
       const t = setTimeout(() => {
         setShowCursor(false);
@@ -58,10 +74,10 @@ export function HeroTextReveal({
       }, 700);
       return () => clearTimeout(t);
     }
-    const delayMs = visibleCount === 0 ? baseDelay * 1000 : 28;
+    const delayMs = visibleCount === 0 ? baseDelay * 1000 : charDelayMs;
     const t = setTimeout(() => setVisibleCount((c) => c + 1), delayMs);
     return () => clearTimeout(t);
-  }, [visibleCount, totalChars, baseDelay, onComplete]);
+  }, [visibleCount, totalChars, baseDelay, charDelayMs, onComplete, instant]);
 
   return (
     <span className={`inline-block ${className}`}>
@@ -78,7 +94,7 @@ export function HeroTextReveal({
                 className={`inline-block will-change-[opacity] ${item.className ?? ""}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: globalIdx < visibleCount ? 1 : 0 }}
-                transition={{ duration: 0.03 }}
+                transition={{ duration: charDurationMs / 1000 }}
               >
                 {item.char === " " ? "\u00A0" : item.char}
               </motion.span>

@@ -11,6 +11,7 @@ import { createLead, type LeadAttachment } from "@/lib/store";
 import { track } from "@/lib/analytics";
 import { modalOverlay, modalPanel, luxeEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export interface LeadModalProps {
   kind: FormKind;
@@ -33,6 +34,7 @@ export function LeadModal({ kind, lang, prefill, onClose }: LeadModalProps) {
   const [submitting, setSubmitting] = useState(false);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const toast = useToast();
 
   const steps = config.steps;
   const isLast = step === steps.length - 1;
@@ -94,12 +96,13 @@ export function LeadModal({ kind, lang, prefill, onClose }: LeadModalProps) {
       track("form_submit", { form: kind, ref: lead.id });
       setRefNum(lead.id);
       setPhase("success");
+      toast.success(t(lang, "form.toastSuccess"));
     } catch {
       setPhase("error");
     } finally {
       setSubmitting(false);
     }
-  }, [validate, steps, step, files, values, config.type, kind]);
+  }, [validate, steps, step, files, values, config.type, kind, toast, lang]);
 
   const next = useCallback(() => {
     if (!validate(steps[step])) return;

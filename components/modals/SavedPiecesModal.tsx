@@ -6,14 +6,29 @@ import { ModalShell } from "./ModalShell";
 import { useModal } from "./ModalSystem";
 import { useMotion } from "@/components/effects/MotionContext";
 import { useSavedPieces } from "@/hooks/useSavedPieces";
+import { useToast } from "@/components/ui/ToastProvider";
 import { Heart, X, ArrowRight } from "lucide-react";
 
 export function SavedPiecesModal({ lang }: { lang: Lang }) {
   const { activeModal, closeModal } = useModal();
   const { reducedMotion } = useMotion();
   const { pieces, remove, clear } = useSavedPieces();
+  const toast = useToast();
 
   const isOpen = activeModal === "saved";
+
+  const handleRemove = (id: string) => {
+    remove(id);
+    toast.info(lang === "fr" ? "Pièce retirée" : "Removed from saved");
+  };
+
+  const handleClear = () => {
+    clear();
+    toast.info(
+      lang === "fr" ? "Liste effacée" : "Saved list cleared",
+      { durationMs: 1800 },
+    );
+  };
 
   return (
     <ModalShell
@@ -43,7 +58,7 @@ export function SavedPiecesModal({ lang }: { lang: Lang }) {
               {pieces.length} {lang === "fr" ? "pièce(s)" : "piece(s)"}
             </span>
             <button
-              onClick={clear}
+              onClick={handleClear}
               className="text-[0.75rem] text-text-3 hover:text-red-300 transition-colors"
             >
               {lang === "fr" ? "Tout effacer" : "Clear all"}
@@ -71,7 +86,8 @@ export function SavedPiecesModal({ lang }: { lang: Lang }) {
                     {lang === "fr" ? "Demander" : "Ask"} <ArrowRight size={12} />
                   </button>
                   <button
-                    onClick={() => remove(piece.id)}
+                    onClick={() => handleRemove(piece.id)}
+                    aria-label={lang === "fr" ? "Retirer cette pièce" : "Remove this piece"}
                     className="w-8 h-8 rounded-full border border-(--line) flex items-center justify-center text-text-3 hover:text-red-300 transition-colors"
                   >
                     <X size={14} />

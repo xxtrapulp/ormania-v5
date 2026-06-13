@@ -170,6 +170,7 @@ const dict = {
     "Merci — nous vous répondrons dans un jour ouvrable. Votre numéro de référence :",
   ],
   "form.successClose": ["Done", "Terminé"],
+  "form.toastSuccess": ["We'll be in touch within 24 hours.", "Nous vous répondrons dans les 24 heures."],
   "form.error": ["Something went wrong. Please try again or call us.", "Une erreur est survenue. Réessayez ou appelez-nous."],
   "form.step": ["Step", "Étape"],
   "form.of": ["of", "de"],

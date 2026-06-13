@@ -6,14 +6,29 @@ import { ModalShell } from "./ModalShell";
 import { useModal } from "./ModalSystem";
 import { useMotion } from "@/components/effects/MotionContext";
 import { useCompare } from "@/hooks/useCompare";
+import { useToast } from "@/components/ui/ToastProvider";
 import { Scale, X, ArrowRight } from "lucide-react";
 
 export function CompareModal({ lang }: { lang: Lang }) {
   const { activeModal, closeModal } = useModal();
   const { reducedMotion } = useMotion();
   const { items, remove, clear } = useCompare();
+  const toast = useToast();
 
   const isOpen = activeModal === "compare";
+
+  const handleRemove = (id: string) => {
+    remove(id);
+    toast.info(lang === "fr" ? "Retiré du comparateur" : "Removed from compare");
+  };
+
+  const handleClear = () => {
+    clear();
+    toast.info(
+      lang === "fr" ? "Comparateur vidé" : "Compare list cleared",
+      { durationMs: 1800 },
+    );
+  };
 
   return (
     <ModalShell
@@ -43,7 +58,7 @@ export function CompareModal({ lang }: { lang: Lang }) {
               {items.length} {lang === "fr" ? "pièce(s)" : "piece(s)"}
             </span>
             <button
-              onClick={clear}
+              onClick={handleClear}
               className="text-[0.75rem] text-text-3 hover:text-red-300 transition-colors"
             >
               {lang === "fr" ? "Tout effacer" : "Clear all"}
@@ -69,7 +84,8 @@ export function CompareModal({ lang }: { lang: Lang }) {
                     {lang === "fr" ? "Demander" : "Ask"} <ArrowRight size={12} />
                   </button>
                   <button
-                    onClick={() => remove(item.id)}
+                    onClick={() => handleRemove(item.id)}
+                    aria-label={lang === "fr" ? "Retirer cette pièce" : "Remove this piece"}
                     className="w-9 h-9 rounded-lg border border-(--line) flex items-center justify-center text-text-3 hover:text-red-300 transition-colors"
                   >
                     <X size={14} />
