@@ -32,20 +32,31 @@ export function BlurWords({
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      gsap.from(words, {
-        opacity: 0,
-        y: isMobile ? 12 : 20,
-        ...(isMobile ? {} : { filter: "blur(8px)" }),
-        duration: isMobile ? 0.5 : 0.7,
-        stagger: isMobile ? stagger * 0.6 : stagger,
-        delay,
-        ease: isMobile ? "power2.out" : "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: isMobile ? "top 90%" : "top 75%",
-          toggleActions: "play none none none",
+      // fromTo + immediateRender:false → if the trigger never fires
+      // (hot-reload, fast scroll, prefetch), the words stay visible.
+      gsap.fromTo(
+        words,
+        {
+          opacity: 0,
+          y: isMobile ? 12 : 20,
+          ...(isMobile ? {} : { filter: "blur(8px)" }),
         },
-      });
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: isMobile ? 0.5 : 0.7,
+          stagger: isMobile ? stagger * 0.6 : stagger,
+          delay,
+          ease: isMobile ? "power2.out" : "power3.out",
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: el,
+            start: isMobile ? "top 95%" : "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     }, el);
 
     return () => ctx.revert();
@@ -89,19 +100,29 @@ export function FadeLines({
     if (!lines.length) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(lines, {
-        opacity: 0,
-        y: 15,
-        duration: 0.6,
-        stagger,
-        delay,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
+      // Use fromTo with explicit start AND end states, and set
+      // immediateRender:false so the elements stay at their natural
+      // CSS opacity (1) until the scrollTrigger actually fires.
+      // Prevents the "stuck at opacity:0" failure when the trigger
+      // doesn't fire (hot-reload races, fast-scrolling users, etc.).
+      gsap.fromTo(
+        lines,
+        { opacity: 0, y: 15 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger,
+          delay,
+          ease: "power2.out",
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     }, el);
 
     return () => ctx.revert();

@@ -13,6 +13,13 @@ import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
  * Premium IG showroom card — editorial, not an embedded-feed clone.
  * Reels render vertical (9:16); posts render square.
  * "Ask About This" is always visible (never hover-only).
+ *
+ * Motion note: cards default to visible. The previous `whileInView`
+ * opacity:0→1 reveal stranded cards at opacity 0 when the Intersection
+ * Observer's `amount` threshold wasn't met (e.g. only the bottom 11px
+ * of a card peeking into a tight viewport). The grid layout made
+ * "10% visible" unreliable for half-width cards. Better to lose the
+ * animation than the content.
  */
 export function IGCard({ post, lang, index = 0, priority = false }: { post: IGPost; lang: Lang; index?: number; priority?: boolean }) {
   const { open } = useLeadModal();
@@ -21,11 +28,9 @@ export function IGCard({ post, lang, index = 0, priority = false }: { post: IGPo
   return (
     <motion.article
       layout
-      initial={reduce ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      exit={reduce ? undefined : { opacity: 0, scale: 0.96 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.55, ease: luxeEase, delay: (index % 4) * 0.06 }}
+      initial={reduce ? false : { opacity: 0, y: 18 }}
+      animate={reduce ? undefined : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: luxeEase, delay: Math.min(index, 4) * 0.05 }}
       className="card-glow card-zoom relative rounded-2xl overflow-hidden border border-(--line) bg-ink-2 group"
     >
       <a
