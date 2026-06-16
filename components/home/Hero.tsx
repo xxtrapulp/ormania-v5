@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useId, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { track } from "@/lib/analytics";
 import { heroStagger, heroItem, luxeEase } from "@/lib/motion";
@@ -95,6 +95,23 @@ function LogoShutter({
   const reduce = useReducedMotion();
   // We have 10 horizontal slats. Their indices drive a staggered top→bottom reveal.
   const SLATS = 10;
+  // Local state: when the wipe finishes, flip playIntro to false so
+  // AnimatePresence unmounts the slats. Without this, the slats
+  // settle at opacity 1 / y 0 and stay as a permanent gold overlay
+  // on the wordmark.
+  const [introPlaying, setIntroPlaying] = useState(playIntro);
+  useEffect(() => {
+    if (!playIntro) {
+      setIntroPlaying(false);
+      return;
+    }
+    setIntroPlaying(true);
+    // Last slat finishes at introStart + 9*55 + 500ms. Add 200ms of
+    // breathing room before flipping, so the final slat has settled
+    // before AnimatePresence starts the fade-out.
+    const t = setTimeout(() => setIntroPlaying(false), introStart + 9 * 55 + 700);
+    return () => clearTimeout(t);
+  }, [playIntro, introStart]);
 
   if (reduce) {
     return (
@@ -133,35 +150,44 @@ function LogoShutter({
 
   return (
     <div className="mb-6 md:mb-8 relative">
-      {/* Slats that wipe IN (revealing the logo below) */}
+      {/* Slats that wipe IN (revealing the logo below) and then fade
+          away — the slats are a transient wipe effect, not a permanent
+          overlay. AnimatePresence handles unmount after the exit anim. */}
       <div className="relative">
-        {Array.from({ length: SLATS }).map((_, i) => {
-          // Each slat covers 1/SLATS of the height. We translate it from -100% (above)
-          // to 0% (settled) so it slides into place and uncovers the logo strip.
-          const slatDelay = (introStart + (i * 0.55) * 10) / 1000; // 0.55s span across slats
-          return (
-            <motion.div
-              key={`shutter-${i}`}
-              aria-hidden
-              className="absolute inset-x-0 h-[10%] z-10"
-              style={{
-                top: `${(i / SLATS) * 100}%`,
-                background:
-                  "linear-gradient(180deg, rgba(201,168,106,0.18) 0%, rgba(201,168,106,0.05) 100%)",
-                borderTop: "1px solid rgba(201,168,106,0.45)",
-                borderBottom: "1px solid rgba(201,168,106,0.18)",
-                boxShadow: "inset 0 0 18px rgba(201,168,106,0.18)",
-              }}
-              initial={{ y: "-100%", opacity: 0.9 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                duration: 0.5,
-                delay: slatDelay,
-                ease: [0.22, 0.61, 0.36, 1],
-              }}
-            />
-          );
-        })}
+        <AnimatePresence>
+          {introPlaying && Array.from({ length: SLATS }).map((_, i) => {
+            // Each slat covers 1/SLATS of the height. We translate it from
+            // -100% (above) to 0% (settled) so it slides into place and
+            // uncovers the logo strip. 55ms gap × 10 slats ≈ 0.55s total
+            // wipe duration. The setTimeout in useEffect above flips
+            // introPlaying to false after the last slat settles, then
+            // AnimatePresence fades the whole group out.
+            const slatDelay = (introStart + i * 55) / 1000;
+            return (
+              <motion.div
+                key={`shutter-${i}`}
+                aria-hidden
+                className="absolute inset-x-0 h-[10%] z-10"
+                style={{
+                  top: `${(i / SLATS) * 100}%`,
+                  background:
+                    "linear-gradient(180deg, rgba(201,168,106,0.18) 0%, rgba(201,168,106,0.05) 100%)",
+                  borderTop: "1px solid rgba(201,168,106,0.45)",
+                  borderBottom: "1px solid rgba(201,168,106,0.18)",
+                  boxShadow: "inset 0 0 18px rgba(201,168,106,0.18)",
+                }}
+                initial={{ y: "-100%", opacity: 0.9 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.4, delay: i * 0.03 } }}
+                transition={{
+                  duration: 0.5,
+                  delay: slatDelay,
+                  ease: [0.22, 0.61, 0.36, 1],
+                }}
+              />
+            );
+          })}
+        </AnimatePresence>
         {/* The logo behind the slats. Always rendered so the slats reveal it in place. */}
         <motion.div
           animate={{ y: [0, -6, 0] }}

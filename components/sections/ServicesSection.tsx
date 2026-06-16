@@ -1,104 +1,115 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+/**
+ * ServicesSection — replaces the four generic Lucide-icon service cards
+ * with four interactive mini-moments (Track E+ from the plan):
+ *   1. Custom Design    — a gold line draws itself into a ring outline
+ *   2. Restoration      — drag a slider to wipe a "polish" reveal
+ *   3. Engagement       — pick stone/setting/metal, ring updates live
+ *   4. Gift Curation    — pick "who is it for", routes to gift finder
+ *
+ * Each card has its own dedicated component in ./services/*; this
+ * section file just composes them. The ServiceCardShell provides the
+ * shared chrome (border, padding, hover lift, learn-more link).
+ *
+ * IMPORTANT: this section has NO whileInView opacity reveals or GSAP
+ * triggers. Each card animates on mount with a stagger via the shell
+ * (animate: opacity 1), so the cards are visible the moment the
+ * user scrolls to them. This is the pattern that fixed the
+ * disappearing-content bug (see e2e/disappearing-content.spec.ts).
+ */
+
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
-import { Gem, Wrench, Heart, Gift } from "lucide-react";
+import { ServiceCardShell } from "./services/ServiceCardShell";
+import { CustomDesignCard } from "./services/CustomDesignCard";
+import { RestorationCard } from "./services/RestorationCard";
+import { EngagementCard } from "./services/EngagementCard";
+import { GiftCurationCard } from "./services/GiftCurationCard";
 
-const SERVICES = [
-  {
-    icon: Gem,
-    title: { en: "Custom Design", fr: "Design sur mesure" },
-    desc: { en: "From idea to finished piece.", fr: "De l'idée à la pièce finie." },
-    long: {
-      en: "Bring us a sketch, a photo, or just a feeling. We guide you through materials, stones, and design until it feels exactly right.",
-      fr: "Apportez-nous un croquis, une photo ou simplement une impression. Nous vous guidons à travers les matériaux, les pierres et le design jusqu'à ce que tout soit parfait.",
-    },
+const STRINGS = {
+  en: {
+    eyebrow: "Signature Services",
+    title: "Our craft, at your service.",
   },
-  {
-    icon: Wrench,
-    title: { en: "Jewelry Restoration", fr: "Restauration de bijoux" },
-    desc: { en: "Repairs, resizing, polishing, and stone work.", fr: "Réparations, mise à grandeur, polissage et travail de pierres." },
-    long: {
-      en: "Sizing, stones, clasps, polish, watch batteries — most repairs are done in-house in Laval with care and precision.",
-      fr: "Mise à grandeur, pierres, fermoirs, polissage, piles de montre — la plupart des réparations sont faites sur place à Laval avec soin et précision.",
-    },
+  fr: {
+    eyebrow: "Services phares",
+    title: "Notre savoir-faire, à votre service.",
   },
-  {
-    icon: Heart,
-    title: { en: "Engagement Guidance", fr: "Conseil pour fiançailles" },
-    desc: { en: "Personal help choosing or creating the ring.", fr: "Aide personnalisée pour choisir ou créer la bague." },
-    long: {
-      en: "Natural and lab-grown diamonds, private consultations, and a ring made for one story — yours.",
-      fr: "Diamants naturels et de laboratoire, consultations privées et une bague faite pour une seule histoire — la vôtre.",
-    },
-  },
-  {
-    icon: Gift,
-    title: { en: "Gift Curation", fr: "Curation de cadeaux" },
-    desc: { en: "Help finding something meaningful.", fr: "Aide pour trouver quelque chose de significatif." },
-    long: {
-      en: "Not sure what to choose? Tell us about the person and the occasion. We'll suggest pieces that feel personal and lasting.",
-      fr: "Vous ne savez pas quoi choisir ? Parlez-nous de la personne et de l'occasion. Nous vous suggérerons des pièces qui semblent personnelles et durables.",
-    },
-  },
-] as const;
+} as const;
 
 export function ServicesSection({ lang }: { lang: Lang }) {
-  const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
+  const s = STRINGS[lang];
 
   return (
     <section className="py-12 md:py-20 bg-ink">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <SectionReveal className="mb-8 md:mb-10">
           <SectionReveal.Support>
-            <Eyebrow
-              text={lang === "fr" ? "Services phares" : "Signature Services"}
-              className="mb-3"
-            />
+            <Eyebrow text={s.eyebrow} className="mb-3" />
           </SectionReveal.Support>
           <SectionReveal.Title className="font-serif text-[clamp(1.75rem,5vw,3rem)] text-ivory block">
-            {lang === "fr" ? "Notre savoir-faire, à votre service." : "Our craft, at your service."}
+            {s.title}
           </SectionReveal.Title>
         </SectionReveal>
 
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {SERVICES.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title.en}
-                className="group relative overflow-hidden rounded-2xl border border-(--line) bg-[rgba(255,255,255,0.02)] p-6 md:p-8 transition-all duration-500 hover:border-(--line-2) hover:bg-[rgba(255,255,255,0.04)]"
-                initial={reduce ? undefined : { opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "80px" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 0.61, 0.36, 1] }}
-              >
-                <div className="flex items-start gap-4 md:gap-5">
-                  <div className="shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold">
-                    <Icon size={20} strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-[1.15rem] md:text-[1.35rem] text-ivory mb-1">
-                      {service.title[lang]}
-                    </h3>
-                    <p className="text-gold text-[0.85rem] md:text-[0.95rem] mb-3">
-                      {service.desc[lang]}
-                    </p>
-                    <p className="text-[0.85rem] md:text-[0.9rem] text-text-2 leading-relaxed">
-                      {service.long[lang]}
-                    </p>
-                  </div>
-                </div>
-                {/* Subtle gold line that draws on hover */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)]" />
-              </motion.div>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <ServiceCardShell
+            learnMoreHref={`/${lang}/custom`}
+            eyebrow="01"
+            title={lang === "fr" ? "Design sur mesure" : "Custom Design"}
+            subcopy={
+              lang === "fr"
+                ? "D'un simple trait, une pièce faite pour vous."
+                : "From a single line, a piece made only for you."
+            }
+            lang={lang}
+          >
+            <CustomDesignCard />
+          </ServiceCardShell>
+
+          <ServiceCardShell
+            learnMoreHref={`/${lang}/repairs`}
+            eyebrow="02"
+            title={lang === "fr" ? "Restauration de bijoux" : "Jewelry Restoration"}
+            subcopy={
+              lang === "fr"
+                ? "Vos bijoux de famille retrouvent leur premier éclat."
+                : "Family heirlooms returned to their first light."
+            }
+            lang={lang}
+          >
+            <RestorationCard />
+          </ServiceCardShell>
+
+          <ServiceCardShell
+            learnMoreHref={`/${lang}/engagement`}
+            eyebrow="03"
+            title={lang === "fr" ? "Conseil pour fiançailles" : "Engagement Guidance"}
+            subcopy={
+              lang === "fr"
+                ? "Pierre. Sertissure. Métal. Voyez votre bague prendre forme."
+                : "Stone. Setting. Metal. See your ring take shape."
+            }
+            lang={lang}
+          >
+            <EngagementCard lang={lang} />
+          </ServiceCardShell>
+
+          <ServiceCardShell
+            learnMoreHref={`/${lang}/explore#quiz`}
+            eyebrow="04"
+            title={lang === "fr" ? "Curation de cadeaux" : "Gift Curation"}
+            subcopy={
+              lang === "fr"
+                ? "Dites-nous pour qui — on s'occupe du reste."
+                : "Tell us who it's for — we'll take it from here."
+            }
+            lang={lang}
+          >
+            <GiftCurationCard lang={lang} />
+          </ServiceCardShell>
         </div>
       </div>
     </section>
