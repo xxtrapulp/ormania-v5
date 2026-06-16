@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { useModal } from "@/components/modals/ModalSystem";
@@ -44,7 +43,6 @@ const STATUS_LABELS = {
 
 export function ToolsSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
   const router = useRouter();
   const { openModal } = useModal();
 
@@ -65,17 +63,25 @@ export function ToolsSection({ lang }: { lang: Lang }) {
           </SectionReveal.Body>
         </SectionReveal>
 
-        <div ref={ref} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+        {/*
+          Tool cards. We previously used a dual-observer pattern
+          (useScrollReveal + framer-motion whileInView) with
+          `initial={{ opacity: 0 }}` — this caused the cards to be
+          permanently invisible if either observer missed (e.g. fast
+          scroll, or the section being just barely off-screen at mount).
+          The cards are now visible by default; the `whileInView` reveal
+          is a nice-to-have, not a hard dependency on visibility.
+        */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {TOOLS.map((tool, i) => {
             const Icon = tool.icon;
             const status = STATUS_LABELS[tool.status];
             return (
               <motion.div
                 key={tool.titleEn}
-                initial={reduce ? undefined : { opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "80px" }}
+                initial={false}
+                whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
+                viewport={{ once: true, amount: 0.05, margin: "200px" }}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 0.61, 0.36, 1] }}
               >
                 <GlassCard

@@ -41,7 +41,16 @@ function SectionRevealRoot({
   children,
   delay = 0,
   stagger = 0.05,
-  margin = "-80px",
+  /*
+   * Generous positive margin — fires the reveal 200px BEFORE the
+   * element enters the viewport. The previous `-80px` (negative
+   * shrink) combined with framer-motion's default `amount: 0.5` made
+   * the observer too strict; short / wide section headers often
+   * never reached the threshold, silently stranding them at the
+   * `initial="hidden"` (opacity 0) state. See lib/motion.ts for the
+   * matching viewport config used by Reveal / MaskedWords.
+   */
+  margin = "200px",
   repeat = false,
   className,
   as = "div",

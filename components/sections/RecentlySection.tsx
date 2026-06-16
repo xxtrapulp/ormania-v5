@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { TiltCard } from "@/components/effects/TiltCard";
 import { useModal } from "@/components/modals/ModalSystem";
@@ -22,7 +21,6 @@ const RECENT_ITEMS = [
 
 export function RecentlySection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
   const { openModal } = useModal();
 
   return (
@@ -45,14 +43,21 @@ export function RecentlySection({ lang }: { lang: Lang }) {
           </SectionReveal.Body>
         </SectionReveal>
 
-        <div ref={ref} className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/*
+          Recent items. Previously used the dual-observer pattern
+          (useScrollReveal + framer-motion whileInView) with
+          `initial={{ opacity: 0 }}` — this caused the cards to be
+          permanently invisible if either observer missed. They are
+          now visible by default; `whileInView` reveal is a nice-to-
+          have, not a hard dependency on visibility.
+        */}
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
           {RECENT_ITEMS.map((item, i) => (
             <motion.div
               key={item.titleEn}
-              initial={reduce ? undefined : { opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "80px" }}
+              initial={false}
+              whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
+              viewport={{ once: true, amount: 0.05, margin: "200px" }}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <TiltCard className="rounded-2xl h-full">

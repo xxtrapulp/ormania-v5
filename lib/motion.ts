@@ -87,7 +87,25 @@ export const stepSlide = (dir: 1 | -1): Variants => ({
   exit: { opacity: 0, x: -24 * dir, transition: { duration: 0.25, ease: luxeEase } },
 });
 
-export const viewport = { once: true, margin: "-80px" } as const;
+/*
+ * Shared viewport config for `whileInView` reveals.
+ *
+ * History: the previous config was `{ once: true, margin: "-80px" }`. The
+ * negative margin is "shrink the trigger area by 80px on each side" — i.e.
+ * the observer only fires when the element is fully 80px INSIDE the viewport.
+ * Combined with framer-motion's default `amount: 0.5` (50% of the element
+ * must be visible), this meant short or wide elements (e.g. section titles,
+ * short headings) often never reached the threshold, and the `initial`
+ * "hidden" state (`opacity: 0, y: ...`) would persist forever — the
+ * element was silently dropped from view. This was the root cause of the
+ * chronic "disappearing content" bug (e.g. MaskedWords, SectionReveal
+ * titles, MaskedWords under the section header).
+ *
+ * New config: positive 200px margin (trigger 200px BEFORE the element enters
+ * the viewport) and `amount: 0.05` (5% visible fires the reveal). Generous
+ * enough that scrolling fast or landing on a tall page won't strand content.
+ */
+export const viewport = { once: true, margin: "200px", amount: 0.05 } as const;
 
 /* ──────────────────────────────────────────────────────────────────
  * 2) `variants` aggregate — the single import surface for the

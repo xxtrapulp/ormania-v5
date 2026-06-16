@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
 import { Eyebrow, MaskedWords } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { TiltCard } from "@/components/effects/TiltCard";
 import { useModal } from "@/components/modals/ModalSystem";
@@ -26,7 +25,6 @@ const FILTERS: { key: IGCategory; labelEn: string; labelFr: string }[] = [
 export function InstagramShowroomSection({ lang }: { lang: Lang }) {
   const [activeFilter, setActiveFilter] = useState<IGCategory>("all");
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
   const { openModal } = useModal();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -84,7 +82,7 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
         </div>
 
         {/* Masonry grid */}
-        <div ref={ref} className="ig-masonry">
+        <div className="ig-masonry">
           <AnimatePresence mode="popLayout">
             {filtered.map((post, i) => (
               <motion.div
@@ -154,10 +152,9 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
         {/* How Instagram Inquiries Work */}
         <motion.div
           className="mt-12 md:mt-16 p-6 md:p-8 rounded-2xl border border-(--line) bg-[rgba(255,255,255,0.02)]"
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "80px" }}
+          initial={false}
+          whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
+          viewport={{ once: true, amount: 0.05, margin: "200px" }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
         >
           <h3 className="font-serif text-[1.15rem] md:text-[1.35rem] text-ivory text-center mb-6">

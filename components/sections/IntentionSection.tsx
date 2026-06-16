@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { Eyebrow } from "@/components/design-system/TextReveal";
-import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
 import { User, Crown, Sun, CircleUser, Wrench, Search } from "lucide-react";
@@ -49,7 +48,6 @@ const INTENTIONS = [
 
 export function IntentionSection({ lang }: { lang: Lang }) {
   const reduce = useReducedMotion();
-  const { ref, isInView } = useScrollReveal();
 
   return (
     <section className="py-12 md:py-20 bg-ink-2">
@@ -66,20 +64,24 @@ export function IntentionSection({ lang }: { lang: Lang }) {
           </SectionReveal.Title>
         </SectionReveal>
 
-        <div
-          ref={ref}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
-        >
+        {/*
+          Intention cards. Previously used the dual-observer pattern
+          (useScrollReveal + framer-motion whileInView) with
+          `initial={{ opacity: 0 }}` — this caused the cards to be
+          permanently invisible if either observer missed. They are
+          now visible by default; the `whileInView` reveal is a nice-
+          to-have, not a hard dependency on visibility.
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {INTENTIONS.map((item, i) => {
             const Icon = item.icon;
             return (
               <motion.div
                 key={item.title.en}
                 className="group relative rounded-2xl border border-(--line) bg-ink p-5 md:p-6 transition-all duration-500 hover:border-(--line-2) hover:-translate-y-1 cursor-pointer"
-                initial={reduce ? undefined : { opacity: 0, y: 24 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "80px" }}
+                initial={false}
+                whileInView={reduce ? undefined : { opacity: [0, 1], y: [16, 0] }}
+                viewport={{ once: true, amount: 0.05, margin: "200px" }}
                 transition={{
                   duration: 0.5,
                   delay: i * 0.08,
