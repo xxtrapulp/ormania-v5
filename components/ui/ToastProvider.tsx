@@ -33,16 +33,22 @@ const ToastContext = createContext<ToastApi | null>(null);
 /**
  * useToast() — fire ephemeral confirmation toasts.
  *
- * Soft-fails when called outside a ToastProvider so server components
- * and isolated test harnesses don't crash; the no-op API is still typed.
+ * Throws when called outside a ToastProvider so any provider-tree bug
+ * surfaces loudly instead of silently swallowing the call (the previous
+ * soft-fail no-op masked real failures — the LeadModal would transition
+ * to "Request received" but no toast would appear, and we'd never know
+ * why). If you need a no-op API for isolated test harnesses, wrap the
+ * component under a <ToastProvider> (it's lightweight — no DOM, just
+ * a context + an in-memory state array).
  */
 export function useToast(): ToastApi {
   const ctx = useContext(ToastContext);
   if (!ctx) {
-    return {
-      success: () => {},
-      info: () => {},
-    };
+    throw new Error(
+      "useToast() must be used inside a <ToastProvider>. " +
+        "Mount <ToastProvider> high in the React tree (e.g. in the root " +
+        "language layout) so every component that fires toasts can find it.",
+    );
   }
   return ctx;
 }
