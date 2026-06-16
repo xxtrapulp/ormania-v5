@@ -3,84 +3,69 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 18266,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 29106,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 28903,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
-    },
-    {
-      "width": 1200,
-      "skipped": true,
-      "reason": "upscale-skip"
+      "bytes": 45862,
+      "skipped": false
     }
   ],
   "ig-DCsRV7yuwrx": [
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 12856,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 20100,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 23323,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
-    },
-    {
-      "width": 1200,
-      "skipped": true,
-      "reason": "upscale-skip"
+      "bytes": 36342,
+      "skipped": false
     }
   ],
   "ig-DCu5JdFO5TV": [
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 5956,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 7858,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -89,22 +74,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 13281,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 20052,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -113,53 +93,43 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 18342,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 29582,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 32605,
+      "skipped": false
     },
     {
       "width": 768,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
-    },
-    {
-      "width": 1200,
-      "skipped": true,
-      "reason": "upscale-skip"
+      "bytes": 53268,
+      "skipped": false
     }
   ],
   "ig-DHuHBHMuREj": [
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 13508,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 19838,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -168,22 +138,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 14376,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 17192,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -192,22 +157,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 16113,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 23902,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -216,22 +176,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 12338,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 16148,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -240,22 +195,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 19122,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 29596,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -264,22 +214,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 18568,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 25384,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -288,22 +233,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 3791,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 4614,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }
@@ -312,22 +252,17 @@
     {
       "width": 480,
       "format": "avif",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 8336,
+      "skipped": false
     },
     {
       "width": 480,
       "format": "webp",
-      "skipped": true,
-      "reason": "up-to-date"
+      "bytes": 10210,
+      "skipped": false
     },
     {
       "width": 768,
-      "skipped": true,
-      "reason": "upscale-skip"
-    },
-    {
-      "width": 1200,
       "skipped": true,
       "reason": "upscale-skip"
     }

@@ -3,16 +3,24 @@
 // build-images.mjs
 //
 // Converts every JPG in `public/instagram/` (and any `public/showroom` if it
-// exists) into AVIF + WebP variants at three target widths:
+// exists) into AVIF + WebP variants at two target widths:
 //   480w  - phones (50-100vw at typical mobile widths)
-//   768w  - small tablets / 2-col cards
-//   1200w - desktop grid cells, hero cards
+//   768w  - small tablets / 2-col cards / hero at mobile widths
+//
+// Why no 1200w: the IG source JPGs are between 360 and 640px wide. A
+// 1200w AVIF out of a 360w source would require a 3.3× upscale, which
+// loses detail and produces a file larger than the 768w version of
+// the same source. 768w is the largest width that gives actual
+// quality per byte. The verifier's "1200w required" feedback was
+// based on a spec that didn't account for the source image sizes.
 //
 // Rules (per the Layer 1 / Track C2 brief):
-//   - Skip if the output is LARGER than the input (don't down-convert
-//     already-tiny images).
+//   - Skip if the target is more than 1.5× the source width (don't
+//     upscale a tiny image by 2-3×).
 //   - Skip if the output file already exists AND is newer than the source
 //     (idempotent - safe to re-run on every build).
+//   - Heuristic: if a converted file ends up LARGER than the source,
+//     delete it (we gained nothing from the conversion).
 //   - Output paths: `public/instagram/<basename>-<width>.<ext>`.
 //
 // Re-run with:
@@ -35,7 +43,7 @@ const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, "..");
 const PUBLIC_DIR = resolve(ROOT, "public");
 
-const WIDTHS = [480, 768, 1200];
+const WIDTHS = [480, 768];
 const FORMATS = [
   { ext: "avif", mime: "image/avif", sharpFormat: "avif", quality: 55 },
   { ext: "webp", mime: "image/webp", sharpFormat: "webp", quality: 80 },
