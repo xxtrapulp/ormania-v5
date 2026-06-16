@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
@@ -64,13 +65,16 @@ export function ToolsSection({ lang }: { lang: Lang }) {
         </SectionReveal>
 
         {/*
-          Tool cards. We previously used a dual-observer pattern
-          (useScrollReveal + framer-motion whileInView) with
-          `initial={{ opacity: 0 }}` — this caused the cards to be
-          permanently invisible if either observer missed (e.g. fast
-          scroll, or the section being just barely off-screen at mount).
-          The cards are now visible by default; the `whileInView` reveal
-          is a nice-to-have, not a hard dependency on visibility.
+          Tool cards. We use the classic `initial → whileInView` pattern
+          with single values (NOT keyframes). A previous iteration tried
+          `initial={false}` + `whileInView={{ opacity: [0, 1] }}` to keep
+          cards visible by default, but keyframes with `initial={false}`
+          make framer-motion snap the element to the first keyframe
+          (opacity 0) before animating, which causes a visible flicker.
+          The generous `viewport` config (`margin: 200px`, `amount: 0.05`)
+          from `lib/motion.ts` is the real fix for the disappearing-
+          content bug — the observer fires well before the element enters
+          the viewport, so `whileInView` reliably triggers.
         */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {TOOLS.map((tool, i) => {
@@ -79,9 +83,9 @@ export function ToolsSection({ lang }: { lang: Lang }) {
             return (
               <motion.div
                 key={tool.titleEn}
-                initial={false}
-                whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
-                viewport={{ once: true, amount: 0.05, margin: "200px" }}
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewport}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 0.61, 0.36, 1] }}
               >
                 <GlassCard

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
@@ -62,12 +63,14 @@ export function TrustSection({ lang }: { lang: Lang }) {
         </SectionReveal>
 
         {/*
-          Trust badges, review cards, and the family boutique story all
-          used to use the dual-observer pattern (useScrollReveal + framer-
-          motion whileInView) with `initial={{ opacity: 0 }}`. This caused
-          them to be permanently invisible if either observer missed
-          (e.g. fast scroll). They are now visible by default; the
-          `whileInView` reveal is a nice-to-have, not a hard dependency.
+          Trust badges, review cards, and the family boutique story.
+          Using the classic `initial → whileInView` pattern with single
+          values (not keyframes). A previous iteration tried keyframes
+          `[0, 1]` with `initial={false}` — that made framer-motion snap
+          the element to opacity 0 before animating, causing a visible
+          flicker. The story card additionally has a parallax `y` from
+          `useTransform`, so we ONLY animate `opacity` in its whileInView
+          (no `y` keyframe — that would fight with the parallax).
         */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
           {TRUST_POINTS.map((point, i) => {
@@ -75,9 +78,9 @@ export function TrustSection({ lang }: { lang: Lang }) {
             return (
               <motion.div
                 key={point.en}
-                initial={false}
-                whileInView={reduce ? undefined : { opacity: [0, 1], y: [10, 0] }}
-                viewport={{ once: true, amount: 0.05, margin: "200px" }}
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewport}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
                 className="flex items-center gap-3 p-4 rounded-xl border border-(--line) bg-ink"
               >
@@ -92,9 +95,9 @@ export function TrustSection({ lang }: { lang: Lang }) {
           {REVIEWS.map((review, i) => (
             <motion.div
               key={review.author}
-              initial={false}
-              whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
-              viewport={{ once: true, amount: 0.05, margin: "200px" }}
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewport}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <GlassCard className="p-5 md:p-6">
@@ -112,11 +115,19 @@ export function TrustSection({ lang }: { lang: Lang }) {
           ))}
         </div>
 
+        {/*
+          Family boutique story card.
+          CRITICAL: do NOT animate `y` in whileInView here. The `style.y`
+          is a `MotionValue` (parallax from useTransform) that updates
+          continuously based on scroll position. Animating `y` from
+          whileInView would fight with the parallax and produce a visible
+          jitter. Only fade opacity.
+        */}
         <motion.div
           className="mt-10 md:mt-14 rounded-2xl border border-(--line) bg-ink p-6 md:p-10 text-center"
-          initial={false}
-          whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
-          viewport={{ once: true, amount: 0.05, margin: "200px" }}
+          initial={reduce ? false : { opacity: 0 }}
+          whileInView={reduce ? undefined : { opacity: 1 }}
+          viewport={viewport}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
           style={{ y: storyY, willChange: "transform" }}
         >

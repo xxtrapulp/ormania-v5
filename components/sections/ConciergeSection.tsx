@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
@@ -16,18 +17,18 @@ export function ConciergeSection({ lang }: { lang: Lang }) {
     <section className="py-12 md:py-20 bg-ink-2">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/*
-          Concierge card. Previously used the dual-observer pattern
-          (useScrollReveal + framer-motion whileInView) with
-          `initial={{ opacity: 0 }}` — this caused the entire concierge
-          block to be permanently invisible if either observer missed.
-          It is now visible by default; the `whileInView` reveal is a
-          nice-to-have, not a hard dependency on visibility.
+          Concierge card. Classic `initial → whileInView` pattern with
+          single values. A previous iteration used `initial={false}` +
+          keyframes `[0, 1]` — that made framer-motion snap the card to
+          opacity 0 first, causing a visible flicker. The generous
+          `viewport` config (`margin: 200px`, `amount: 0.05`) is the
+          real fix for the disappearing-content bug.
         */}
         <motion.div
           className="relative overflow-hidden rounded-2xl border border-(--line) bg-ink p-8 md:p-12 lg:p-16"
-          initial={false}
-          whileInView={reduce ? undefined : { opacity: [0, 1], y: [16, 0] }}
-          viewport={{ once: true, amount: 0.05, margin: "200px" }}
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={viewport}
           transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
         >
           {/* Subtle gold glow */}

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { CursorUnderline } from "@/components/effects/CursorUnderline";
@@ -65,12 +66,10 @@ export function IntentionSection({ lang }: { lang: Lang }) {
         </SectionReveal>
 
         {/*
-          Intention cards. Previously used the dual-observer pattern
-          (useScrollReveal + framer-motion whileInView) with
-          `initial={{ opacity: 0 }}` — this caused the cards to be
-          permanently invisible if either observer missed. They are
-          now visible by default; the `whileInView` reveal is a nice-
-          to-have, not a hard dependency on visibility.
+          Intention cards. Classic `initial → whileInView` pattern with
+          single values. The generous `viewport` config (`margin: 200px`,
+          `amount: 0.05`) is the real fix for the disappearing-content
+          bug — the observer fires well before the element enters view.
         */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {INTENTIONS.map((item, i) => {
@@ -79,9 +78,9 @@ export function IntentionSection({ lang }: { lang: Lang }) {
               <motion.div
                 key={item.title.en}
                 className="group relative rounded-2xl border border-(--line) bg-ink p-5 md:p-6 transition-all duration-500 hover:border-(--line-2) hover:-translate-y-1 cursor-pointer"
-                initial={false}
-                whileInView={reduce ? undefined : { opacity: [0, 1], y: [16, 0] }}
-                viewport={{ once: true, amount: 0.05, margin: "200px" }}
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewport}
                 transition={{
                   duration: 0.5,
                   delay: i * 0.08,

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { useModal } from "@/components/modals/ModalSystem";
 import { GlassCard } from "@/components/design-system/GlassCard";
@@ -34,13 +35,20 @@ export function BeforeAfterSection({ lang }: { lang: Lang }) {
           </h2>
         </div>
 
+        {/*
+          Transformation cards. Use the shared loose `viewport` config
+          from `lib/motion.ts` (margin: 200px, amount: 0.05) instead of
+          the old local `margin: 80px`. The old config was too strict —
+          a fast scroll past the section could strand the cards at
+          `opacity: 0` because the observer never fired.
+        */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {TRANSFORMATIONS.map((item, i) => (
             <motion.div
               key={item.en}
-              initial={reduce ? undefined : { opacity: 0, y: 20 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "80px" }}
+              viewport={viewport}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <GlassCard className="p-0 overflow-hidden group cursor-pointer">

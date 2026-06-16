@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { TiltCard } from "@/components/effects/TiltCard";
@@ -44,20 +45,21 @@ export function RecentlySection({ lang }: { lang: Lang }) {
         </SectionReveal>
 
         {/*
-          Recent items. Previously used the dual-observer pattern
-          (useScrollReveal + framer-motion whileInView) with
-          `initial={{ opacity: 0 }}` — this caused the cards to be
-          permanently invisible if either observer missed. They are
-          now visible by default; `whileInView` reveal is a nice-to-
-          have, not a hard dependency on visibility.
+          Recent items. Classic `initial → whileInView` pattern with
+          single values. A previous iteration used `initial={false}` +
+          keyframes `[0, 1]` to keep cards visible by default, but that
+          made framer-motion snap to opacity 0 first, causing a visible
+          flicker. The generous `viewport` config (`margin: 200px`,
+          `amount: 0.05`) is the real fix for the disappearing-content
+          bug — the observer fires well before the element enters view.
         */}
         <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
           {RECENT_ITEMS.map((item, i) => (
             <motion.div
               key={item.titleEn}
-              initial={false}
-              whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
-              viewport={{ once: true, amount: 0.05, margin: "200px" }}
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewport}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <TiltCard className="rounded-2xl h-full">

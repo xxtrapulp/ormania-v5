@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { t, type Lang } from "@/lib/i18n";
+import { viewport } from "@/lib/motion";
 import { Eyebrow, MaskedWords } from "@/components/design-system/TextReveal";
 import { SectionReveal } from "@/components/effects/SectionReveal";
 import { TiltCard } from "@/components/effects/TiltCard";
@@ -149,12 +150,17 @@ export function InstagramShowroomSection({ lang }: { lang: Lang }) {
           </AnimatePresence>
         </div>
 
-        {/* How Instagram Inquiries Work */}
+        {/*
+          How Instagram Inquiries Work block. Classic `initial →
+          whileInView` pattern with single values. (The IG card grid
+          above uses IGCard which animates on mount — no scroll trigger
+          needed.)
+        */}
         <motion.div
           className="mt-12 md:mt-16 p-6 md:p-8 rounded-2xl border border-(--line) bg-[rgba(255,255,255,0.02)]"
-          initial={false}
-          whileInView={reduce ? undefined : { opacity: [0, 1], y: [12, 0] }}
-          viewport={{ once: true, amount: 0.05, margin: "200px" }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={viewport}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
         >
           <h3 className="font-serif text-[1.15rem] md:text-[1.35rem] text-ivory text-center mb-6">
