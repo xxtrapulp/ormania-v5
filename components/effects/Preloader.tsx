@@ -22,7 +22,7 @@ export function Preloader() {
     const timer = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem("ormania-preloader", "1");
-    }, 1800);
+    }, 900);
     return () => clearTimeout(timer);
   }, []);
 
@@ -46,7 +46,8 @@ export function Preloader() {
               alt="Ormania"
               width={180}
               height={42}
-              priority
+              preload
+              fetchPriority="high"
               className="h-9 md:h-10 w-auto"
             />
             <motion.div

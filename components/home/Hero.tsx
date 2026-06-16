@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useId, useMemo } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
@@ -10,9 +11,19 @@ import { heroStagger, heroItem, luxeEase } from "@/lib/motion";
 import { ResponsiveLabel } from "@/components/ui/Button";
 import { IgIcon } from "@/components/ui/icons";
 import { GoldDust } from "@/components/effects/GoldDust";
-import { Ring3D } from "@/components/effects/Ring3D";
 import { HeroTextReveal } from "@/components/effects/HeroTextReveal";
 import { useMousePosition } from "@/hooks/useMousePosition";
+
+// Lazy-load the 3D gold-torus decoration. The torus is gorgeous but
+// adds ~600KB of three.js + @react-three/fiber to the initial bundle.
+// Loaded on mount, after the first frame paints.
+const Ring3D = dynamic(
+  () => import("@/components/effects/Ring3D").then((m) => m.Ring3D),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full" aria-hidden />,
+  }
+);
 
 /* === Hero image selection (Layer 1 / B2 — single signature image) === */
 const HERO_IMAGE = "/instagram/ig-DEN0REXJO1E.jpg";
@@ -121,7 +132,8 @@ function LogoShutter({
           alt="Bijouterie Ormania"
           width={652}
           height={150}
-          priority
+          preload
+          fetchPriority="high"
           className="h-16 xs:h-20 md:h-24 lg:h-28 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
         />
       </div>
@@ -141,7 +153,8 @@ function LogoShutter({
           alt="Bijouterie Ormania"
           width={652}
           height={150}
-          priority
+          preload
+          fetchPriority="high"
           className="h-16 xs:h-20 md:h-24 lg:h-28 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
         />
       </motion.div>
@@ -150,24 +163,46 @@ function LogoShutter({
 
   return (
     <div className="mb-6 md:mb-8 relative">
-      {/* Slats that wipe IN (revealing the logo below) and then fade
-          away — the slats are a transient wipe effect, not a permanent
-          overlay. AnimatePresence handles unmount after the exit anim. */}
+      {/* Slats that wipe UPWARD (sliding out of view from top to bottom).
+          The slats are BEHIND the wordmark in stacking order, so the
+          wordmark paints immediately as the LCP element. The slats
+          provide the gold-tint backdrop that animates out, leaving the
+          wordmark visible. AnimatePresence handles unmount after the
+          exit anim. */}
       <div className="relative">
+        {/* The logo in FRONT of the slats. Always rendered at full
+            opacity, animates a gentle vertical bob for life. */}
+        <motion.div
+          className="relative z-10"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+        >
+          <Image
+            src="/brand/ormania.svg"
+            alt="Bijouterie Ormania"
+            width={652}
+            height={150}
+            preload
+            fetchPriority="high"
+            className="h-16 xs:h-20 md:h-24 lg:h-28 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
+          />
+        </motion.div>
         <AnimatePresence>
           {introPlaying && Array.from({ length: SLATS }).map((_, i) => {
-            // Each slat covers 1/SLATS of the height. We translate it from
-            // -100% (above) to 0% (settled) so it slides into place and
-            // uncovers the logo strip. 55ms gap × 10 slats ≈ 0.55s total
-            // wipe duration. The setTimeout in useEffect above flips
-            // introPlaying to false after the last slat settles, then
-            // AnimatePresence fades the whole group out.
+            // Each slat covers 1/SLATS of the height. We start it at
+            // y: 0 (settled, covering the wordmark area) and translate
+            // it to y: "-100%" (sliding up out of view). 55ms gap × 10
+            // slats ≈ 0.55s total wipe duration. The slats sit BEHIND
+            // the wordmark in z-order so the LCP image paints without
+            // obstruction. The setTimeout in useEffect above flips
+            // introPlaying to false after the last slat exits, then
+            // AnimatePresence unmounts the group.
             const slatDelay = (introStart + i * 55) / 1000;
             return (
               <motion.div
                 key={`shutter-${i}`}
                 aria-hidden
-                className="absolute inset-x-0 h-[10%] z-10"
+                className="absolute inset-x-0 h-[10%] z-0"
                 style={{
                   top: `${(i / SLATS) * 100}%`,
                   background:
@@ -175,9 +210,10 @@ function LogoShutter({
                   borderTop: "1px solid rgba(201,168,106,0.45)",
                   borderBottom: "1px solid rgba(201,168,106,0.18)",
                   boxShadow: "inset 0 0 18px rgba(201,168,106,0.18)",
+                  mixBlendMode: "screen",
                 }}
-                initial={{ y: "-100%", opacity: 0.9 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ y: 0, opacity: 0.9 }}
+                animate={{ y: "-100%", opacity: 0 }}
                 exit={{ opacity: 0, transition: { duration: 0.4, delay: i * 0.03 } }}
                 transition={{
                   duration: 0.5,
@@ -188,20 +224,6 @@ function LogoShutter({
             );
           })}
         </AnimatePresence>
-        {/* The logo behind the slats. Always rendered so the slats reveal it in place. */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        >
-          <Image
-            src="/brand/ormania.svg"
-            alt="Bijouterie Ormania"
-            width={652}
-            height={150}
-            priority
-            className="h-16 xs:h-20 md:h-24 lg:h-28 w-auto max-w-full drop-shadow-[0_4px_28px_rgba(201,168,106,0.25)]"
-          />
-        </motion.div>
       </div>
     </div>
   );
@@ -355,7 +377,8 @@ export function Hero({ lang }: { lang: Lang }) {
               src={HERO_IMAGE}
               alt={HERO_IMAGE_ALT}
               fill
-              priority
+              preload
+              fetchPriority="high"
               sizes="100vw"
               className="object-cover"
             />

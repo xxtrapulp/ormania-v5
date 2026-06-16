@@ -120,7 +120,8 @@ export function Header({ lang }: { lang: Lang }) {
               alt="Ormania"
               width={148}
               height={34}
-              priority
+              preload
+              fetchPriority="high"
               className="h-7 md:h-8 w-auto"
             />
           </Link>

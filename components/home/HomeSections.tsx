@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, useEffect, type ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { Gem, Hammer, Heart, MapPin, Phone, Sparkles, Wrench, Gift, Circle, Link as LinkIcon, Search } from "lucide-react";
 import { t, type Lang } from "@/lib/i18n";
 import { COLLECTIONS, CUSTOM_STEPS, REPAIR_SERVICES, STORE, TOOLS } from "@/lib/data";
@@ -12,9 +13,16 @@ import { Button, ResponsiveLabel } from "@/components/ui/Button";
 import { IGGrid } from "@/components/ig/IGGrid";
 import { IgIcon } from "@/components/ui/icons";
 import { TiltCard } from "@/components/effects/TiltCard";
-import { ScrollStory } from "@/components/effects/ScrollStory";
 import { BlurWords, FadeLines, TypeEyebrow } from "@/components/effects/TextReveal";
 import { ParallaxText } from "@/components/effects/ParallaxText";
+
+// Lazy-load the 3D scroll story. Same reason as GlobalBackground +
+// Ring3D: the scroll story uses three.js + @react-three/fiber, which
+// is ~600KB minified. Loaded after first paint.
+const ScrollStory = dynamic(
+  () => import("@/components/effects/ScrollStory").then((m) => m.ScrollStory),
+  { ssr: false, loading: () => <div className="min-h-[80vh]" aria-hidden /> }
+);
 import { useScrollEffects } from "@/hooks/useScrollEffects";
 import { useScrollReveal } from "@/components/effects/useScrollReveal";
 import { ResponsiveIgImage } from "@/components/ui/ResponsiveIgImage";
